@@ -1,0 +1,6 @@
+.idea
+.serverless
+vendor
+.DS_Store
+tmp
+.vscode
