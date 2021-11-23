@@ -1,17 +1,14 @@
 <?php
-	
 
-// conexion
-$conn = new mysqli(
-    'serverless-lineysoft.cluster-caeiyn2btsoe.us-east-1.rds.amazonaws.com',
-    'moises',
-    'moiseslinar3s',
-    'lineysoft',
-		3306);
+use Illuminate\Database\Capsule\Manager as Capsule;
 
-if ($conn->connect_error) {
-    echo "No se pudo conectar a la Base de Datos";
-    exit;
-}
+$conect = new Capsule;
+$conect->addConnection([
+  "driver" => "mysql",
+  "host" => "54.89.83.220",
+  "database" => "demo",
+  "username" => "root",
+  "password" => "moiseslinar3s"
 
+]);
 ?>

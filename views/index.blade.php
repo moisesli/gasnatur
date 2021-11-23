@@ -1,3 +1,3 @@
-@extends('layout.layout_welcome')
+@extends('layout.login')
 
-@section('title', 'GasNatur')
+@section('title', 'Login - GasNatur')
