@@ -9,7 +9,6 @@ class Users extends Controller
 
   public function index()
   {
-    $count = User::where('name', 'moises')->count();
-    return $count;
+    return 'Users Pagina index';
   }
 }

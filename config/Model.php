@@ -1,35 +1,19 @@
 <?php
-
 namespace Config;
+use Config\Database;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Container\Container;
 class Model
 {
+    protected $db;
 
-  public $capsule;
+    public function __construct(){
+        try {
 
-  public function __construct()
-  {
-    $this->capsule = new Capsule;
+            $this->db = new Database(DATABASE['TYPE'], DATABASE['HOST'], DATABASE['NAME'], DATABASE['USER'], DATABASE['PASS'], DATABASE['CHAR']);
 
-    $this->capsule->addConnection([
-      'driver' => 'mysql',
-      'host' => '54.89.83.220',
-      'database' => 'demo',
-      'username' => 'root',
-      'password' => 'moiseslinar3s',
-      'charset' => 'utf8',
-      'collation' => 'utf8_unicode_ci',
-      'prefix' => '',
-    ]);
-    $this->capsule->setEventDispatcher(new Dispatcher(new Container));
-
-    // Make this Capsule instance available globally via static methods... (optional)
-    $this->capsule->setAsGlobal();
-
-    // Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
-    $this->capsule->bootEloquent();
-  }
+        } catch (PDOException $e) {
+            echo "Error al conectarse a la base de datos: ".$e->getMessage();
+        }
+    }
 }
+?>

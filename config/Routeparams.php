@@ -6,9 +6,7 @@ use Buki\Router\Router;
 
 class Routeparams{
 
-  public $router;
-  public $view;
-  
+  public $router;  
 
   public function __construct()
   {
@@ -22,8 +20,6 @@ class Routeparams{
         'middlewares' => 'App\Middlewares'   
       ]
     ]);
-
-    $this->view = new View();
   }
 
   public function run()

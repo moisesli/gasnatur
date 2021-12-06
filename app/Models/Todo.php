@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Models;
-use Illuminate\Database\Eloquent\Model as Eloquent;
+//namespace App\Models;
 use Config\Model;
 
-class Todo extends Eloquent
+class Todo extends Model
 {
-  protected $fillable = ['todo','category','description'];
+  
 }

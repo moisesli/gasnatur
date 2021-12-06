@@ -2,12 +2,30 @@
 
 namespace Config;
 
+
+
 class Controller extends Routeparams
 {
+  public $conexion;
 
-  public function view($view, $data = [])
+  public function __construct()
   {
-    return $this->view->show($view, $data);
+      //$this->conexion = new Conexion();
+      return 'index';
   }
+
+    public function loadModel($fileName)
+    {
+        $path = './app/Models/' . ($fileName).'Model.php';
+
+        if (file_exists($path)){
+            require_once './app/Models/' . ($fileName).'Model.php';
+
+            $modelName = $fileName.'Model';
+            //$objModel = App\Models\UserModel;
+            $objModel = new $modelName();
+            return $objModel;
+        }
+    }
 
 }

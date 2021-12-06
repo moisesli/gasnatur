@@ -2,8 +2,6 @@
 
 namespace Config;
 
-use Jenssegers\Blade\Blade;
-
 class View
 {
   public static function show($view, $data)
@@ -13,12 +11,6 @@ class View
     $getLocalServer = 'localhost';
     $myServer = $_SERVER['SERVER_NAME'];
 
-    if(strpos($myServer, $getLocalServer) !== false){
-      $blade = new Blade(dirname(__DIR__).'/views','./views/tmp');
-    } else{
-      $blade = new Blade(dirname(__DIR__).'/views','../../../tmp');
-    }
-
-    return $blade->render($view, $data);
+    return ($view, $data);
   }
 }
