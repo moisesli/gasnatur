@@ -9,6 +9,7 @@ class Database extends \PDO
         parent::setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
+    //listar todos
     public function findAll($sql, $array = [], $fetchMode = \PDO::FETCH_OBJ){
         $sth = $this->prepare($sql);
         foreach ($array as $key => $value) {
@@ -17,7 +18,7 @@ class Database extends \PDO
         $sth->execute();
         return $sth->fetchAll($fetchMode);
     }
-
+    //listar uno (where)
     protected function find($sql, $array = [], $fetchMode = \PDO::FETCH_OBJ){
         $sth = $this->prepare($sql);
         foreach ($array as $key => $value) {
@@ -27,6 +28,7 @@ class Database extends \PDO
         return $sth->fetch($fetchMode);
     }
 
+    //pagnacion¿?
     protected function numRows($sql, $array = []){
         $sth = $this->prepare($sql);
         foreach ($array as $key => $value) {
@@ -35,7 +37,7 @@ class Database extends \PDO
         $sth->execute();
         return $sth->rowCount();
     }
-
+    //crear datos
     public function insert($table, array $data){
         ksort($data);
         $fieldNames = implode('`, `', array_keys($data));
@@ -47,7 +49,7 @@ class Database extends \PDO
         $stm = $sth->execute();
         return $stm;
     }
-
+   
     public function update($table, array $data, $where){
         ksort($data);
         $fieldDetails = NULL;
