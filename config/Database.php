@@ -64,7 +64,7 @@ class Database extends \PDO
         $stm = $sth->execute();
         return $stm;
     }
-
+    //eliminar data
     public function delete($table, $where, $limit = 1){
         $sth = $this->prepare("DELETE FROM {$table} WHERE $where LIMIT $limit");
         $stm = $sth->execute();
@@ -77,4 +77,3 @@ class Database extends \PDO
     //public function from($table, $as = null){}
     //public function delete($id = null){}
 }
-?>

@@ -1,10 +1,10 @@
 <?php
 define('DATABASE', [
-    'HOST' => '127.0.0.1',
+    'HOST' => '54.89.83.220',
     'TYPE' => 'mysql',
     'NAME' => 'gasnatur',
     'USER' => 'root',
-    'PASS' => '16falladapeta03',
+    'PASS' => 'moiseslinar3s',
     'CHAR' => 'utf8'
 ]);
 ?>

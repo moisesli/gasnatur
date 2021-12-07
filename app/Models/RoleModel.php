@@ -1,9 +1,8 @@
 <?php
 use Config\Model;
 
-class UserModel extends Model
+Class RoleModel extends Model
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -15,7 +14,7 @@ class UserModel extends Model
         $response->success = false;
 
         try {
-            $sth = $this->db->insert('users', $data);
+            $sth = $this->db->insert('roles', $data);
             // validacion
             if ($sth) {
                 $response->success = true;
@@ -34,18 +33,13 @@ class UserModel extends Model
     {
 
         try {
-            return $this->db->findAll("select * from users");
+            return $this->db->findAll("select * from roles");
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];
         }
 
     }
-
-    // public function findById($id)
-    // {
-    //     return $this->db->find("SELECT * FROM users WHERE id=:id LIMIT 1", [":id" => $id]);
-    // }
 
     public function update($data, $id)
     {
@@ -54,7 +48,7 @@ class UserModel extends Model
 
         try {
 
-            $sth = $this->db->update("users", $data, "id={$id}");
+            $sth = $this->db->update("roles", $data, "id={$id}");
             if (!$sth) {
                 throw new \Exception("No pudimos actualizar el usuario");
             }
@@ -71,7 +65,7 @@ class UserModel extends Model
     public function delete($id)
     {
 
-        $result = $this->db->delete('users', 'id' . '=' . $id);
+        $result = $this->db->delete('roles', 'id' . '=' . $id);
         return;
     }
 }

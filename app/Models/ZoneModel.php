@@ -1,21 +1,21 @@
 <?php
+
 use Config\Model;
 
-class UserModel extends Model
+class ZoneModel extends Model
 {
-
-    public function __construct()
+	public function __construct()
     {
         parent::__construct();
     }
 
-    public function create($data)
+	public function create($data)
     {
         $response = new \stdClass;
         $response->success = false;
 
         try {
-            $sth = $this->db->insert('users', $data);
+            $sth = $this->db->insert('zones', $data);
             // validacion
             if ($sth) {
                 $response->success = true;
@@ -30,31 +30,20 @@ class UserModel extends Model
         //return true;
     }
 
-    public function getAll()
+	public function getAll()
     {
-
-        try {
-            return $this->db->findAll("select * from users");
-        } catch (\Exception $e) {
-
-            return ["success" => false, "message" => $e->getMessage()];
-        }
-
+        $result = $this->db->findAll("select * from zones");
+        return $result;
     }
 
-    // public function findById($id)
-    // {
-    //     return $this->db->find("SELECT * FROM users WHERE id=:id LIMIT 1", [":id" => $id]);
-    // }
-
-    public function update($data, $id)
+	public function update($data, $id)
     {
         $response = new \stdClass;
         $response->success = false;
 
         try {
 
-            $sth = $this->db->update("users", $data, "id={$id}");
+            $sth = $this->db->update("zones", $data, "id={$id}");
             if (!$sth) {
                 throw new \Exception("No pudimos actualizar el usuario");
             }
@@ -68,10 +57,10 @@ class UserModel extends Model
         return $response;
     }
 
-    public function delete($id)
+	public function delete($id)
     {
 
-        $result = $this->db->delete('users', 'id' . '=' . $id);
+        $result = $this->db->delete('zones', 'id' . '=' . $id);
         return;
     }
 }
