@@ -42,10 +42,15 @@ class UserModel extends Model
 
     }
 
-    // public function findById($id)
-    // {
-    //     return $this->db->find("SELECT * FROM users WHERE id=:id LIMIT 1", [":id" => $id]);
-    // }
+    public function findById($id)
+    {
+        try {
+            return $this->db->find("SELECT * FROM users WHERE id={$id} LIMIT 1");
+        } catch (\Exception $e) {
+
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 
     public function update($data, $id)
     {

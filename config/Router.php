@@ -5,16 +5,17 @@ $app = new \Config\Routeparams();
 // Controllers
 //users
 $app->router->get('/apis/users', 'Users@index');
+$app->router->get('/apis/users/:id','Users@getById');
 $app->router->post('/apis/users', 'Users@create');
 $app->router->put('/apis/users/:id', 'Users@update');
 $app->router->delete('/apis/users/:id', 'Users@delete');
 
 //zones
-$app->router->get('/apis/zones', 'Zones@index');
-$app->router->get('/apis/zones/:id', 'Zones@getById');
-$app->router->post('/apis/zones', 'Zones@create');
-$app->router->put('/apis/zones/:id', 'Zones@update');
-$app->router->delete('/apis/zones/:id', 'Zones@delete');
+$app->router->get('/apis/zonas', 'Zones@index');
+$app->router->get('/apis/zonas/:id', 'Zones@getById');
+$app->router->post('/apis/zonas', 'Zones@create');
+$app->router->put('/apis/zonas/:id', 'Zones@update');
+$app->router->delete('/apis/zonas/:id', 'Zones@delete');
 
 //concessionaires
 $app->router->get('/apis/concessionaires', 'Concessionaires@index');

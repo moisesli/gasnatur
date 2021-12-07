@@ -17,29 +17,104 @@ class Zones extends Controller
 		$this->zone = $this->loadModel('Zone');
 	}
 
-	public function create(Request $request)
+	public function create(Request $request,Response $response)
 	{
+		$statusOk = false;
+		$messageError = "";
 
+		try {
 
-		$data = $request->toArray();
+			if (count($request->json()->all()) == 0) {
+				throw new \Exception("No existe parámetros");
+			}
 
-		return "Creado correctamente: " . $this->zone->create($data);
+			$data = $request->json()->all();
+			
+			if($data['nombre'] == ""){
+				throw new \Exception("Ingrese el nombre de la zona");
+			}
+			if($data['estado'] == ""){
+				throw new \Exception("Seleccione el estado de la zona");
+			}
+
+			$result = $this->zone->create($data);
+
+			[$statusOk, $messageError] = array_values((array)$result);
+			
+		} catch (\Exception $e) {
+			$messageError = $e->getMessage();
+		}
+
+		return $response->json(["success" => $statusOk, "message" => $messageError], 201);
 	}
 
-	public function index()
+	public function index(Response $response)
 	{
-	  return $this->zone->getAll();
+		$results = $this->zone->getAll();
+
+		return $response->json($results);
 	}
 
-	public function update(Request $request, $id)
+	public function getById(Response $response, $id){
+
+		$result = $this->zone->findById($id);
+
+		return $response->json($result);
+	}
+
+	public function update(Request $request, Response $response, $id)
     {
-        $data = $request->toArray();
-        return $this->zone->update($data, $id);
+		$statusOk = false;
+		$messageError = "";
+
+		try {
+
+			if (count($request->json()->all()) == 0) {
+				throw new \Exception("No existe parámetros");
+			}
+
+			$data = $request->json()->all();
+			
+			if($id == ""){
+				throw new \Exception("No existe el id de la zona");
+			}
+			if($data['nombre'] == ""){
+				throw new \Exception("Ingrese el nombre de la zona");
+			}
+			if($data['estado'] == ""){
+				throw new \Exception("Seleccione el estado de la zona");
+			}
+
+			$result = $this->zone->update($data, $id);
+
+			[$statusOk, $messageError] = array_values((array)$result);
+			
+		} catch (\Exception $e) {
+			$messageError = $e->getMessage();
+		}
+
+		return $response->json(["success" => $statusOk, "message" => $messageError], 200);
     }
 
-	public function delete($id)
+	public function delete(Request $request, Response $response, $id)
 	{
-  
-	  return "Eliminado correctamente: " . $this->zone->delete($id);
+		$statusOk = false;
+		$messageError = "";
+
+		try {
+			
+			if($id == ""){
+				throw new \Exception("No existe el id de la zona");
+			}
+
+			$result = $this->zone->delete($id);
+
+			[$statusOk, $messageError] = array_values((array)$result);
+			
+		} catch (\Exception $e) {
+			$messageError = $e->getMessage();
+		}
+
+		return $response->json(["success" => $statusOk, "message" => $messageError], 200);
 	}
 }

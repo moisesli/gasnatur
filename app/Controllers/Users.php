@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Config\Controller;
 use App\Models\User;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,28 +17,26 @@ class Users extends Controller
     $this->user = $this->loadModel('User');
   }
 
-  // public function getAll(Response $response)
-  // {
-
-  //   $results = $this->zones->getAll();
-
-  //   return $response->json($results);
-  // }
-
-  // public function getById(Response $response, $id){
-
-  // 	$result = $this->zones->findById($id);
-
-  // 	return $response->json($result);
-  // }
-
   public function create(Request $request)
   {
 
+    try{
+        $data = $request->toArray();
 
-    $data = $request->toArray();
+        if (array_key_exists("username",$data) == null || $data["username"] =='' 
+          || array_key_exists("password",$data) == null || $data["password"] ==''
+          )
+          return http_response_code(400);
+          //throw new Exception("Username sin valor");
+      
+        //return "Creado correctamente: " . $this->user->create($data);
 
-    return "Creado correctamente: " . $this->user->create($data);
+        if ($this->user->create($data))
+          return http_response_code(201);
+    
+      } catch (\Exception $e) {
+        return http_response_code(500);
+    }
   }
 
 
@@ -46,11 +45,10 @@ class Users extends Controller
     return $this->user->getAll();
   }
 
-  // public function getById(Response $response, $id){
-  //   $result = $this->user->findById($id);
+  public function getById( $id){
 
-  // 	return $response->json($result);
-  // }
+  	return $this->user->findById($id);
+  }
 
   public function update(Request $request, $id)
   {

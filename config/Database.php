@@ -19,7 +19,7 @@ class Database extends \PDO
         return $sth->fetchAll($fetchMode);
     }
     //listar uno (where)
-    protected function find($sql, $array = [], $fetchMode = \PDO::FETCH_OBJ){
+    public function find($sql, $array = [], $fetchMode = \PDO::FETCH_OBJ){
         $sth = $this->prepare($sql);
         foreach ($array as $key => $value) {
             $sth->bindValue("$key", $value);
