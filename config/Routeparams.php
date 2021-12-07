@@ -1,12 +1,11 @@
 <?php
 
 namespace Config;
-
 use Buki\Router\Router;
 
 class Routeparams{
 
-  public $router;  
+  public $router;
 
   public function __construct()
   {
@@ -20,6 +19,7 @@ class Routeparams{
         'middlewares' => 'App\Middlewares'   
       ]
     ]);
+
   }
 
   public function run()

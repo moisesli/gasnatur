@@ -2,17 +2,13 @@
 
 namespace App\Controllers;
 
-use Config\Controller;
+use Config\View;
 
-class Auth extends Controller
+class Auth extends View
 {
-    public function index()
-    {
-        $usuario = '';
-        return json_encode($usuario);
-    }
-    public function login()
-		{
-			return $this->view('auth/login');
-		}
+
+  public function login()
+  {
+    return $this->show('index');
+  }
 }
