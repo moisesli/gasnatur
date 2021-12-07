@@ -51,6 +51,11 @@ $app->router->get('/', function () {
     return $front->show('auth.login');
 });
 
+$app->router->get('/dashboard', function () {
+    $front = new \Config\View();
+    return $front->show('dashboard.index');
+});
+
 $app->router->get('/registro', function () {
     $front = new \Config\View();
     return $front->show('auth.register');
