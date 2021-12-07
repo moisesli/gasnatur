@@ -2,7 +2,7 @@
 
 $app = new \Config\Routeparams();
 
-$app->router->get('/', 'Home@index');
+//$app->router->get('/', 'Home@index');
 
 // Controllers
 //users
@@ -48,5 +48,17 @@ $app->router->delete('/apis/roles/:id', 'Roles@delete');
 $app->router->get('/about', function () {
     return 'About Page';
 });
+
+
+
+
+
+// **************** ROUTES FRONT ************************
+
+
+// Auth
+$app->router->get('/', 'front.AuthController@login');
+
+
 
 $app->run();
