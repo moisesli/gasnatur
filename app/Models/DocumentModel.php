@@ -1,7 +1,5 @@
 <?php
 
-//namespace App\Models;
-
 use Config\Model;
 
 class DocumentModel extends Model
@@ -12,36 +10,37 @@ class DocumentModel extends Model
     }
 
     public function create($data)
-    {
-        $response = new \stdClass;
-        $response->success = false;
+	{
+		$response = new \stdClass;
+		$response->success = false;
 
-        try {
-            $sth = $this->db->insert('identities_documents', $data);
-            // validacion
-            if ($sth) {
-                $response->success = true;
-                $response->message = "Registrado correctamente";
-            } else {
-                $response->message = "No se pudo registrar, vuelva a intentarlo";
-            }
-        } catch (\Exception $e) {
-            $response->message = $e->getMessage();
-        }
-        return $response;
-        //return true;
-    }
+		try {
+
+			$sth = $this->db->insert("identities_documents", $data);
+			if(!$sth){
+				throw new \Exception("No pudimos registrar la zona");
+			}
+
+			$response->success = true;
+			$response->message = "Registrado correctamente";
+			
+		} catch (\Exception $e) {
+			$response->message = $e->getMessage();
+		}
+
+		return $response;
+	}
 
     public function getAll()
-    {
+	{
+		try {
 
-        try {
-            return $this->db->findAll("select * from identities_documents");
-        } catch (\Exception $e) {
+			return $this->db->findAll("SELECT * FROM identities_documents");
 
-            return ["success" => false, "message" => $e->getMessage()];
-        }
-    }
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
 
     public function update($data, $id)
     {
@@ -52,7 +51,7 @@ class DocumentModel extends Model
 
             $sth = $this->db->update("identities_documents", $data, "id={$id}");
             if (!$sth) {
-                throw new \Exception("No pudimos actualizar el usuario");
+                throw new \Exception("No pudimos actualizar la zona");
             }
 
             $response->success = true;
@@ -64,10 +63,24 @@ class DocumentModel extends Model
         return $response;
     }
 
-    public function delete($id)
-    {
+    public function delete($id){
+		$response = new \stdClass;
+		$response->success = false;
 
-        $result = $this->db->delete('identities_documents', 'id' . '=' . $id);
-        return;
-    }
+		try {
+
+			$sth = $this->db->delete("identities_documents", "id={$id}");
+			if(!$sth){
+				throw new \Exception("No pudimos eliminar la zona");
+			}
+
+			$response->success = true;
+			$response->message = "Eliminado correctamente";
+			
+		} catch (\Exception $e) {
+			$response->message = $e->getMessage();
+		}
+
+		return $response;
+	}
 }

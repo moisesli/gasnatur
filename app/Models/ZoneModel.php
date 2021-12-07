@@ -9,32 +9,41 @@ class ZoneModel extends Model
         parent::__construct();
     }
 
-	public function create($data)
-    {
-        $response = new \stdClass;
-        $response->success = false;
 
-        try {
-            $sth = $this->db->insert('zones', $data);
-            // validacion
-            if ($sth) {
-                $response->success = true;
-                $response->message = "Registrado correctamente";
-            } else {
-                $response->message = "No se pudo registrar, vuelva a intentarlo";
-            }
-        } catch (\Exception $e) {
-            $response->message = $e->getMessage();
-        }
-        return $response;
-        //return true;
-    }
+    public function create($data)
+	{
+		$response = new \stdClass;
+		$response->success = false;
 
-	public function getAll()
-    {
-        $result = $this->db->findAll("select * from zones");
-        return $result;
-    }
+		try {
+
+			$sth = $this->db->insert("zonas", $data);
+			if(!$sth){
+				throw new \Exception("No pudimos registrar la zona");
+			}
+
+			$response->success = true;
+			$response->message = "Registrado correctamente";
+			
+		} catch (\Exception $e) {
+			$response->message = $e->getMessage();
+		}
+
+		return $response;
+	}
+
+    public function getAll()
+	{
+		try {
+
+			return $this->db->findAll("SELECT * FROM zonas");
+
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
+
+	
 
 	public function update($data, $id)
     {
@@ -43,9 +52,9 @@ class ZoneModel extends Model
 
         try {
 
-            $sth = $this->db->update("zones", $data, "id={$id}");
+            $sth = $this->db->update("zonas", $data, "id={$id}");
             if (!$sth) {
-                throw new \Exception("No pudimos actualizar el usuario");
+                throw new \Exception("No pudimos actualizar la zona");
             }
 
             $response->success = true;
@@ -57,10 +66,24 @@ class ZoneModel extends Model
         return $response;
     }
 
-	public function delete($id)
-    {
+    public function delete($id){
+		$response = new \stdClass;
+		$response->success = false;
 
-        $result = $this->db->delete('zones', 'id' . '=' . $id);
-        return;
-    }
+		try {
+
+			$sth = $this->db->delete("zonas", "id={$id}");
+			if(!$sth){
+				throw new \Exception("No pudimos eliminar la zona");
+			}
+
+			$response->success = true;
+			$response->message = "Eliminado correctamente";
+			
+		} catch (\Exception $e) {
+			$response->message = $e->getMessage();
+		}
+
+		return $response;
+	}
 }
