@@ -63,5 +63,9 @@ $app->router->get('/registro', function () {
     return $front->show('auth.register');
 });
 
+$app->router->get('/zonas', function () {
+  $front = new \Config\View();
+  return $front->show('zonas.zonas');
+});
 
 $app->run();

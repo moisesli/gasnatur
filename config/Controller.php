@@ -2,8 +2,6 @@
 
 namespace Config;
 
-use Symfony\Component\HttpFoundation\ParameterBag;
-
 class Controller extends Routeparams
 {
   public function __construct()
