@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Config\Controller;
 use App\Models\User;
+use DateTime;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,26 +18,33 @@ class Users extends Controller
     $this->user = $this->loadModel('User');
   }
 
-  public function create(Request $request)
+  public function create(Request $request, Response $response)
   {
+    $statusOk = false;
+    $messageError = "";
 
-    try{
-        $data = $request->toArray();
+    try {
+      $data = $request->json()->all();
 
-        if (array_key_exists("username",$data) == null || $data["username"] =='' 
-          || array_key_exists("password",$data) == null || $data["password"] ==''
-          )
-          return http_response_code(400);
-          //throw new Exception("Username sin valor");
-      
-        //return "Creado correctamente: " . $this->user->create($data);
+      if ($this->user->findByUser($data['usuario']) == 1) {
+        throw new \Exception("El usuario ya existe, por favor ingresar un usuario nuevo");
+      }
 
-        if ($this->user->create($data))
-          return http_response_code(201);
-    
-      } catch (\Exception $e) {
-        return http_response_code(500);
+      $this->validaciones($request, $response);
+
+      $data['usuario'] = strtolower($data['usuario']);
+
+      date_default_timezone_set('America/Lima');
+      $data['fecha_registro'] = Date('y-m-d H:m:s');
+
+      $result = $this->user->create($data);
+
+      [$statusOk, $messageError] = array_values((array)$result);
+    } catch (\Exception $e) {
+      $messageError = $e->getMessage();
     }
+
+    return $response->json(["success" => $statusOk, "message" => $messageError], 201);
   }
 
 
@@ -45,20 +53,105 @@ class Users extends Controller
     return $this->user->getAll();
   }
 
-  public function getById( $id){
-
-  	return $this->user->findById($id);
-  }
-
-  public function update(Request $request, $id)
-  {
-    $data = $request->toArray();
-    return $this->user->update($data, $id);
-  }
-
-  public function delete($id)
+  public function getById($id)
   {
 
-    return "Eliminado correctamente: " . $this->user->delete($id);
+    return $this->user->findByUser($id);
+  }
+
+  public function update(Request $request, Response $response, $id)
+  {
+    $statusOk = false;
+    $messageError = "";
+
+    try {
+
+      if (count($request->json()->all()) == 0) {
+        throw new \Exception("No existe parámetros");
+      }
+
+      $data = $request->json()->all();
+
+      if($id<=0 | $id == ""){
+        throw new \Exception("No existe el id del usuario");
+       }
+
+       $this->validaciones($request, $response);
+
+      $result = $this->user->update($data, $id);
+
+      [$statusOk, $messageError] = array_values((array)$result);
+    } catch (\Exception $e) {
+      $messageError = $e->getMessage();
+    }
+
+    return $response->json(["success" => $statusOk, "message" => $messageError], 200);
+  }
+
+  public function delete(Request $request, Response $response, $id)
+  {
+    $statusOk = false;
+    $messageError = "";
+
+    try {
+
+      if($id<=0 | $id == ""){
+        throw new \Exception("No existe el id del usuario");
+       }
+
+      $result = $this->user->delete($id);
+
+      [$statusOk, $messageError] = array_values((array)$result);
+    } catch (\Exception $e) {
+      $messageError = $e->getMessage();
+    }
+
+    return $response->json(["success" => $statusOk, "message" => $messageError], 200);
+  }
+
+  private function validaciones(Request $request, Response $response)
+  {
+    $data = $request->json()->all();
+
+    if (!(preg_match('/^[a-zA-Z0-9]+$/', $data['usuario']))) {
+      throw new \Exception("Se permiten solo letras y numeros");
+    }
+
+    if (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,20}$/', $data['clave'])) {
+      throw new \Exception("El password no cumple con los requerimientos mínimos");
+    }
+
+    if (count($request->json()->all()) == 0) {
+      throw new \Exception("No existe parámetros");
+    }
+
+    if (array_key_exists("usuario", $data) == null) {
+      throw new \Exception("Username sin valor");
+    }
+
+    if (array_key_exists("clave", $data) == null) {
+      throw new \Exception("Password sin valor");
+    }
+
+    if ($data['usuario'] == "") {
+      throw new \Exception("Ingrese el nombre de usuario");
+    }
+    if ($data['clave'] == "") {
+      throw new \Exception("Ingrese password");
+    }
+
+    if ($data['id_personal'] == "" | $data['id_personal'] <=0 | !is_int($data['id_personal'])) {
+      throw new \Exception("El id del personal no es válido");
+    }
+
+    if ($data['id_role'] == "" | $data['id_role'] <=0 | !is_int($data['id_role']) | $data['id_role'] == null) {
+      throw new \Exception("El id del rol no es válido");
+    }
+
+    if($data['estado'] == ""){
+      throw new \Exception("Seleccione el estado del usuario");
+
+    }
+    
   }
 }

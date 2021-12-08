@@ -4,11 +4,11 @@ $app = new \Config\Routeparams();
 
 // Controllers
 //users
-$app->router->get('/apis/users', 'Users@index');
-$app->router->get('/apis/users/:id','Users@getById');
-$app->router->post('/apis/users', 'Users@create');
-$app->router->put('/apis/users/:id', 'Users@update');
-$app->router->delete('/apis/users/:id', 'Users@delete');
+$app->router->get('/apis/usuarios', 'Users@index');
+$app->router->get('/apis/usuarios/:id','Users@getById');
+$app->router->post('/apis/usuarios', 'Users@create');
+$app->router->put('/apis/usuarios/:id', 'Users@update');
+$app->router->delete('/apis/usuarios/:id', 'Users@delete');
 
 //zones
 $app->router->get('/apis/zonas', 'Zones@index');

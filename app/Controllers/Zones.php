@@ -57,8 +57,6 @@ class Zones extends Controller
 	public function index(Response $response)
 	{
 		$results = $this->zone->getAll();
-
-    // fixeado ojo
 		return $this->resjson($results);
 	}
 
