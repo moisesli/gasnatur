@@ -11,7 +11,12 @@
    <!-- Tailwind Css -->
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 
-  <script src="https://unpkg.com/vue@next" defer></script>
+  <!-- Vue js -->
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 
 <body class="bg-gray-200">
@@ -175,5 +180,6 @@
     </div>
   </div>
 </div>
+@yield('vuejs')
 </body>
 </html>

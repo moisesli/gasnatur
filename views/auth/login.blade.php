@@ -51,8 +51,7 @@
                 <div class="flex items-center h-5">
                   <input
                     id="remember" aria-describedby="remember" name="remember" type="checkbox"
-                    class="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-green-200 h-4 w-4 rounded"
-                    required>
+                    class="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-green-200 h-4 w-4 rounded">
                 </div>
                 <div class="text-sm ml-3">
                   <label for="remember" class="font-medium text-gray-900">Recordarme</label>
@@ -79,7 +78,7 @@
           password: '123456'
         })
         const sendLogin = () => {
-          window.location.href = "/zonas";
+          window.location.href = "zonas";
           console.log('Se envio los datos login');
         }
         return {login, sendLogin };
