@@ -2,6 +2,8 @@
 
 namespace Config;
 use Buki\Router\Router;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class Routeparams{
 

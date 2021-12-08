@@ -17,6 +17,12 @@ class Zones extends Controller
 		$this->zone = $this->loadModel('Zone');
 	}
 
+  public function test(Request $request,Response $response){
+    $data = $request->toArray();
+    $this->zone->create($data);
+    return count($request->toArray());
+  }
+
 	public function create(Request $request,Response $response)
 	{
 		$statusOk = false;
@@ -52,7 +58,8 @@ class Zones extends Controller
 	{
 		$results = $this->zone->getAll();
 
-		return $response->json($results);
+    // fixeado ojo
+		return $this->resjson($results);
 	}
 
 	public function getById(Response $response, $id){
