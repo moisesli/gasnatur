@@ -15,7 +15,7 @@ class UserModel extends Model
         $response->success = false;
 
         try {
-            $sth = $this->db->insert('users', $data);
+            $sth = $this->db->insert('usuarios', $data);
             // validacion
             if ($sth) {
                 $response->success = true;
@@ -34,7 +34,7 @@ class UserModel extends Model
     {
 
         try {
-            return $this->db->findAll("select * from users");
+            return $this->db->findAll("select * from usuarios");
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];
@@ -45,7 +45,17 @@ class UserModel extends Model
     public function findById($id)
     {
         try {
-            return $this->db->find("SELECT * FROM users WHERE id={$id} LIMIT 1");
+            return $this->db->find("SELECT id FROM usuarios WHERE id={$id}");
+        } catch (\Exception $e) {
+
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function findByUser($usuario)
+    {
+        try {
+            return $this->db->find("SELECT * FROM usuarios WHERE usuario='$usuario'");
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];
@@ -59,7 +69,7 @@ class UserModel extends Model
 
         try {
 
-            $sth = $this->db->update("users", $data, "id={$id}");
+            $sth = $this->db->update("usuarios", $data, "id={$id}");
             if (!$sth) {
                 throw new \Exception("No pudimos actualizar el usuario");
             }
@@ -73,10 +83,25 @@ class UserModel extends Model
         return $response;
     }
 
-    public function delete($id)
-    {
 
-        $result = $this->db->delete('users', 'id' . '=' . $id);
-        return;
-    }
+    public function delete($id)
+	{
+		$response = new \stdClass;
+		$response->success = false;
+
+		try {
+
+			$sth = $this->db->delete("usuarios", "id={$id}");
+			if (!$sth) {
+				throw new \Exception("No pudimos eliminar la zona");
+			}
+
+			$response->success = true;
+			$response->message = "Eliminado correctamente";
+		} catch (\Exception $e) {
+			$response->message = $e->getMessage();
+		}
+
+		return $response;
+	}
 }
