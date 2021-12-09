@@ -2,6 +2,7 @@ service: gasnatur
 
 provider:
     name: aws
+    stage:
     region: us-east-1
     runtime: provided.al2
     environment:
@@ -18,10 +19,10 @@ functions:
         layers:
             - ${bref:layer.php-74-fpm}
         events:
-            - http:
+            - httpApi:
                 path: /
                 method: ANY
-            - http:
+            - httpApi:
                 path: /{any+}
                 method: ANY
 
