@@ -13,7 +13,7 @@ class ConcessionaireModel extends Model{
         $response->success = false;
 
         try {
-            $sth = $this->db->insert('concessionaires', $data);
+            $sth = $this->db->insert('concesionarias', $data);
             // validacion
             if ($sth) {
                 $response->success = true;
@@ -25,13 +25,37 @@ class ConcessionaireModel extends Model{
             $response->message = $e->getMessage();
         }
         return $response;
-        //return true;
     }
 
     public function getAll()
+	{
+		try {
+			return $this->db->findAll("SELECT * FROM concesionarias");
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
+
+    public function findById($id)
+	{
+		try {
+			$sql = "SELECT * FROM concesionarias WHERE id = $id LIMIT 1";
+
+			return $this->db->find($sql);
+		} catch (\Exception $e) {
+
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
+
+    public function findByComparatorRegister($comparator)
     {
-        $result = $this->db->findAll("select * from concessionaires");
-        return $result;
+        try {
+            return $this->db->find("SELECT * FROM concesionarias WHERE descripcion='$comparator'");
+        } catch (\Exception $e) {
+
+            return ["success" => false, "message" => $e->getMessage()];
+        }
     }
 
     public function update($data, $id)
@@ -41,9 +65,9 @@ class ConcessionaireModel extends Model{
 
         try {
 
-            $sth = $this->db->update("concessionaires", $data, "id={$id}");
+            $sth = $this->db->update("concesionarias", $data, "id={$id}");
             if (!$sth) {
-                throw new \Exception("No pudimos actualizar el usuario");
+                throw new \Exception("No pudimos actualizar la concesionaria");
             }
 
             $response->success = true;
@@ -55,11 +79,32 @@ class ConcessionaireModel extends Model{
         return $response;
     }
 
-    public function delete($id)
-    {
+    // public function delete($id)
+    // {
 
-        $result = $this->db->delete('concessionaires', 'id' . '=' . $id);
-        return;
-    }
+    //     $result = $this->db->delete('concessionaires', 'id' . '=' . $id);
+    //     return;
+    // }
+
+    public function delete($id)
+	{
+		$response = new \stdClass;
+		$response->success = false;
+
+		try {
+
+			$sth = $this->db->delete("concesionarias", "id={$id}");
+			if (!$sth) {
+				throw new \Exception("No pudimos eliminar la concesionaria");
+			}
+
+			$response->success = true;
+			$response->message = "Eliminado correctamente";
+		} catch (\Exception $e) {
+			$response->message = $e->getMessage();
+		}
+
+		return $response;
+	}
 
 }

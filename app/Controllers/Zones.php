@@ -17,13 +17,6 @@ class Zones extends Controller
 		$this->zone = $this->loadModel('Zone');
 	}
 
-	public function test(Request $request, Response $response)
-	{
-		$data = $request->toArray();
-		$this->zone->create($data);
-		return count($request->toArray());
-	}
-
 	public function create(Request $request, Response $response)
 	{
 		$statusOk = false;
@@ -31,11 +24,15 @@ class Zones extends Controller
 
 		try {
 
-			if (count($request->json()->all()) == 0) {
-				throw new \Exception("No existe parámetros");
-			}
+			$data = $request->toArray();
 
-			$data = $request->json()->all();
+			if ($this->zone->findByComparatorRegister($data['nombre']) == 1) {
+				throw new \Exception("La zona ya existe, por favor ingresar una nueva zona");
+			  }
+
+			if (count($data) == 0) {
+				throw new \Exception("No existe parametros");
+			}
 
 			if ($data['nombre'] == "") {
 				throw new \Exception("Ingrese el nombre de la zona");
@@ -44,6 +41,8 @@ class Zones extends Controller
 				throw new \Exception("Seleccione el estado de la zona");
 			}
 
+			$data['nombre'] = strtolower($data['nombre']);
+
 			$result = $this->zone->create($data);
 
 			[$statusOk, $messageError] = array_values((array)$result);
@@ -51,10 +50,10 @@ class Zones extends Controller
 			$messageError = $e->getMessage();
 		}
 
-		return $response->json(["success" => $statusOk, "message" => $messageError], 201);
+		return $this->resjson(["success" => $statusOk, "message" => $messageError], 201);
 	}
 
-	public function index(Response $response)
+	public function getAll(Response $response)
 	{
 		$results = $this->zone->getAll();
 		return $this->resjson($results);
@@ -65,7 +64,7 @@ class Zones extends Controller
 
 		$result = $this->zone->findById($id);
 
-		return $response->json($result);
+		return $this->resjson($result);
 	}
 
 	public function update(Request $request, Response $response, $id)
@@ -75,11 +74,16 @@ class Zones extends Controller
 
 		try {
 
-			if (count($request->json()->all()) == 0) {
+			$data = $request->toArray();
+
+			if ($this->zone->findByComparatorRegister($data['nombre']) == 1) {
+				throw new \Exception("La zona ya existe, por favor ingresar una nueva zona");
+			  }
+
+
+			if (count($data) == 0) {
 				throw new \Exception("No existe parámetros");
 			}
-
-			$data = $request->json()->all();
 
 			if ($id == "") {
 				throw new \Exception("No existe el id de la zona");
@@ -98,7 +102,7 @@ class Zones extends Controller
 			$messageError = $e->getMessage();
 		}
 
-		return $response->json(["success" => $statusOk, "message" => $messageError], 200);
+		return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
 	}
 
 	public function delete(Request $request, Response $response, $id)
@@ -119,11 +123,11 @@ class Zones extends Controller
 			$messageError = $e->getMessage();
 		}
 
-		return $response->json(["success" => $statusOk, "message" => $messageError], 200);
+		return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
 	}
 
-	public function paginator($page, $q)
+	public function paginator($id, $q)
 	{
-		return $this->zone->paginator($page, $q);
+		return $this->zone->paginator($id, $q);
 	}
 }

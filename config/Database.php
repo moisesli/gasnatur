@@ -45,7 +45,7 @@ class Database extends \PDO
 
     public function paginator($table, $pagina,$q,$array = [],$fetchMode = \PDO::FETCH_OBJ)
     {
-        $regpagina = 5;
+        $regpagina = 15;
 
         $inicio = ($pagina > 1) ? (($pagina * $regpagina) - $regpagina) : 0;
 
@@ -53,16 +53,22 @@ class Database extends \PDO
         if($q == ""){
             $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table LIMIT $inicio,$regpagina";
         }
+
+        
+
         else{
             $sql ="SELECT SQL_CALC_FOUND_ROWS * FROM $table WHERE $q LIMIT $inicio,$regpagina";
   
         }
+
+        return $sql;
+
         $registros = $this->prepare($sql);
-        
-        
+     
         foreach ($array as $key => $value) {
              $registros->bindValue("$key", $value);
          }
+
         $registros->execute();
         $registros =$registros->fetchAll($fetchMode);
 

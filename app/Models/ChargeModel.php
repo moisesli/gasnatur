@@ -15,7 +15,7 @@ class ChargeModel extends Model
         $response->success = false;
 
         try {
-            $sth = $this->db->insert('charges', $data);
+            $sth = $this->db->insert('cargos', $data);
             // validacion
             if ($sth) {
                 $response->success = true;
@@ -32,15 +32,35 @@ class ChargeModel extends Model
 
     public function getAll()
     {
-
         try {
-            return $this->db->findAll("select * from charges");
+            return $this->db->findAll("SELECT * from cargos");
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function findByComparatorRegister($comparator)
+    {
+        try {
+            return $this->db->find("SELECT * FROM cargos WHERE nombre='$comparator'");
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];
         }
-
     }
+
+
+    public function findById($id)
+	{
+		try {
+			$sql = "SELECT * FROM cargos WHERE id = $id LIMIT 1";
+			
+			return $this->db->find($sql);
+		} catch (\Exception $e) {
+
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
 
     public function update($data, $id)
     {
@@ -49,9 +69,9 @@ class ChargeModel extends Model
 
         try {
 
-            $sth = $this->db->update("charges", $data, "id={$id}");
+            $sth = $this->db->update("cargos", $data, "id={$id}");
             if (!$sth) {
-                throw new \Exception("No pudimos actualizar el usuario");
+                throw new \Exception("No pudimos actualizar el cargo");
             }
 
             $response->success = true;
@@ -64,9 +84,30 @@ class ChargeModel extends Model
     }
 
     public function delete($id)
-    {
+	{
+		$response = new \stdClass;
+		$response->success = false;
 
-        $result = $this->db->delete('charges', 'id' . '=' . $id);
-        return;
-    }
+		try {
+
+			$sth = $this->db->delete("cargos", "id={$id}");
+			if (!$sth) {
+				throw new \Exception("No pudimos eliminar el cargo");
+			}
+
+			$response->success = true;
+			$response->message = "Eliminado correctamente";
+		} catch (\Exception $e) {
+			$response->message = $e->getMessage();
+		}
+
+		return $response;
+	}
+
+    // public function delete($id)
+    // {
+
+    //     $result = $this->db->delete('charges', 'id' . '=' . $id);
+    //     return;
+    // }
 }

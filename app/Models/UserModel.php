@@ -52,10 +52,10 @@ class UserModel extends Model
         }
     }
 
-    public function findByUser($usuario)
+    public function findByComparatorRegister($comparator)
     {
         try {
-            return $this->db->find("SELECT * FROM usuarios WHERE usuario='$usuario'");
+            return $this->db->find("SELECT * FROM usuarios WHERE usuario='$comparator'");
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];

@@ -11,25 +11,27 @@ $app->router->put('/apis/usuarios/:id', 'Users@update');
 $app->router->delete('/apis/usuarios/:id', 'Users@delete');
 
 //zones
-$app->router->get('/apis/zonas/page/:id/:all', 'Zones@paginator');
-$app->router->get('/apis/zonas', 'Zones@index');
+$app->router->get('/apis/zonas', 'Zones@getAll');
+$app->router->get('/apis/zonas/:id/:all', 'Zones@paginator');
 $app->router->get('/apis/zonas/:id', 'Zones@getById');
 $app->router->post('/apis/zonas', 'Zones@create');
-$app->router->post('/apis/test', 'Zones@test');
 $app->router->put('/apis/zonas/:id', 'Zones@update');
 $app->router->delete('/apis/zonas/:id', 'Zones@delete');
 
-//concessionaires
-$app->router->get('/apis/concessionaires', 'Concessionaires@index');
-$app->router->post('/apis/concessionaires', 'Concessionaires@create');
-$app->router->put('/apis/concessionaires/:id', 'Concessionaires@update');
-$app->router->delete('/apis/concessionaires/:id', 'Concessionaires@delete');
 
 //charges
-$app->router->get('/apis/charges', 'Charges@index');
-$app->router->post('/apis/charges', 'Charges@create');
-$app->router->put('/apis/charges/:id', 'Charges@update');
-$app->router->delete('/apis/charges/:id', 'Charges@delete');
+$app->router->get('/apis/cargos', 'Charges@getAll');
+$app->router->get('/apis/cargos/:id', 'Charges@getById');
+$app->router->post('/apis/cargos', 'Charges@create');
+$app->router->put('/apis/cargos/:id', 'Charges@update');
+$app->router->delete('/apis/cargos/:id', 'Charges@delete');
+
+//concessionaires
+$app->router->get('/apis/concesionarias', 'Concessionaires@getAll');
+$app->router->get('/apis/concesionarias/:id', 'Concessionaires@getById');
+$app->router->post('/apis/concesionarias', 'Concessionaires@create');
+$app->router->put('/apis/concesionarias/:id', 'Concessionaires@update');
+$app->router->delete('/apis/concesionarias/:id', 'Concessionaires@delete');
 
 //documents_identities
 $app->router->get('/apis/identities_documents', 'Documents@index');

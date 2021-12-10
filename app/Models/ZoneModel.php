@@ -33,18 +33,27 @@ class ZoneModel extends Model
 	public function getAll()
 	{
 		try {
-
 			return $this->db->findAll("SELECT * FROM zonas");
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}
 	}
 
+	public function findByComparatorRegister($comparator)
+    {
+        try {
+            return $this->db->find("SELECT * FROM zonas WHERE nombre='$comparator'");
+        } catch (\Exception $e) {
+
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
+
 	public function findById($id)
 	{
 		try {
-			$sql = "SELECT * FROM zonas WHERE id= $id LIMIT 1";
-			
+			$sql = "SELECT * FROM zonas WHERE id = $id LIMIT 1";
+
 			return $this->db->find($sql);
 		} catch (\Exception $e) {
 
@@ -94,17 +103,16 @@ class ZoneModel extends Model
 		return $response;
 	}
 
-	public function paginator($pagina,$q)
+	public function paginator($pagina, $q)
 	{
 
 		try {
-			if($q!=""){
+			if ($q != "") {
 				$q = " nombre LIKE '%$q%' ";
 			}
-			return $this->db->paginator('zonas',$pagina,$q);
+			return $this->db->paginator('zonas', $pagina, $q);
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}
 	}
-	
 }

@@ -18,6 +18,13 @@ class Users extends Controller
     $this->user = $this->loadModel('User');
   }
 
+  // public function test(Request $request, Response $response)
+	// {
+	// 	$data = $request->toArray();
+	// 	$this->zone->create($data);
+	// 	return count($request->toArray());
+	// }
+
   public function create(Request $request, Response $response)
   {
     $statusOk = false;
@@ -26,7 +33,7 @@ class Users extends Controller
     try {
       $data = $request->json()->all();
 
-      if ($this->user->findByUser($data['usuario']) == 1) {
+      if ($this->user->findByComparatorRegister($data['usuario']) == 1) {
         throw new \Exception("El usuario ya existe, por favor ingresar un usuario nuevo");
       }
 
@@ -66,12 +73,15 @@ class Users extends Controller
 
     try {
 
-      if (count($request->json()->all()) == 0) {
-        throw new \Exception("No existe parámetros");
+      $data = $request->toArray();
+      if ($this->user->findByComparatorRegister($data['usuario']) == 1) {
+        throw new \Exception("El usuario ya existe, por favor ingresar un usuario nuevo");
       }
 
-      $data = $request->json()->all();
-
+      if (count($data) == 0) {
+        throw new \Exception("No existe parámetros");
+      }
+      
       if($id<=0 | $id == ""){
         throw new \Exception("No existe el id del usuario");
        }
@@ -111,7 +121,11 @@ class Users extends Controller
 
   private function validaciones(Request $request, Response $response)
   {
-    $data = $request->json()->all();
+    $data = $request->toArray();
+
+    if (count($data) == 0) {
+      throw new \Exception("No existe parámetros");
+    }
 
     if (!(preg_match('/^[a-zA-Z0-9]+$/', $data['usuario']))) {
       throw new \Exception("Se permiten solo letras y numeros");
@@ -119,10 +133,6 @@ class Users extends Controller
 
     if (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,20}$/', $data['clave'])) {
       throw new \Exception("El password no cumple con los requerimientos mínimos");
-    }
-
-    if (count($request->json()->all()) == 0) {
-      throw new \Exception("No existe parámetros");
     }
 
     if (array_key_exists("usuario", $data) == null) {
