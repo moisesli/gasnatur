@@ -26,6 +26,7 @@ class Zones extends Controller
 
 	public function create(Request $request,Response $response)
 	{
+
 		$statusOk = false;
 		$messageError = "";
 

@@ -11,8 +11,13 @@ $app->router->put('/apis/usuarios/:id', 'Users@update');
 $app->router->delete('/apis/usuarios/:id', 'Users@delete');
 
 //zones
-$app->router->get('/apis/zonas', 'Zones@index');
-$app->router->get('/apis/zonas/:id', 'Zones@getById');
+$app->router->get('/apis/zonas/:page?/:q?', 'Zones@index');
+// GET zonas/           primera pagina 15 cuando no hay nada
+// GET zonas/2          segunda pagina con 15 resultados
+// GET zonas/2/zonas    segunda pagina con busqueda de zonas
+
+
+$app->router->post('/apis/zonas/:id', 'Zones@getById');
 $app->router->post('/apis/zonas', 'Zones@create');
 $app->router->post('/apis/test', 'Zones@test');
 $app->router->put('/apis/zonas/:id', 'Zones@update');
@@ -63,9 +68,10 @@ $app->router->get('/registro', function () {
     return $front->show('auth.register');
 });
 
-$app->router->get('/zonas', function () {
-  $front = new \Config\View();
-  return $front->show('zonas.zonas');
-});
+
+$app->router->get('/personal', function () {
+    $front = new \Config\View();
+    return $front->show('personal.personal');
+},['before' => 'CheckAuth']);
 
 $app->run();

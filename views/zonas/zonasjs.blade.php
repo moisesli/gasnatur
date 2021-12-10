@@ -49,7 +49,6 @@
       }
 
       const createOrUpdate = () => {
-
         axios.post('/apis/zonas', JSON.stringify(zona)).then(res => {
           console.log(res.data)
         })
