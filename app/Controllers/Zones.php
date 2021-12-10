@@ -17,11 +17,12 @@ class Zones extends Controller
 		$this->zone = $this->loadModel('Zone');
 	}
 
-  public function test(Request $request,Response $response){
-    $data = $request->toArray();
-    $this->zone->create($data);
-    return count($request->toArray());
-  }
+    public function test(Request $request,Response $response)
+    {
+        $data = $request->toArray(); // recibe datos
+        $this->zone->create($data);
+        return $this->resjson($data);
+    }
 
 	public function create(Request $request,Response $response)
 	{
@@ -30,11 +31,11 @@ class Zones extends Controller
 
 		try {
 
-			if (count($request->json()->all()) == 0) {
+			if (count($request->toArray()) == 0) {
 				throw new \Exception("No existe parámetros");
 			}
 
-			$data = $request->json()->all();
+			$data = $request->toArray();
 			
 			if($data['nombre'] == ""){
 				throw new \Exception("Ingrese el nombre de la zona");
@@ -51,7 +52,7 @@ class Zones extends Controller
 			$messageError = $e->getMessage();
 		}
 
-		return $response->json(["success" => $statusOk, "message" => $messageError], 201);
+		return $this->resjson(["success" => $statusOk, "message" => $messageError], 201);
 	}
 
 	public function index(Response $response)

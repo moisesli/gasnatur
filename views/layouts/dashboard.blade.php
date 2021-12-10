@@ -10,7 +10,7 @@
   <title>@yield('title')</title>
 
   <!-- Tailwind Css -->
-  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Vue js -->
   <script src="https://unpkg.com/vue@next"></script>
@@ -18,7 +18,8 @@
   <!-- Axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <!-- Codigo Vue js -->
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 
 </head>
 
