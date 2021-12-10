@@ -17,8 +17,16 @@ class Zones extends Controller
 		$this->zone = $this->loadModel('Zone');
 	}
 
-	public function create(Request $request, Response $response)
+    public function test(Request $request,Response $response)
+    {
+        $data = $request->toArray(); // recibe datos
+        $this->zone->create($data);
+        return $this->resjson($data);
+    }
+
+	public function create(Request $request,Response $response)
 	{
+
 		$statusOk = false;
 		$messageError = "";
 

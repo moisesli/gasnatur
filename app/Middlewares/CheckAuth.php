@@ -6,7 +6,7 @@ class CheckAuth {
 
     public function handle(){
 
-        return false;
+        return true;
 
     }
 
