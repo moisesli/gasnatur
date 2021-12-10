@@ -11,6 +11,7 @@ $app->router->put('/apis/usuarios/:id', 'Users@update');
 $app->router->delete('/apis/usuarios/:id', 'Users@delete');
 
 //zones
+$app->router->get('/apis/zonas/page/:id/:all', 'Zones@paginator');
 $app->router->get('/apis/zonas', 'Zones@index');
 $app->router->get('/apis/zonas/:id', 'Zones@getById');
 $app->router->post('/apis/zonas', 'Zones@create');

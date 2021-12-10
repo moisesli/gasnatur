@@ -1,4 +1,5 @@
 <?php
+
 use Config\Model;
 
 class UserModel extends Model
@@ -39,7 +40,6 @@ class UserModel extends Model
 
             return ["success" => false, "message" => $e->getMessage()];
         }
-
     }
 
     public function findById($id)
@@ -85,23 +85,25 @@ class UserModel extends Model
 
 
     public function delete($id)
-	{
-		$response = new \stdClass;
-		$response->success = false;
+    {
+        $response = new \stdClass;
+        $response->success = false;
 
-		try {
+        try {
 
-			$sth = $this->db->delete("usuarios", "id={$id}");
-			if (!$sth) {
-				throw new \Exception("No pudimos eliminar la zona");
-			}
+            $sth = $this->db->delete("usuarios", "id={$id}");
+            if (!$sth) {
+                throw new \Exception("No pudimos eliminar la zona");
+            }
 
-			$response->success = true;
-			$response->message = "Eliminado correctamente";
-		} catch (\Exception $e) {
-			$response->message = $e->getMessage();
-		}
+            $response->success = true;
+            $response->message = "Eliminado correctamente";
+        } catch (\Exception $e) {
+            $response->message = $e->getMessage();
+        }
 
-		return $response;
-	}
+        return $response;
+    }
+
+    
 }

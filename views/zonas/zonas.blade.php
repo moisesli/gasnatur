@@ -192,9 +192,21 @@
                     clip-rule="evenodd"></path>
             </svg>
           </a>
-          <span class="text-sm font-normal text-gray-500">Showing <span
-              class="text-gray-900 font-semibold">1-20</span> of <span
-              class="text-gray-900 font-semibold">2290</span></span>
+
+
+          <span class="text-sm font-normal text-gray-500">Showing 
+            
+
+          <span class="text-gray-900 font-semibold">1-20</span> of 
+
+
+          <span class="text-gray-900 font-semibold">2290</span>
+        
+        
+          </span>
+
+
+
         </div>
         <div class="flex items-center space-x-3">
           <a href="#"

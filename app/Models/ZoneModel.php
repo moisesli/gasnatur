@@ -9,7 +9,6 @@ class ZoneModel extends Model
 		parent::__construct();
 	}
 
-
 	public function create($data)
 	{
 		$response = new \stdClass;
@@ -44,14 +43,14 @@ class ZoneModel extends Model
 	public function findById($id)
 	{
 		try {
-			return $this->db->find("SELECT * FROM usuarios WHERE id={$id} LIMIT 1");
+			$sql = "SELECT * FROM zonas WHERE id= $id LIMIT 1";
+			
+			return $this->db->find($sql);
 		} catch (\Exception $e) {
 
 			return ["success" => false, "message" => $e->getMessage()];
 		}
 	}
-
-
 
 	public function update($data, $id)
 	{
@@ -94,4 +93,18 @@ class ZoneModel extends Model
 
 		return $response;
 	}
+
+	public function paginator($pagina,$q)
+	{
+
+		try {
+			if($q!=""){
+				$q = " nombre LIKE '%$q%' ";
+			}
+			return $this->db->paginator('zonas',$pagina,$q);
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
+	
 }
