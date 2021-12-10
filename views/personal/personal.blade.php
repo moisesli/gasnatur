@@ -1,5 +1,8 @@
 @extends('layouts.dashboard')
 @section('title','Personal')
+@section('vuejs')
+  @include('personal.personaljs')
+@endsection
 @section('content')
   @verbatim
     <!-- Tools table -->
@@ -46,7 +49,7 @@
             </ol>
           </nav>
           <h1 class="text-xl sm:text-2xl font-semibold text-gray-900">
-            Lista de Personal
+            Lista de Personal {{ moises }}
           </h1>
         </div>
         <div class="block sm:flex items-center md:divide-x md:divide-gray-100">
@@ -107,3 +110,5 @@
     </div>
   @endverbatim
 @endsection
+
+
