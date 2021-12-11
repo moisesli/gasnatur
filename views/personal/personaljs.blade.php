@@ -3,19 +3,46 @@
     data() {
       return {
         moises: "moises",
-        loading_personal: false,
+        modal_estado: false,        
+        loading_personals: false,
         loadingPersonalEdit: false,
+        personal: {
+          id: '',
+          id_cargo: '',
+          id_tipodoc: '',
+          numero: '',
+          nombres: '',
+          apellidos: '',
+          fecha_nacimiento: '',
+          sexo: '',
+          direccion: '',
+          telefono: '',
+          celular: '',
+          correo: '',
+          estado: ' '
+        },
         personals: []
       }
     },
     methods: {
       loadPersonals: function () {
-        axios.get('./apis/').then(res => {
+        this.loading_personals = true
+        axios.get('./apis/personal').then(res => {
+          this.personals = res.data
+          this.loading_personals = false
           console.log(res.data)
         })
       },
+      openModal: function () {
+        this.modal_estado = true;
+      },      
+      closeMoldal: function () {
+        this.modal_estado = false;
+      },
+      newPersonal: function () {
+        
+      },
       editPersonal: function($id) {
-
       }
     },
     mounted(){

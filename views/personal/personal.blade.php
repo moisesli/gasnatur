@@ -114,20 +114,29 @@
       <div class="overflow-x-auto">
         <div class="align-middle inline-block min-w-full">
           <div class="shadow overflow-hidden">
-            <div v-show="loading_personal" class="grid justify-items-center fa-7x pt-24 pb-40 pr-28">
+            <div v-show="loading_personals" class="grid justify-items-center fa-7x pt-24 pb-40 pr-28">
               <i class="fas fa-spinner fa-spin text-gray-700"></i>
             </div>
-            <table v-show="!loading_personal" class="table-fixed min-w-full divide-y divide-gray-200">
+            <table v-show="!loading_personals" class="table-fixed min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-100">
               <tr>
                 <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                   #id
                 </th>
                 <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
-                  Nombre de la Zona
+                  Nombres
                 </th>
                 <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
-                  Estado Zona
+                  Documento
+                </th>
+                <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                  Cargo
+                </th>
+                <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                  Celular
+                </th>
+                <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                  Estado
                 </th>
                 <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                   Acciones
@@ -142,9 +151,34 @@
                   </div>
                 </td>
                 <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                  <div class="text-base font-semibold text-gray-900">{{ zona.nombre }}</div>
+                  <div class="text-base font-semibold text-gray-900">
+                    {{ personal.nombres }}, {{ personal.apellidos }}
+                  <div>
+                  <div class="text-sm font-normal text-gray-500">{{ personal.correo }}</div>
                 </td>
-                <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">{{ zona.estado }}</td>
+                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                  <div class="text-base font-semibold text-gray-900">
+                    {{ personal.id_tipodoc }}
+                  <div>
+                </td>
+                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                  <div class="text-base font-semibold text-gray-900">
+                    {{ personal.id_cargo }}
+                  <div>
+                </td>
+                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                  <div class="text-base font-semibold text-gray-900">
+                    {{ personal.celular }}
+                  <div>
+                  <div class="text-sm font-normal text-gray-500">
+                    {{ personal.telefono }}
+                  </div>
+                </td>
+                <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                  <div class="text-base font-semibold text-gray-900">
+                    {{ personal.estado }}
+                  <div>
+                </td>
                 <td class="p-4 whitespace-nowrap space-x-2">
                   <!-- Button Edit -->
                   <button
