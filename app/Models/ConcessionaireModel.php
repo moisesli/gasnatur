@@ -112,7 +112,7 @@ class ConcessionaireModel extends Model{
 		$orderBy = 'descripcion';
 		try {
 			if ($q != "") {
-				$q = " nombre LIKE '%$q%' ";
+				$q = " descripcion LIKE '%$q%' ";
 			}
 			return $this->db->paginator('concesionarias', $pagina, $q, $orderBy);
 		} catch (\Exception $e) {

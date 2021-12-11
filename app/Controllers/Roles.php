@@ -139,7 +139,7 @@ class Roles extends Controller
 		return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
 	}
 
-  public function paginator($id, $q = "")
+  public function paginator($id = "", $q = "")
 	{
 		return $this->role->paginator($id, $q);
 	}

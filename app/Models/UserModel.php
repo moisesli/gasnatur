@@ -110,7 +110,7 @@ class UserModel extends Model
 		$orderBy = 'usuario';
 		try {
 			if ($q != "") {
-				$q = " nombre LIKE '%$q%' ";
+				$q = " usuario LIKE '%$q%' ";
 			}
 			return $this->db->paginator('usuarios', $pagina, $q, $orderBy);
 		} catch (\Exception $e) {
