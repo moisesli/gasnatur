@@ -281,7 +281,6 @@
             </div>
 
           </div>
->>>>>>> 057422678b1123d58b98a43abfed8468a195e871
         </div>
       </div>
       <div class="bg-gray-900 bg-opacity-50 fixed inset-0 z-40"></div>
