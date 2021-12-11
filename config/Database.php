@@ -43,25 +43,22 @@ class Database extends \PDO
         return $sth->rowCount();
     }
 
-    public function paginator($table, $pagina,$q,$array = [],$fetchMode = \PDO::FETCH_OBJ)
+    public function paginator($table, $pagina, $q, $orderBy = "id",$array = [], $fetchMode = \PDO::FETCH_OBJ)
     {
         $regpagina = 15;
 
         $inicio = ($pagina > 1) ? (($pagina * $regpagina) - $regpagina) : 0;
 
-
         if($q == ""){
-            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table LIMIT $inicio,$regpagina";
+            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table ORDER BY $orderBy LIMIT $inicio,$regpagina";
         }
 
-        
-
         else{
-            $sql ="SELECT SQL_CALC_FOUND_ROWS * FROM $table WHERE $q LIMIT $inicio,$regpagina";
+            $sql ="SELECT SQL_CALC_FOUND_ROWS * FROM $table WHERE $q ORDER BY $orderBy LIMIT $inicio,$regpagina";
   
         }
 
-        return $sql;
+        // return $sql;
 
         $registros = $this->prepare($sql);
      

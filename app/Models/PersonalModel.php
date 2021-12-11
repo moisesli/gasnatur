@@ -2,14 +2,14 @@
 
 use Config\Model;
 
-class ZoneModel extends Model
+class PersonalModel extends Model
 {
-	public function __construct()
+    public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function create($data)
+    public function create($data)
 	{
 		unset($data['id']);
 		$response = new \stdClass;
@@ -17,9 +17,9 @@ class ZoneModel extends Model
 
 		try {
 
-			$sth = $this->db->insert("zonas", $data);
+			$sth = $this->db->insert("personal", $data);
 			if (!$sth) {
-				throw new \Exception("No pudimos registrar la zona");
+				throw new \Exception("No pudimos registrar al personal");
 			}
 
 			$response->success = true;
@@ -31,29 +31,29 @@ class ZoneModel extends Model
 		return $response;
 	}
 
-	public function getAll()
+    public function getAll()
 	{
 		try {
-			return $this->db->findAll("SELECT * FROM zonas");
+			return $this->db->findAll("SELECT * FROM personal");
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}
 	}
 
-	public function findByComparatorRegister($comparator)
+    public function findByComparatorRegister($comparator)
     {
         try {
-            return $this->db->find("SELECT * FROM zonas WHERE nombre='$comparator'");
+            return $this->db->find("SELECT * FROM personal WHERE nombre='$comparator'");
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];
         }
     }
 
-	public function findById($id)
+    public function findById($id)
 	{
 		try {
-			$sql = "SELECT * FROM zonas WHERE id = $id LIMIT 1";
+			$sql = "SELECT * FROM personal WHERE id = $id LIMIT 1";
 
 			return $this->db->find($sql);
 		} catch (\Exception $e) {
@@ -62,16 +62,16 @@ class ZoneModel extends Model
 		}
 	}
 
-	public function update($data, $id)
+    public function update($data, $id)
 	{
 		$response = new \stdClass;
 		$response->success = false;
 
 		try {
 
-			$sth = $this->db->update("zonas", $data, "id={$id}");
+			$sth = $this->db->update("personal", $data, "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos actualizar la zona");
+				throw new \Exception("No pudimos actualizar al personal");
 			}
 
 			$response->success = true;
@@ -83,16 +83,16 @@ class ZoneModel extends Model
 		return $response;
 	}
 
-	public function delete($id)
+    public function delete($id)
 	{
 		$response = new \stdClass;
 		$response->success = false;
 
 		try {
 
-			$sth = $this->db->delete("zonas", "id={$id}");
+			$sth = $this->db->delete("personal", "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos eliminar la zona");
+				throw new \Exception("No pudimos eliminar al personal");
 			}
 
 			$response->success = true;
@@ -104,16 +104,5 @@ class ZoneModel extends Model
 		return $response;
 	}
 
-	public function paginator($pagina, $q)
-	{
-		$orderBy = 'nombre';
-		try {
-			if ($q != "") {
-				$q = " nombre LIKE '%$q%' ";
-			}
-			return $this->db->paginator('zonas', $pagina, $q, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+	
 }

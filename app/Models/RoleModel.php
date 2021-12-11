@@ -15,7 +15,6 @@ Class RoleModel extends Model
 
         try {
             $sth = $this->db->insert('roles', $data);
-            // validacion
             if ($sth) {
                 $response->success = true;
                 $response->message = "Registrado correctamente";
@@ -26,20 +25,41 @@ Class RoleModel extends Model
             $response->message = $e->getMessage();
         }
         return $response;
-        //return true;
     }
 
     public function getAll()
     {
 
         try {
-            return $this->db->findAll("select * from roles");
+            return $this->db->findAll("SELECT * FROM roles");
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];
         }
 
     }
+
+    public function findByComparatorRegister($comparator)
+    {
+        try {
+            return $this->db->find("SELECT * FROM roles WHERE nombre='$comparator'");
+        } catch (\Exception $e) {
+
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function findById($id)
+	{
+		try {
+			$sql = "SELECT * FROM roles WHERE id = $id LIMIT 1";
+
+			return $this->db->find($sql);
+		} catch (\Exception $e) {
+
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
 
     public function update($data, $id)
     {
@@ -61,11 +81,37 @@ Class RoleModel extends Model
 
         return $response;
     }
-
     public function delete($id)
-    {
+	{
+		$response = new \stdClass;
+		$response->success = false;
 
-        $result = $this->db->delete('roles', 'id' . '=' . $id);
-        return;
-    }
+		try {
+
+			$sth = $this->db->delete("roles", "id={$id}");
+			if (!$sth) {
+				throw new \Exception("No pudimos eliminar el rol");
+			}
+
+			$response->success = true;
+			$response->message = "Eliminado correctamente";
+		} catch (\Exception $e) {
+			$response->message = $e->getMessage();
+		}
+
+		return $response;
+	}
+
+    public function paginator($pagina, $q)
+	{
+		$orderBy = 'nombre';
+		try {
+			if ($q != "") {
+				$q = " nombre LIKE '%$q%' ";
+			}
+			return $this->db->paginator('roles', $pagina, $q, $orderBy);
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
 }

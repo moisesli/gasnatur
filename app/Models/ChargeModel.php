@@ -104,10 +104,16 @@ class ChargeModel extends Model
 		return $response;
 	}
 
-    // public function delete($id)
-    // {
-
-    //     $result = $this->db->delete('charges', 'id' . '=' . $id);
-    //     return;
-    // }
+    public function paginator($pagina, $q)
+	{
+		$orderBy = 'nombre';
+		try {
+			if ($q != "") {
+				$q = " nombre LIKE '%$q%' ";
+			}
+			return $this->db->paginator('cargos', $pagina, $q, $orderBy);
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
 }
