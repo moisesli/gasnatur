@@ -66,9 +66,9 @@ $app->router->get('/registro', function () {
     return $front->show('auth.register');
 });
 
-$app->router->get('/distritos', function () {
+$app->router->get('/zonas', function () {
   $front = new \Config\View();
-  return $front->show('distritos.distritos');
+  return $front->show('zonas.zonas');
 },['before' => 'CheckAuth']);
 
 $app->router->get('/personal', function () {
