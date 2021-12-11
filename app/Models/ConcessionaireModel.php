@@ -107,4 +107,17 @@ class ConcessionaireModel extends Model{
 		return $response;
 	}
 
+    public function paginator($pagina, $q)
+	{
+		$orderBy = 'descripcion';
+		try {
+			if ($q != "") {
+				$q = " nombre LIKE '%$q%' ";
+			}
+			return $this->db->paginator('concesionarias', $pagina, $q, $orderBy);
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
+
 }

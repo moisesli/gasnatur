@@ -31,7 +31,7 @@ class Users extends Controller
     $messageError = "";
 
     try {
-      $data = $request->json()->all();
+      $data = $request->toArray();
 
       if ($this->user->findByComparatorRegister($data['usuario']) == 1) {
         throw new \Exception("El usuario ya existe, por favor ingresar un usuario nuevo");
@@ -51,20 +51,23 @@ class Users extends Controller
       $messageError = $e->getMessage();
     }
 
-    return $response->json(["success" => $statusOk, "message" => $messageError], 201);
+    return $this->resjson(["success" => $statusOk, "message" => $messageError], 201);
   }
 
 
-  public function index()
-  {
-    return $this->user->getAll();
-  }
+  public function getAll(Response $response)
+	{
+		$results = $this->user->getAll();
+		return $this->resjson($results);
+	}
 
-  public function getById($id)
-  {
+  public function getById(Response $response, $id)
+	{
 
-    return $this->user->findByUser($id);
-  }
+		$result = $this->user->findById($id);
+
+		return $this->resjson($result);
+	}
 
   public function update(Request $request, Response $response, $id)
   {
@@ -74,6 +77,7 @@ class Users extends Controller
     try {
 
       $data = $request->toArray();
+
       if ($this->user->findByComparatorRegister($data['usuario']) == 1) {
         throw new \Exception("El usuario ya existe, por favor ingresar un usuario nuevo");
       }
@@ -95,7 +99,7 @@ class Users extends Controller
       $messageError = $e->getMessage();
     }
 
-    return $response->json(["success" => $statusOk, "message" => $messageError], 200);
+    return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
   }
 
   public function delete(Request $request, Response $response, $id)
@@ -116,7 +120,7 @@ class Users extends Controller
       $messageError = $e->getMessage();
     }
 
-    return $response->json(["success" => $statusOk, "message" => $messageError], 200);
+    return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
   }
 
   private function validaciones(Request $request, Response $response)
@@ -127,9 +131,20 @@ class Users extends Controller
       throw new \Exception("No existe parámetros");
     }
 
+    if ($data['usuario'] == "") {
+      throw new \Exception("Ingrese el nombre de usuario");
+    }
+
+    if ($data['clave'] == "") {
+      throw new \Exception("Ingrese password");
+    }
+
     if (!(preg_match('/^[a-zA-Z0-9]+$/', $data['usuario']))) {
       throw new \Exception("Se permiten solo letras y numeros");
     }
+    // // la contraseña debe tener letras mayusculas minunisculas caracteres especiales y numeros, 
+    // y minimo de 8 caracteres
+    // // hasta 20 caracteres
 
     if (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,20}$/', $data['clave'])) {
       throw new \Exception("El password no cumple con los requerimientos mínimos");
@@ -141,13 +156,6 @@ class Users extends Controller
 
     if (array_key_exists("clave", $data) == null) {
       throw new \Exception("Password sin valor");
-    }
-
-    if ($data['usuario'] == "") {
-      throw new \Exception("Ingrese el nombre de usuario");
-    }
-    if ($data['clave'] == "") {
-      throw new \Exception("Ingrese password");
     }
 
     // if(empty($data['id_personal'])){
@@ -169,7 +177,8 @@ class Users extends Controller
     
   }
 
-  private function paginar(){
-    return $this->zone->paginator();
-  }
+  public function paginator($id, $q = "")
+	{
+		return $this->user->paginator($id, $q);
+	}
 }

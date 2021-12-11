@@ -45,7 +45,7 @@ class UserModel extends Model
     public function findById($id)
     {
         try {
-            return $this->db->find("SELECT id FROM usuarios WHERE id={$id}");
+            return $this->db->find("SELECT * FROM usuarios WHERE id={$id}");
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];
@@ -104,6 +104,19 @@ class UserModel extends Model
 
         return $response;
     }
+
+    public function paginator($pagina, $q)
+	{
+		$orderBy = 'usuario';
+		try {
+			if ($q != "") {
+				$q = " nombre LIKE '%$q%' ";
+			}
+			return $this->db->paginator('usuarios', $pagina, $q, $orderBy);
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
 
     
 }
