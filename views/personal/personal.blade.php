@@ -5,6 +5,7 @@
 @endsection
 @section('content')
   @verbatim
+
     <!-- Tools table -->
     <div class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
       <div class="mb-1 w-full">
@@ -49,7 +50,7 @@
             </ol>
           </nav>
           <h1 class="text-xl sm:text-2xl font-semibold text-gray-900">
-            Lista de Personal {{ moises }}
+            Lista de Personal {{ modal_tipo }}
           </h1>
         </div>
         <div class="block sm:flex items-center md:divide-x md:divide-gray-100">
@@ -97,7 +98,7 @@
               </a>
             </div>
             <button
-                @click="newZona"
+                @click="newPersonal"
                 type="button" data-modal-toggle="add-product-modal"
                 class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center rounded-lg text-sm px-3 py-3 text-center sm:ml-auto">
               <i v-show="loading_newZona" class="fas fa-spinner fa-spin"></i>
@@ -182,8 +183,8 @@
                 <td class="p-4 whitespace-nowrap space-x-2">
                   <!-- Button Edit -->
                   <button
-                    @click="editPersonal(personal.id)"
-                    type="button" data-modal-toggle="product-modal"
+                    @click="editPersonal(personal)"
+                    type="button" data-modal-toggle="product-modal" :id="'edit' + personal.id"
                     class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
                     <i v-show="!loadingPersonalEdit" class="mr-2 text-base fa fa-edit"></i>
                     <i v-show="loadingPersonalEdit" class="text-base fas fa-spinner fa-spin mr-2"></i>
@@ -252,6 +253,74 @@
         </a>
       </div>
     </div>
+
+    <!-- Modal -->
+    <div v-bind:class="{ hidden: !modal_estado }">
+      <div
+        class="overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full flex"
+        id="user-modal" aria-modal="true" role="dialog">
+        <div class="relative w-full max-w-xl px-4 h-full md:h-auto">
+
+          <div class="bg-white rounded-lg shadow relative">
+
+            <div class="flex items-start justify-between p-5 border-b rounded-t">
+              <h3 class="text-xl font-semibold">
+                <i class="fas fa-edit text-gray-600 mr-2"></i>
+                <span v-if="modal_tipo=='new'">Nuevo Personal</span>
+                <span v-else>Editar Personal</span>   
+              </h3>
+              <button
+                @click="closeModal"
+                type="button"
+                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                data-modal-toggle="user-modal">
+                <i class="fas fa-times fa-lg p-1 text-gray-400"></i>
+              </button>
+            </div>
+
+            <div class="p-6 space-y-6">
+              <form action="#">
+                <div class="grid grid-cols-6 gap-6">
+                  <div class="col-span-6 sm:col-span-3">
+                    <label for="nombre" class="text-sm font-medium text-gray-900 block mb-2">Nombre de Zona</label>
+                    <input
+                      v-model="personal.id_cargo"
+                      type="text" name="nombre" id="nombre"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
+                      placeholder="Lima Norte" required="">
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label for="last-name" class="text-sm font-medium text-gray-900 block mb-2">Estado de Zona</label>
+                    <input
+                      v-model="personal.id_tipodoc"
+                      type="text" name="last-name" id="last-name"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
+                      placeholder="Activo" required="">
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="items-center p-6 border-t border-gray-200 bg-gray-50 rounded-b">
+              <button
+                
+                type="submit"
+                class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3">
+                <i class="fas fa-save mr-2 text-base"></i>Guardar Datos
+              </button>
+              <button
+                @click="closeModal"
+                class="text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                <i class="fas fa-times-circle mr-2 text-base"></i>Cancelar
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-900 bg-opacity-50 fixed inset-0 z-40"></div>
+    </div>
+
   @endverbatim
 @endsection
 
