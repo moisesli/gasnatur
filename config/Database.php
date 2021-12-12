@@ -45,7 +45,7 @@ class Database extends \PDO
 
     public function paginator($table, $pagina, $q, $orderBy = "id",$array = [], $fetchMode = \PDO::FETCH_OBJ)
     {
-        $regpagina = 15;
+        $regpagina = 10;
 
         $inicio = ($pagina > 1) ? (($pagina * $regpagina) - $regpagina) : 0;
 
