@@ -13,7 +13,7 @@ $app->router->put('/apis/usuarios/:id', 'Users@update');
 $app->router->delete('/apis/usuarios/:id', 'Users@delete');
 
 //zones
-// $app->router->get('/apis/zonas', 'Zones@getAll');
+$app->router->get('/apis/zonas', 'Zones@getAll');
 $app->router->get('/apis/zonas/:id?/:all?', 'Zones@paginator');
 //el get en getById cambiarlo por post para que no confunda con el paginador, hacerlo en todas los cruds.
 $app->router->post('/apis/zonas/:id', 'Zones@getById');

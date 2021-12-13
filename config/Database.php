@@ -43,47 +43,62 @@ class Database extends \PDO
         return $sth->rowCount();
     }
 
-    public function paginator($table, $pagina, $q, $orderBy = "id",$array = [], $fetchMode = \PDO::FETCH_OBJ)
+    public function paginator($table, $pagina, $palabraBuscada, $filtro, $orderBy = "id", $array = [], $fetchMode = \PDO::FETCH_OBJ)
     {
         $regpagina = 10;
 
-        $inicio = ($pagina > 1) ? (($pagina * $regpagina) - $regpagina) : 0;
+        $inicio = ($pagina >= 1) ? (($pagina * $regpagina) - $regpagina) : 0;
 
-        if($q == ""){
+        if ($filtro == "") {
             $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table ORDER BY $orderBy LIMIT $inicio,$regpagina";
-        }
-
-        else{
-            $sql ="SELECT SQL_CALC_FOUND_ROWS * FROM $table WHERE $q ORDER BY $orderBy LIMIT $inicio,$regpagina";
-  
+        } else {
+            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table WHERE $filtro ORDER BY $orderBy LIMIT $inicio,$regpagina";
         }
 
         // return $sql;
 
         $registros = $this->prepare($sql);
-     
+
         foreach ($array as $key => $value) {
-             $registros->bindValue("$key", $value);
-         }
+            $registros->bindValue("$key", $value);
+        }
 
         $registros->execute();
-        $registros =$registros->fetchAll($fetchMode);
+        $registros = $registros->fetchAll($fetchMode);
 
         $totalregistros = $this->query("SELECT FOUND_ROWS() as total");
         $totalregistros = $totalregistros->fetch()['total'];
 
         $numeropaginas = ceil($totalregistros / $regpagina);
-        
-        $resultado =[];
-        $resultado["registros"] =$registros;
-        $resultado["totalregistros"] = $totalregistros;
-        $resultado["numeropaginas"] = $numeropaginas;
-        
-        return  $resultado;
 
+        if ($pagina == null or empty($palabraBuscada)) {
+            $resultado = [];
+            $resultado["registros"] = $registros;
+            $resultado["inicio"] = 1;
+            $resultado["fin"] = $numeropaginas;
+            $resultado["totalregistros"] = $totalregistros;
+            $resultado["pagina"] = 1;
+            $resultado["pagina_anterior"] = 0;
+            $resultado["pagina_posterior"] = 2;
+            $resultado["palabra buscada"] = $palabraBuscada;
+            return  $resultado;
+        }
+
+        $resultado = [];
+        $resultado["registros"] = $registros;
+        $resultado["inicio"] = 1;
+        $resultado["fin"] = $numeropaginas;
+        $resultado["totalregistros"] = $totalregistros;
+        $resultado["pagina"] = $pagina;
+        if ($pagina >= 1 or empty($palabraBuscada)) {
+            $resultado["pagina_anterior"] = $pagina - 1;
+            $resultado["pagina_posterior"] = $pagina + 1;
+            $resultado["palabra buscada"] = $palabraBuscada;
+        }
+        return $resultado;
     }
 
-    //crear datos
+
     public function insert($table, array $data)
     {
         ksort($data);

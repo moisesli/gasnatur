@@ -78,24 +78,7 @@ class Personal extends Controller
 
 			$data = $request->toArray();
 
-			// if ($this->zone->findByComparatorRegister($data['nombre']) == 1) {
-			// 	throw new \Exception("La zona ya existe, por favor ingresar una nueva zona");
-			//   }
-
-
-			if (count($data) == 0) {
-				throw new \Exception("No existe parámetros");
-			}
-
-			// if ($id == "") {
-			// 	throw new \Exception("No existe el id de la zona");
-			// }
-			// if ($data['nombre'] == "") {
-			// 	throw new \Exception("Ingrese el nombre de la zona");
-			// }
-			// if ($data['estado'] == "") {
-			// 	throw new \Exception("Seleccione el estado de la zona");
-			// }
+			$this->validaciones($request, $response);
 
 			$result = $this->personal->update($data, $id);
 
@@ -137,6 +120,14 @@ class Personal extends Controller
 			throw new \Exception("No existe parametros");
 		}
 
+		if (!(preg_match('/^[a-zA-Z ]+$/', $data['nombres']))) {
+			throw new \Exception("Se permiten solo letras");
+		}
+
+		if (!(preg_match('/^[a-zA-Z ]+$/', $data['apellidos']))) {
+			throw new \Exception("Se permiten solo letras");
+		}
+
 		if ($data['nombres'] == "") {
 			throw new \Exception("Ingrese el nombre del personal");
 		}
@@ -153,20 +144,24 @@ class Personal extends Controller
 			throw new \Exception("Ingrese fecha de nacimiento");
 		}
 
-		// if (!(preg_match('/^\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$/', $data['fecha_nacimiento']))) {
-		// 	throw new \Exception("Ingrese el formato correcto aaaa/mm/dd");
-		// }
+		if (!(preg_match('/^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$/', $data['fecha_nacimiento']))) {
+			throw new \Exception("Ingrese el formato correcto aaaa/mm/dd");
+		}
 
 		if ($data['sexo'] == "") {
 			throw new \Exception("Seleccione su género");
 		}
 
-		if (!(preg_match('/^[a-zA-Z ]+$/', $data['nombres']))) {
-			throw new \Exception("Se permiten solo letras");
+		if (!preg_match('/^[#.0-9a-zA-Z\s,-]+$/', $data['direccion'])) {
+			throw new \Exception("Solo se permiten numeros y letras");
+		}
+	
+		if (!(preg_match('/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/', $data['fecha_nacimiento']))) {
+			throw new \Exception("Ingrese correctamente el correo");
 		}
 
-		if (!(preg_match('/^[a-zA-Z ]+$/', $data['apellidos']))) {
-			throw new \Exception("Se permiten solo letras");
+		if ($data['estado'] == "") {
+			throw new \Exception("Seleccione el estado");
 		}
 	}
 

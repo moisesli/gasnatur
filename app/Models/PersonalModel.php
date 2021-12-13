@@ -107,11 +107,14 @@ class PersonalModel extends Model
 	public function paginator($pagina, $q)
 	{
 		$orderBy = 'apellidos';
+		$palabraBuscada = "";
+		$filtro = "";
 		try {
 			if ($q != "") {
-				$q = " apellidos LIKE '%$q%' ";
+				$palabraBuscada = $q;
+				$filtro = " apellidos LIKE '%$q%' ";
 			}
-			return $this->db->paginator('personal', $pagina, $q, $orderBy);
+			return $this->db->paginator('personal', $pagina, $palabraBuscada ,$filtro, $orderBy);
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}

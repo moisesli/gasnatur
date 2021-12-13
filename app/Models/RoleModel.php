@@ -105,11 +105,14 @@ Class RoleModel extends Model
     public function paginator($pagina, $q)
 	{
 		$orderBy = 'nombre';
+        $palabraBuscada = "";
+		$filtro = "";
 		try {
 			if ($q != "") {
-				$q = " nombre LIKE '%$q%' ";
+                $palabraBuscada=$q;
+				$filtro = " nombre LIKE '%$q%' ";
 			}
-			return $this->db->paginator('roles', $pagina, $q, $orderBy);
+			return $this->db->paginator('roles', $pagina, $palabraBuscada ,$filtro, $orderBy);
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}

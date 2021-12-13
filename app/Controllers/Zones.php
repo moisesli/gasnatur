@@ -138,4 +138,7 @@ class Zones extends Controller
 	{
 		return $this->zone->paginator($id, $q);
 	}
+
+
+
 }

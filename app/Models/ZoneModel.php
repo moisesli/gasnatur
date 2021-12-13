@@ -41,14 +41,14 @@ class ZoneModel extends Model
 	}
 
 	public function findByComparatorRegister($comparator)
-    {
-        try {
-            return $this->db->find("SELECT * FROM zonas WHERE nombre='$comparator'");
-        } catch (\Exception $e) {
+	{
+		try {
+			return $this->db->find("SELECT * FROM zonas WHERE nombre='$comparator'");
+		} catch (\Exception $e) {
 
-            return ["success" => false, "message" => $e->getMessage()];
-        }
-    }
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
 
 	public function findById($id)
 	{
@@ -107,13 +107,30 @@ class ZoneModel extends Model
 	public function paginator($pagina, $q)
 	{
 		$orderBy = 'nombre';
+		$palabraBuscada = "";
+		$filtro = "";
+
 		try {
 			if ($q != "") {
-				$q = " nombre LIKE '%$q%' ";
+				$palabraBuscada = $q;
+				$filtro = " nombre LIKE '%$q%' ";
 			}
-			return $this->db->paginator('zonas', $pagina, $q, $orderBy);
+			return $this->db->paginator('zonas', $pagina, $palabraBuscada, $filtro, $orderBy);
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}
 	}
+
+
+	// public function paginatorSinPaginaPalabra($pagina, $q){
+	// 	$orderBy = 'nombre';
+	// 	try {
+	// 		if ($q != "") {
+	// 			$q = " nombre LIKE '%$q%' ";
+	// 		}
+	// 		return $this->db->paginatorSinPaginaPalabra('zonas', $pagina, $q, $orderBy);
+	// 	} catch (\Exception $e) {
+	// 		return ["success" => false, "message" => $e->getMessage()];
+	// 	}
+	// }
 }

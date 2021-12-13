@@ -108,11 +108,14 @@ class UserModel extends Model
     public function paginator($pagina, $q)
 	{
 		$orderBy = 'usuario';
+        $palabraBuscada = "";
+		$filtro = "";
 		try {
 			if ($q != "") {
-				$q = " usuario LIKE '%$q%' ";
+                $palabraBuscada = $q;
+				$filtro = " usuario LIKE '%$q%' ";
 			}
-			return $this->db->paginator('usuarios', $pagina, $q, $orderBy);
+			return $this->db->paginator('usuarios', $pagina, $palabraBuscada ,$filtro, $orderBy);
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}
