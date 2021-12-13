@@ -57,7 +57,8 @@ $app->router->delete('/apis/roles/:id', 'Roles@delete');
 
 
 //Personal
-$app->router->get('/apis/personal', 'Personal@getAll');
+// $app->router->get('/apis/personal', 'Personal@getAll');
+$app->router->get('/apis/personal/:id?/:all?', 'Personal@paginator');
 //el get en getById cambiarlo por post para que no confunda con el paginador, hacerlo en todas los cruds.
 $app->router->post('/apis/personal/:id','Personal@getById'); 
 $app->router->post('/apis/personal', 'Personal@create');

@@ -172,7 +172,6 @@ class Users extends Controller
 
     if($data['estado'] == ""){
       throw new \Exception("Seleccione el estado del usuario");
-
     }
     
   }

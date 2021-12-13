@@ -112,11 +112,6 @@ class Roles extends Controller
     return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
   }
 
-  // public function delete($id)
-  // {
-
-  //   return "Eliminado correctamente: " . $this->role->delete($id);
-  // }
 
   public function delete(Request $request, Response $response, $id)
 	{
