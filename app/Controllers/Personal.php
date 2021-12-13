@@ -165,7 +165,7 @@ class Personal extends Controller
 		}
 	}
 
-	public function paginator($id = "", $q = "")
+	public function paginator($id = 1, $q = "")
 	{
 		return $this->personal->paginator($id, $q);
 	}

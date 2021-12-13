@@ -71,31 +71,33 @@ class Database extends \PDO
 
         $numeropaginas = ceil($totalregistros / $regpagina);
 
-        if ($pagina == null or empty($palabraBuscada)) {
-            $resultado = [];
-            $resultado["registros"] = $registros;
-            $resultado["inicio"] = 1;
-            $resultado["fin"] = $numeropaginas;
-            $resultado["totalregistros"] = $totalregistros;
-            $resultado["pagina"] = 1;
-            $resultado["pagina_anterior"] = 0;
-            $resultado["pagina_posterior"] = 2;
-            $resultado["palabra buscada"] = $palabraBuscada;
-            return  $resultado;
-        }
-
         $resultado = [];
         $resultado["registros"] = $registros;
         $resultado["inicio"] = 1;
         $resultado["fin"] = $numeropaginas;
         $resultado["totalregistros"] = $totalregistros;
         $resultado["pagina"] = $pagina;
-        if ($pagina >= 1 or empty($palabraBuscada)) {
-            $resultado["pagina_anterior"] = $pagina - 1;
-            $resultado["pagina_posterior"] = $pagina + 1;
-            $resultado["palabra buscada"] = $palabraBuscada;
-        }
+        $resultado["pagina_anterior"] = $pagina - 1;
+        $resultado["pagina_posterior"] = $pagina + 1;
+        $resultado["palabra buscada"] = $palabraBuscada;
         return $resultado;
+
+        // if ($pagina == null and empty($palabraBuscada)) {
+        //     $resultado["pagina"] = 1;
+        //     $resultado["pagina_anterior"] = 0;
+        //     $resultado["pagina_posterior"] = 2;
+        //     $resultado["palabra buscada"] = $palabraBuscada;
+        //     return  $resultado;
+        // }
+        
+        // if ($pagina >= 1 or empty($palabraBuscada)) {
+        //     $resultado["pagina"] = $pagina;
+        //     $resultado["pagina_anterior"] = $pagina - 1;
+        //     $resultado["pagina_posterior"] = $pagina + 1;
+        //     $resultado["palabra buscada"] = $palabraBuscada;
+        //     return $resultado;
+        // }
+        
     }
 
 

@@ -176,7 +176,7 @@ class Users extends Controller
     
   }
 
-  public function paginator($id = "", $q = "")
+  public function paginator($id = 1, $q = "")
 	{
 		return $this->user->paginator($id, $q);
 	}

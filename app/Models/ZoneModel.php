@@ -120,17 +120,4 @@ class ZoneModel extends Model
 			return ["success" => false, "message" => $e->getMessage()];
 		}
 	}
-
-
-	// public function paginatorSinPaginaPalabra($pagina, $q){
-	// 	$orderBy = 'nombre';
-	// 	try {
-	// 		if ($q != "") {
-	// 			$q = " nombre LIKE '%$q%' ";
-	// 		}
-	// 		return $this->db->paginatorSinPaginaPalabra('zonas', $pagina, $q, $orderBy);
-	// 	} catch (\Exception $e) {
-	// 		return ["success" => false, "message" => $e->getMessage()];
-	// 	}
-	// }
 }
