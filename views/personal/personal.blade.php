@@ -186,8 +186,8 @@
                     @click="editPersonal(personal)"
                     type="button" data-modal-toggle="product-modal" :id="'edit' + personal.id"
                     class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
-                    <i v-show="!loadingPersonalEdit" class="mr-2 text-base fa fa-edit"></i>
-                    <i v-show="loadingPersonalEdit" class="text-base fas fa-spinner fa-spin mr-2"></i>
+                    <i v-show="!personal.gasnatur_estado" class="mr-2 text-base fa fa-edit"></i>
+                    <i v-show="personal.gasnatur_estado" class="text-base fas fa-spinner fa-spin mr-2"></i>
                     Editar
                   </button>
                   <!-- Button Delete -->
@@ -259,7 +259,7 @@
       <div
         class="overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full flex"
         id="user-modal" aria-modal="true" role="dialog">
-        <div class="relative w-full max-w-xl px-4 h-full md:h-auto">
+        <div class="relative w-full max-w-2xl px-4 h-full md:h-auto">
 
           <div class="bg-white rounded-lg shadow relative">
 
@@ -279,10 +279,29 @@
             </div>
 
             <div class="p-6 space-y-6">
+              <!-- Message -->
+              <span v-show="!message.success">{{ message.message }}</span>              
+              <!-- End Message -->
               <form action="#">
                 <div class="grid grid-cols-6 gap-6">
                   <div class="col-span-6 sm:col-span-3">
-                    <label for="nombre" class="text-sm font-medium text-gray-900 block mb-2">Nombre de Zona</label>
+                    <label for="nombre" class="text-sm font-medium text-gray-900 block mb-2">Nombres</label>
+                    <input
+                      v-model="personal.nombres"
+                      type="text" name="nombres" id="nombres"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
+                      placeholder="" required="">
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label for="last-name" class="text-sm font-medium text-gray-900 block mb-2">Apellidos</label>
+                    <input
+                      v-model="personal.apellidos"
+                      type="text" name="apellidos" id="apellidos"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
+                      placeholder="Activo" required="">
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label for="nombre" class="text-sm font-medium text-gray-900 block mb-2">Cargo</label>
                     <input
                       v-model="personal.id_cargo"
                       type="text" name="nombre" id="nombre"
@@ -290,24 +309,80 @@
                       placeholder="Lima Norte" required="">
                   </div>
                   <div class="col-span-6 sm:col-span-3">
-                    <label for="last-name" class="text-sm font-medium text-gray-900 block mb-2">Estado de Zona</label>
+                    <label for="last-name" class="text-sm font-medium text-gray-900 block mb-2">Tipo de Documento</label>
                     <input
                       v-model="personal.id_tipodoc"
                       type="text" name="last-name" id="last-name"
                       class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
                       placeholder="Activo" required="">
                   </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label for="nombre" class="text-sm font-medium text-gray-900 block mb-2">Numero</label>
+                    <input
+                      v-model="personal.numero" type="text"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
+                      placeholder="Lima Norte" required="">
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label class="text-sm font-medium text-gray-900 block mb-2">Fecha Nacimiento</label>
+                    <input
+                      v-model="personal.fecha_nacimiento" type="text"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
+                      placeholder="Activo" required="">
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label for="nombre" class="text-sm font-medium text-gray-900 block mb-2">Sexo</label>
+                    <input
+                      v-model="personal.sexo" type="text"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
+                      placeholder="" required="">
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label class="text-sm font-medium text-gray-900 block mb-2">Direccion</label>
+                    <input
+                      v-model="personal.direccion" type="text"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
+                      placeholder="" required="">
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label class="text-sm font-medium text-gray-900 block mb-2">Telefono</label>
+                    <input
+                      v-model="personal.telefono" type="text"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
+                      placeholder="" required="">
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label class="text-sm font-medium text-gray-900 block mb-2">Celular</label>
+                    <input
+                      v-model="personal.celular" type="text"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
+                      placeholder="" required="">
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label class="text-sm font-medium text-gray-900 block mb-2">Correo</label>
+                    <input
+                      v-model="personal.correo" type="text"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
+                      placeholder="" required="">
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label class="text-sm font-medium text-gray-900 block mb-2">Estado</label>
+                    <input
+                      v-model="personal.estado" type="text"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2"
+                      placeholder="" required="">
+                  </div>
                 </div>
               </form>
             </div>
 
-            <div class="items-center p-6 border-t border-gray-200 bg-gray-50 rounded-b">
+            <div class="items-center p-6 border-t border-gray-200 bg-gray-50 rounded-b">              
               <button
-                
-                type="submit"
+                @click="store"
                 class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3">
-                <i class="fas fa-save mr-2 text-base"></i>Guardar Datos
-              </button>
+                <i v-show="loadingStore" class="fas fa-sync fa-spin fa-spin text-base mr-2"></i>
+                <i v-show="!loadingStore" class="fas fa-save mr-2 text-base"></i>Guardar
+              </button>              
               <button
                 @click="closeModal"
                 class="text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
