@@ -283,6 +283,11 @@
               <span v-show="!message.success">{{ message.message }}</span>              
               <!-- End Message -->
               <form action="#">
+                <FormulateInput type="textarea" />
+                <div class="flex flex-col md:flex-row">
+                  
+                  <FormulateInput type="text" />    
+                </div>
                 <div class="grid grid-cols-6 gap-6">
                   <div class="col-span-6 sm:col-span-3">
                     <label for="nombre" class="text-sm font-medium text-gray-900 block mb-2">Nombres</label>

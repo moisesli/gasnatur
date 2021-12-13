@@ -21,6 +21,11 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@braid/vue-formulate@2.5.2/dist/snow.css"/>
+  
+  <!-- Formulate vue -->
+  <script src="https://cdn.jsdelivr.net/npm/@braid/vue-formulate@2.5.2/dist/formulate.min.js"></script>
+
 </head>
 
 <body class="bg-gray-200" id="app">

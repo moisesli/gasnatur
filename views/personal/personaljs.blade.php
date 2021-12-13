@@ -1,4 +1,4 @@
-<script type="application/javascript">
+<script type="application/javascript">  
   Vue.createApp({
     data() {
       return {
@@ -34,7 +34,7 @@
       loadPersonals: function () {
         this.loading_personals = true
         axios.get('./apis/personal').then(res => {
-          this.personals = res.data
+          this.personals = res.data.registros
           // Agregar idenfiticador                  
           for( const per in this.personals){
             this.personals[per].gasnatur_estado = false;
