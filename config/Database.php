@@ -76,8 +76,8 @@ class Database extends \PDO
 
         $resultado = [];
         $resultado["registros"] = $registros;
-        $resultado["inicio"] = 1;
-        $resultado["fin"] = $numeropaginas;
+        $resultado["inicio"] = $inicio +1 ;
+        $resultado["fin"] = $inicio + $regpagina;
         $resultado["totalregistros"] = $totalregistros;
         $resultado["pagina"] = $pagina;
         $resultado["pagina_anterior"] = $pagina - 1;
