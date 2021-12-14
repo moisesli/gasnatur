@@ -3,6 +3,15 @@
   const app = createApp({
     data() {
       return {
+        pagination: {
+          inicio: null,
+          fin: null,
+          totalregistros: null,
+          pagina: null,
+          pagina_anterior: null,
+          pagina_posterior: null,
+          palabra_buscada: ''
+        },
         page: 1,
         search: '',        
         items: [],
@@ -30,7 +39,14 @@
       loadItems: function(page = 1, search = ''){
         this.loading.items = true;
         axios.get('./apis/zonas/'+ page + '/' + search).then(res => {
-          this.items = res.data.registros
+          this.items = res.data.registros;
+          this.pagination.inicio = res.data.inicio;
+          this.pagination.fin = res.data.fin;
+          this.pagination.totalregistros = res.data.totalregistros;
+          this.pagination.pagina  = res.data.pagina;
+          this.pagination.pagina_anterior = res.data.pagina_anterior;
+          this.pagination.pagina_posterior = res.data.pagina_posterior;
+          //this.pagination.palabra_buscada = res.data.palabra_buscada;
           for( const index in this.items){
             this.items[index].loading = false;
           }

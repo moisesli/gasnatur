@@ -44,7 +44,7 @@
         <label for="products-search" class="sr-only">Search</label>
         <div class="mt-1 relative sm:w-64 xl:w-96">
           <input 
-            type="text" name="email" id="products-search" v-model="search" @input="loadItems(1,search)"
+            type="text" name="email" id="products-search" v-model="search" @input="loadItems(page,search)"
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="Buscar Zonas">
         </div>
       </form>
