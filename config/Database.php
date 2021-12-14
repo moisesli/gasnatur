@@ -79,7 +79,7 @@ class Database extends \PDO
         $resultado["inicio"] = $inicio +1 ;
         $resultado["fin"] = $inicio + $regpagina;
         $resultado["totalregistros"] = $totalregistros;
-        $resultado["pagina"] = $pagina;
+        $resultado["pagina"] = intval($pagina);
         $resultado["pagina_anterior"] = $pagina - 1;
         $resultado["pagina_posterior"] = $pagina + 1;
         $resultado["palabra_buscada"] = $palabraBuscada;
