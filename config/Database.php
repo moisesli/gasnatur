@@ -86,7 +86,7 @@ class Database extends \PDO
         return $resultado;
     }
 
-    public function login($usuario, $clave)
+    public function login($usuario, $clave, $array = [], $fetchMode = \PDO::FETCH_OBJ)
     {
         $time = time();
         $key = 'gas_natu_ral';
@@ -97,32 +97,35 @@ class Database extends \PDO
 
         $sql = "SELECT * FROM usuarios WHERE  usuario = '$usuario' AND  clave = '$clave'";
         $sth = $this->prepare($sql);
+        
+        foreach ($array as $key => $value) {
+            $sth->bindValue("$key", $value);
+        }
         $sth->execute();
+
         $count = $sth->rowCount();
-        $sth = null;
+        
         if ($count == 1) {
+
+            $usuarioData = $sth->fetchAll($fetchMode);          
 
             $time = time();
             $key = 'gas_natu_ral';
             $token = array(
-                'iat' => $time,
                 'exp' => $time + (60 * 60),
                 'data' => [ 
-                    'id' => 1,
+                    'id' => $usuarioData[0]->id,
+                    'id_role' => $usuarioData[0]->id_role,
                     'usuario' => $usuario
                 ]
             );
             
             $jwt = JWT::encode($token, $key); 
+            
+            return $jwt;
 
-            // return $jwt;
+            ///$data = JWT::decode($jwt, $key, array('HS256')); 
 
-            $data = JWT::decode($jwt, $key, array('HS256')); 
-
-
-            $array = [];
-            $array['token'] = $data;
-            return $array;
         } else {
             return "";
         }

@@ -18,18 +18,13 @@ class UserModel extends Model
 
         try {
 
-            $time = time();
             $key = 'gas_natu_ral';
 
-            // return $key;
-            $token = array(
-                    'clave' => $data['clave']
-            );
+            $token = array('clave' => $data['clave']);
 
             $data['clave'] = JWT::encode($token, $key);
 
             $sth = $this->db->insert('usuarios', $data);
-
 
             // validacion
             if ($sth) {

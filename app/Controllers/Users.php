@@ -16,14 +16,8 @@ class Users extends Controller
   public function __construct()
   {
     $this->user = $this->loadModel('User');
+    session_start();
   }
-
-  // public function test(Request $request, Response $response)
-  // {
-  // 	$data = $request->toArray();
-  // 	$this->zone->create($data);
-  // 	return count($request->toArray());
-  // }
 
   public function create(Request $request, Response $response)
   {
@@ -179,7 +173,6 @@ class Users extends Controller
   public function login(Request $request, Response $response)
   {
     $data = $request->toArray();
-    
 
     if (count($data) == 0) {
       throw new \Exception("No existe parámetros");
@@ -192,7 +185,7 @@ class Users extends Controller
     if ($data['clave'] == "") {
       throw new \Exception("Ingrese password");
     }
-    
+
     if (array_key_exists("usuario", $data) == null) {
       throw new \Exception("Username sin valor");
     }
@@ -200,6 +193,17 @@ class Users extends Controller
     if (array_key_exists("clave", $data) == null) {
       throw new \Exception("Password sin valor");
     }
-    return $this->user->login($data['usuario'], $data['clave']);
+
+    $token = $this->user->login($data['usuario'], $data['clave']);
+
+    if( $token !="")
+     {
+        $_SESSION[$data['usuario']] = $token;
+        return $token;
+    }
+    else{
+      return "usuario y/o password inválido";
+    }
+
   }
 }

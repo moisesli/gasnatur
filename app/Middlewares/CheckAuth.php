@@ -6,6 +6,9 @@ class CheckAuth {
 
     public function handle(){
 
+
+     //token
+
         return true;
 
     }
