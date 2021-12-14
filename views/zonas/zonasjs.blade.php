@@ -3,11 +3,12 @@
   const app = createApp({
     data() {
       return {
+        search: '',
         pagination: {
           inicio: null,
           fin: null,
           totalregistros: null,
-          pagina: null,
+          pagina: 1,
           pagina_anterior: null,
           pagina_posterior: null,
           palabra_buscada: ''
@@ -36,23 +37,26 @@
       }
     },
     methods: {
-      loadItems: function(page = 1, search = ''){
-        this.loading.items = true;
-        axios.get('./apis/zonas/'+ page + '/' + search).then(res => {
-          this.items = res.data.registros;
-          this.pagination.inicio = res.data.inicio;
-          this.pagination.fin = res.data.fin;
-          this.pagination.totalregistros = res.data.totalregistros;
-          this.pagination.pagina  = res.data.pagina;
-          this.pagination.pagina_anterior = res.data.pagina_anterior;
-          this.pagination.pagina_posterior = res.data.pagina_posterior;
-          //this.pagination.palabra_buscada = res.data.palabra_buscada;
-          for( const index in this.items){
-            this.items[index].loading = false;
-          }
-          this.loading.items = false;
-          console.log(this.items)
-        })
+      loadItems: function(pagina = 1, palabra_buscada = ''){  
+        if( pagina != 0 ){
+          this.loading.items = true;
+          axios.get('./apis/zonas/'+ pagina + '/' + palabra_buscada).then(res => {
+            console.log(res.data)
+            this.items = res.data.registros;
+            this.pagination.inicio = res.data.inicio;
+            this.pagination.fin = res.data.fin;
+            this.pagination.totalregistros = res.data.totalregistros;
+            this.pagination.pagina  = res.data.pagina;
+            this.pagination.pagina_anterior = res.data.pagina_anterior;
+            this.pagination.pagina_posterior = res.data.pagina_posterior;
+            this.pagination.palabra_buscada = res.data.palabra_buscada;
+            for( const index in this.items){
+              this.items[index].loading = false;
+            }
+            this.loading.items = false;          
+          })
+        }
+        
       },
       newItem: function(){
         this.modal.method = 'new'
