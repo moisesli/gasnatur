@@ -82,12 +82,12 @@ class Database extends \PDO
         $resultado["pagina"] = intval($pagina);
         
         if($resultado["pagina"]>=$numeropaginas){
-            $resultado["pagina_anterior"] = 0;
+            $resultado["pagina_anterior"] = $pagina - 1;
             $resultado["pagina_posterior"] = 0;
-            return $resultado;
+        } elseif($resultado["pagina"]<=$numeropaginas){
+            $resultado["pagina_anterior"] = 0;
+            $resultado["pagina_posterior"] = $pagina + 1;
         }
-        $resultado["pagina_anterior"] = $pagina - 1;
-        $resultado["pagina_posterior"] = $pagina + 1;
         $resultado["palabra_buscada"] = $palabraBuscada;
         return $resultado;
     }
