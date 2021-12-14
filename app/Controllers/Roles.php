@@ -83,10 +83,6 @@ class Roles extends Controller
 
       $data = $request->toArray();
 
-      if ($this->role->findByComparatorRegister($data['nombre']) == 1) {
-        throw new \Exception("El rol ya existe, por favor ingresar una nuevo rol");
-      }
-
       if (count($data) == 0) {
         throw new \Exception("No existe parámetros");
       }

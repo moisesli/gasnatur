@@ -72,10 +72,6 @@ class Charges extends Controller
 
 			$data = $request->toArray();
 
-			if ($this->charge->findByComparatorRegister($data['nombre']) == 1) {
-				throw new \Exception("El cargo ya existe, por favor ingresar un nuevo cargo");
-			  }
-
 			if (count($data) == 0) {
 				throw new \Exception("No existe parámetros");
 			}
@@ -83,6 +79,7 @@ class Charges extends Controller
 			if ($id == "") {
 				throw new \Exception("No existe el id del cargo");
 			}
+
 			if ($data['nombre'] == "") {
 				throw new \Exception("Ingrese el nombre del cargo");
 			}

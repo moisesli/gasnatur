@@ -106,7 +106,7 @@ class PersonalModel extends Model
 
 	public function paginator($pagina, $q)
 	{
-		$orderBy = 'apellidos';
+		$orderBy = 'id';
 		$palabraBuscada = "";
 		$filtro = "";
 		try {

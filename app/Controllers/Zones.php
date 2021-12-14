@@ -84,11 +84,6 @@ class Zones extends Controller
 
 			$data = $request->toArray();
 
-			if ($this->zone->findByComparatorRegister($data['nombre']) == 1) {
-				throw new \Exception("La zona ya existe, por favor ingresar una nueva zona");
-			  }
-
-
 			if (count($data) == 0) {
 				throw new \Exception("No existe parámetros");
 			}

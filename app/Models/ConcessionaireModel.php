@@ -109,7 +109,7 @@ class ConcessionaireModel extends Model{
 
     public function paginator($pagina, $q)
 	{
-		$orderBy = 'descripcion';
+		$orderBy = 'id';
         $palabraBuscada = "";
 		$filtro = "";
 		try {

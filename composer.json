@@ -10,6 +10,7 @@
     "izniburak/router": "^2.3",
     "jenssegers/blade": "^1.4",
     "bref/bref": "^1.4",
-    "aws/aws-sdk-php": "^3.185"
+    "aws/aws-sdk-php": "^3.185",
+    "firebase/php-jwt": "^5.5"
   }
 }

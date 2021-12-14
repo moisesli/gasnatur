@@ -1,6 +1,9 @@
 <?php
+// require_once 'vendor/autoload.php';
 
 namespace Config;
+
+use Firebase\JWT\JWT;
 
 class Database extends \PDO
 {
@@ -81,23 +84,48 @@ class Database extends \PDO
         $resultado["pagina_posterior"] = $pagina + 1;
         $resultado["palabra buscada"] = $palabraBuscada;
         return $resultado;
+    }
 
-        // if ($pagina == null and empty($palabraBuscada)) {
-        //     $resultado["pagina"] = 1;
-        //     $resultado["pagina_anterior"] = 0;
-        //     $resultado["pagina_posterior"] = 2;
-        //     $resultado["palabra buscada"] = $palabraBuscada;
-        //     return  $resultado;
-        // }
-        
-        // if ($pagina >= 1 or empty($palabraBuscada)) {
-        //     $resultado["pagina"] = $pagina;
-        //     $resultado["pagina_anterior"] = $pagina - 1;
-        //     $resultado["pagina_posterior"] = $pagina + 1;
-        //     $resultado["palabra buscada"] = $palabraBuscada;
-        //     return $resultado;
-        // }
-        
+    public function login($usuario, $clave)
+    {
+        $time = time();
+        $key = 'gas_natu_ral';
+        $token = array(
+                'clave' => $clave
+        );
+        $clave = JWT::encode($token, $key);
+
+        $sql = "SELECT * FROM usuarios WHERE  usuario = '$usuario' AND  clave = '$clave'";
+        $sth = $this->prepare($sql);
+        $sth->execute();
+        $count = $sth->rowCount();
+        $sth = null;
+        if ($count == 1) {
+
+            $time = time();
+            $key = 'gas_natu_ral';
+            $token = array(
+                'iat' => $time,
+                'exp' => $time + (60 * 60),
+                'data' => [ 
+                    'id' => 1,
+                    'usuario' => $usuario
+                ]
+            );
+            
+            $jwt = JWT::encode($token, $key); 
+
+            // return $jwt;
+
+            $data = JWT::decode($jwt, $key, array('HS256')); 
+
+
+            $array = [];
+            $array['token'] = $data;
+            return $array;
+        } else {
+            return "";
+        }
     }
 
 

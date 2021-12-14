@@ -19,11 +19,11 @@ class Users extends Controller
   }
 
   // public function test(Request $request, Response $response)
-	// {
-	// 	$data = $request->toArray();
-	// 	$this->zone->create($data);
-	// 	return count($request->toArray());
-	// }
+  // {
+  // 	$data = $request->toArray();
+  // 	$this->zone->create($data);
+  // 	return count($request->toArray());
+  // }
 
   public function create(Request $request, Response $response)
   {
@@ -56,18 +56,18 @@ class Users extends Controller
 
 
   public function getAll(Response $response)
-	{
-		$results = $this->user->getAll();
-		return $this->resjson($results);
-	}
+  {
+    $results = $this->user->getAll();
+    return $this->resjson($results);
+  }
 
   public function getById(Response $response, $id)
-	{
+  {
 
-		$result = $this->user->findById($id);
+    $result = $this->user->findById($id);
 
-		return $this->resjson($result);
-	}
+    return $this->resjson($result);
+  }
 
   public function update(Request $request, Response $response, $id)
   {
@@ -78,19 +78,15 @@ class Users extends Controller
 
       $data = $request->toArray();
 
-      if ($this->user->findByComparatorRegister($data['usuario']) == 1) {
-        throw new \Exception("El usuario ya existe, por favor ingresar un usuario nuevo");
-      }
-
       if (count($data) == 0) {
         throw new \Exception("No existe parámetros");
       }
-      
-      if($id<=0 | $id == ""){
-        throw new \Exception("No existe el id del usuario");
-       }
 
-       $this->validaciones($request, $response);
+      if ($id <= 0 | $id == "") {
+        throw new \Exception("No existe el id del usuario");
+      }
+
+      $this->validaciones($request, $response);
 
       $result = $this->user->update($data, $id);
 
@@ -109,9 +105,9 @@ class Users extends Controller
 
     try {
 
-      if($id<=0 | $id == ""){
+      if ($id <= 0 | $id == "") {
         throw new \Exception("No existe el id del usuario");
-       }
+      }
 
       $result = $this->user->delete($id);
 
@@ -162,22 +158,48 @@ class Users extends Controller
     //   throw new \Exception("El id del personal está vacío");
     // }
 
-    if ($data['id_personal'] == "" | $data['id_personal'] <=0 | !is_int($data['id_personal'])) {
+    if ($data['id_personal'] == "" | $data['id_personal'] <= 0 | !is_int($data['id_personal'])) {
       throw new \Exception("El id del personal no es válido");
     }
 
-    if ($data['id_role'] == "" | $data['id_role'] <=0 | !is_int($data['id_role']) | $data['id_role'] == null) {
+    if ($data['id_role'] == "" | $data['id_role'] <= 0 | !is_int($data['id_role']) | $data['id_role'] == null) {
       throw new \Exception("El id del rol no es válido");
     }
 
-    if($data['estado'] == ""){
+    if ($data['estado'] == "") {
       throw new \Exception("Seleccione el estado del usuario");
     }
-    
   }
 
   public function paginator($id = 1, $q = "")
-	{
-		return $this->user->paginator($id, $q);
-	}
+  {
+    return $this->user->paginator($id, $q);
+  }
+
+  public function login(Request $request, Response $response)
+  {
+    $data = $request->toArray();
+    
+
+    if (count($data) == 0) {
+      throw new \Exception("No existe parámetros");
+    }
+
+    if ($data['usuario'] == "") {
+      throw new \Exception("Ingrese el nombre de usuario");
+    }
+
+    if ($data['clave'] == "") {
+      throw new \Exception("Ingrese password");
+    }
+    
+    if (array_key_exists("usuario", $data) == null) {
+      throw new \Exception("Username sin valor");
+    }
+
+    if (array_key_exists("clave", $data) == null) {
+      throw new \Exception("Password sin valor");
+    }
+    return $this->user->login($data['usuario'], $data['clave']);
+  }
 }

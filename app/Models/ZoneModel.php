@@ -106,7 +106,7 @@ class ZoneModel extends Model
 
 	public function paginator($pagina, $q)
 	{
-		$orderBy = 'nombre';
+		$orderBy = 'id';
 		$palabraBuscada = "";
 		$filtro = "";
 

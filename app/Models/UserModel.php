@@ -1,6 +1,7 @@
 <?php
 
 use Config\Model;
+use Firebase\JWT\JWT;
 
 class UserModel extends Model
 {
@@ -16,7 +17,20 @@ class UserModel extends Model
         $response->success = false;
 
         try {
+
+            $time = time();
+            $key = 'gas_natu_ral';
+
+            // return $key;
+            $token = array(
+                    'clave' => $data['clave']
+            );
+
+            $data['clave'] = JWT::encode($token, $key);
+
             $sth = $this->db->insert('usuarios', $data);
+
+
             // validacion
             if ($sth) {
                 $response->success = true;
@@ -106,20 +120,28 @@ class UserModel extends Model
     }
 
     public function paginator($pagina, $q)
-	{
-		$orderBy = 'usuario';
+    {
+        $orderBy = 'id';
         $palabraBuscada = "";
-		$filtro = "";
-		try {
-			if ($q != "") {
+        $filtro = "";
+        try {
+            if ($q != "") {
                 $palabraBuscada = $q;
-				$filtro = " usuario LIKE '%$q%' ";
-			}
-			return $this->db->paginator('usuarios', $pagina, $palabraBuscada ,$filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+                $filtro = " usuario LIKE '%$q%' ";
+            }
+            return $this->db->paginator('usuarios', $pagina, $palabraBuscada, $filtro, $orderBy);
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 
-    
+    public function login($usuario, $clave)
+    {
+        try {
+            return $this->db->login($usuario, $clave);
+        } catch (\Exception $e) {
+
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }
