@@ -3,6 +3,8 @@
   const app = createApp({
     data() {
       return {
+        page: 1,
+        search: '',        
         items: [],
         item: {
           id: '',
@@ -25,9 +27,9 @@
       }
     },
     methods: {
-      loadItems: function(){
+      loadItems: function(page = 1, search = ''){
         this.loading.items = true;
-        axios.get('./apis/zonas').then(res => {
+        axios.get('./apis/zonas/'+ page + '/' + search).then(res => {
           this.items = res.data.registros
           for( const index in this.items){
             this.items[index].loading = false;
@@ -63,7 +65,8 @@
             console.log(this.message.message)
             if(this.message.success == true){
               this.closeModal();
-            }            
+            }
+            this.loadItems();
             this.loading.store = false;
           })
         }else if( this.modal.method == 'edit' ){
