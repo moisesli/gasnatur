@@ -82,7 +82,7 @@ class Database extends \PDO
         $resultado["pagina"] = $pagina;
         $resultado["pagina_anterior"] = $pagina - 1;
         $resultado["pagina_posterior"] = $pagina + 1;
-        $resultado["palabra buscada"] = $palabraBuscada;
+        $resultado["palabra_buscada"] = $palabraBuscada;
         return $resultado;
     }
 
@@ -121,7 +121,7 @@ class Database extends \PDO
             );
             
             $jwt = JWT::encode($token, $key); 
-            
+
             return $jwt;
 
             ///$data = JWT::decode($jwt, $key, array('HS256')); 
