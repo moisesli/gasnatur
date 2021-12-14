@@ -53,9 +53,9 @@ class Database extends \PDO
         $inicio = ($pagina >= 1) ? (($pagina * $regpagina) - $regpagina) : 0;
 
         if ($filtro == "") {
-            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table ORDER BY $orderBy LIMIT $inicio,$regpagina";
+            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table ORDER BY $orderBy DESC LIMIT $inicio,$regpagina";
         } else {
-            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table WHERE $filtro ORDER BY $orderBy LIMIT $inicio,$regpagina";
+            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table WHERE $filtro ORDER BY $orderBy DESC LIMIT $inicio,$regpagina";
         }
 
         // return $sql;
