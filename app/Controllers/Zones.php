@@ -33,8 +33,7 @@ class Zones extends Controller
 		try {
 
 			$data = $request->toArray();
-
-
+			
 			if ($this->zone->findByComparatorRegister($data['nombre'])) { 
 				throw new \Exception("La zona ya existe, por favor ingresar una nueva zona");
 			  }

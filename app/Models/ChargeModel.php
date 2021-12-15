@@ -43,7 +43,8 @@ class ChargeModel extends Model
     public function findByComparatorRegister($comparator)
     {
         try {
-            return $this->db->find("SELECT * FROM cargos WHERE nombre='$comparator'");
+            $sql = "SELECT * FROM cargos WHERE nombre='$comparator'";
+            return $this->db->find($sql);
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];

@@ -26,7 +26,7 @@ class Roles extends Controller
 
       $data = $request->toArray();
 
-      if ($this->role->findByComparatorRegister($data['nombre']) == 1) {
+      if ($this->role->findByComparatorRegister($data['nombre'])) {
         throw new \Exception("El rol ya existe, por favor ingresar una nuevo rol");
       }
 
@@ -67,12 +67,6 @@ class Roles extends Controller
 
     return $this->resjson($result);
   }
-
-  // public function update(Request $request, $id)
-  // {
-  //   $data = $request->toArray();
-  //   return $this->role->update($data, $id);
-  // }
 
   public function update(Request $request, Response $response, $id)
   {

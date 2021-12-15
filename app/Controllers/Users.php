@@ -27,7 +27,7 @@ class Users extends Controller
     try {
       $data = $request->toArray();
 
-      if ($this->user->findByComparatorRegister($data['usuario']) == 1) {
+      if ($this->user->findByComparatorRegister($data['usuario'])) {
         throw new \Exception("El usuario ya existe, por favor ingresar un usuario nuevo");
       }
 

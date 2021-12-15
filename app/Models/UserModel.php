@@ -17,12 +17,7 @@ class UserModel extends Model
         $response = new \stdClass;
         $response->success = false;
 
-        try {
-
-            if ($this->zone->findByComparatorRegister($data['usuario'])) { 
-				throw new \Exception("El usuario ya existe, por favor ingresar una nuevo usuario");
-			  }
-            
+        try {            
             $data['clave'] = $this->db->encriptationInformationText($data['clave']);
 
             $sth = $this->db->insert('usuarios', $data);

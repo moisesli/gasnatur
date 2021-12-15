@@ -41,7 +41,6 @@ class ConcessionaireModel extends Model{
 	{
 		try {
 			$sql = "SELECT * FROM concesionarias WHERE id = $id LIMIT 1";
-
 			return $this->db->find($sql);
 		} catch (\Exception $e) {
 
@@ -52,7 +51,8 @@ class ConcessionaireModel extends Model{
     public function findByComparatorRegister($comparator)
     {
         try {
-            return $this->db->find("SELECT * FROM concesionarias WHERE descripcion='$comparator'");
+            $sql = "SELECT * FROM concesionarias WHERE descripcion='$comparator'";
+            return $this->db->find($sql);
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];

@@ -24,7 +24,7 @@ class Charges extends Controller
 		try {
 
 			$data = $request->toArray();
-			if ($this->charge->findByComparatorRegister($data['nombre']) == 1) {
+			if ($this->charge->findByComparatorRegister($data['nombre'])) {
 				throw new \Exception("El cargo ya existe, por favor ingresar una nuevo cargo");
 			  }
 

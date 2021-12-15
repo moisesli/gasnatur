@@ -15,9 +15,7 @@ Class RoleModel extends Model
         $response->success = false;
 
         try {
-            if ($this->zone->findByComparatorRegister($data['nombre'])) { 
-				throw new \Exception("El rol ya existe, por favor ingresar una nuevo rol");
-			  }
+            
             $sth = $this->db->insert('roles', $data);
             if ($sth) {
                 $response->success = true;
