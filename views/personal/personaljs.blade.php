@@ -30,6 +30,9 @@
         personals: []
       }
     },
+
+
+    
     methods: {
       loadPersonals: function () {
         this.loading_personals = true
