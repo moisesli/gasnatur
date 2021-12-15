@@ -9,6 +9,7 @@ class ConcessionaireModel extends Model{
 
     public function create($data)
     {
+        unset($data['id']);
         $response = new \stdClass;
         $response->success = false;
 

@@ -34,7 +34,8 @@ class Zones extends Controller
 
 			$data = $request->toArray();
 
-			if ($this->zone->findByComparatorRegister($data['nombre']) == 1) {
+
+			if ($this->zone->findByComparatorRegister($data['nombre'])) { 
 				throw new \Exception("La zona ya existe, por favor ingresar una nueva zona");
 			  }
 
@@ -97,6 +98,10 @@ class Zones extends Controller
 			if ($data['estado'] == "") {
 				throw new \Exception("Seleccione el estado de la zona");
 			}
+
+			if (!(preg_match('/^[a-zA-Z0-9]+$/', $data['nombre']))) {
+				throw new \Exception("Se permiten solo letras y numeros");
+			  }
 
 			$result = $this->zone->update($data, $id);
 

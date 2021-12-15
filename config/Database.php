@@ -1,5 +1,4 @@
 <?php
-// require_once 'vendor/autoload.php';
 
 namespace Config;
 
@@ -32,7 +31,10 @@ class Database extends \PDO
             $sth->bindValue("$key", $value);
         }
         $sth->execute();
-        return $sth->fetch($fetchMode);
+
+        $reuslt =  $sth->fetch($fetchMode);
+
+        return $reuslt;
     }
 
     //pagnacion¿?
@@ -94,11 +96,8 @@ class Database extends \PDO
     public function login($usuario, $clave, $array = [], $fetchMode = \PDO::FETCH_OBJ)
     {
         $time = time();
-        $key = 'gas_natu_ral';
-        $token = array(
-                'clave' => $clave
-        );
-        $clave = JWT::encode($token, $key);
+    
+        $clave = $this->encriptationInformationText($clave);
 
         $sql = "SELECT * FROM usuarios WHERE  usuario = '$usuario' AND  clave = '$clave'";
         $sth = $this->prepare($sql);
@@ -134,6 +133,16 @@ class Database extends \PDO
         } else {
             return "";
         }
+    }
+
+    public function encriptationInformationText($data){
+        $key = 'gas_natu_ral';
+
+        $token = array($data);
+
+        $dataEncriptada = JWT::encode($token, $key);
+
+        return $dataEncriptada;
     }
 
 
@@ -172,11 +181,4 @@ class Database extends \PDO
         $stm = $sth->execute();
         return $stm;
     }
-
-
-    //public function orderBy($column, $direction = 'asc'){}
-    //public function orderByDesc($column){ }
-    //public function where($column, $operator = null, $value = null, $boolean = 'and')
-    //public function from($table, $as = null){}
-    //public function delete($id = null){}
 }
