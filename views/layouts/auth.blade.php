@@ -16,6 +16,8 @@
 
   {{--Add Js Login--}}
   {{--<script src="/views/auth/login.js"></script>--}}
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   
 </head>
 <body>

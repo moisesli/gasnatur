@@ -192,21 +192,22 @@
             <div class="flex flex-col md:flex-row">
               <div class="md:w-1/2 md:mr-2.5">
                 <label class="text-sm font-medium text-gray-900 block mb-2">Nombres</label>
-                <input v-model="item.nombre" type="text" name="nombres" id="nombres" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" required="">
+                <input v-model="item.nombres" type="text" name="nombres" id="nombres" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" required="">
               </div>
               <div class="md:w-1/2 md:ml-2.5">
                 <label class="text-sm font-medium text-gray-900 block mb-2">Apellidos</label>
-                <input v-model="item.estado" type="text" name="nombres" id="nombres" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" required="">
+                <input v-model="item.apellidos" type="text" name="nombres" id="nombres" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" required="">
               </div>
             </div>
 
+            <!-- Segunda Fila -->
             <div class="flex flex-col md:flex-row mt-5">
               <div class="md:w-1/3 md:mr-2.5">
                 <label class="text-sm font-medium text-gray-900 block mb-2">Cargo</label>
                 <select v-model="item.id_cargo" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2">
                   <option value="1">Gerente</option>
                   <option value="2">Sub Gerente</option>
-                  <option value="3">Asistente</option>
+                  <option value="5">Asistente</option>
                 </select>                
               </div>
               <div class="md:w-1/3 md:ml-2.5 md:mr-2.5">                
@@ -222,6 +223,13 @@
                 <input v-model="item.numero" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="">
               </div>
             </div>
+
+            <!-- Tercera Fila -->
+            <div class="flex flex-col md:flex-row mt-5">
+              <div class="md:w-1/5">
+              </div>
+            </div>
+
 
           </form>
         </div>

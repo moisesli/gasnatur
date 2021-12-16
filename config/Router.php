@@ -90,11 +90,11 @@ $app->router->get('/registro', function () {
 $app->router->get('/zonas', function () {
   $front = new \Config\View();
   return $front->show('zonas.zonas');
-},['before' => 'CheckAuth']);
+});
 
 $app->router->get('/personal', function () {
     $front = new \Config\View();
     return $front->show('personal.personal');
-},['before' => 'CheckAuth']);
+});
 
 $app->run();
