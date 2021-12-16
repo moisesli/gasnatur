@@ -3,26 +3,18 @@
 namespace App\Controllers;
 
 use Config\Controller;
-use App\Models\Zone;
+use App\Models\FinancingModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Zones extends Controller
+class Financing extends Controller
 {
-
-	public $zone;
+    public $financing;
 
 	public function __construct()
 	{
-		$this->zone = $this->loadModel('Zone');
+		$this->financing = $this->loadModel('Financing');
 	}
-
-    // public function test(Request $request,Response $response)
-    // {
-    //     $data = $request->toArray(); // recibe datos
-    //     $this->zone->create($data);
-    //     return $this->resjson($data);
-    // }
 
 	public function create(Request $request,Response $response)
 	{
@@ -34,24 +26,28 @@ class Zones extends Controller
 
 			$data = $request->toArray();
 			
-			if ($this->zone->findByComparatorRegister($data['nombre'])) { 
-				throw new \Exception("La zona ya existe, por favor ingresar una nueva zona");
+			if ($this->financing->findByComparatorRegister($data['descripcion'])) { 
+				throw new \Exception("El plan ya existe, por favor ingresar una nuevo plan");
 			  }
 
 			if (count($data) == 0) {
 				throw new \Exception("No existe parametros");
 			}
 
-			if ($data['nombre'] == "") {
-				throw new \Exception("Ingrese el nombre de la zona");
+			if ($data['descripcion'] == "") {
+				throw new \Exception("Ingrese el nombre");
 			}
 			if ($data['estado'] == "") {
-				throw new \Exception("Seleccione el estado de la zona");
+				throw new \Exception("Seleccione el estado");
 			}
 
-			$data['nombre'] = strtolower($data['nombre']);
+			if (!(preg_match('/^[a-zA-Z0-9]+$/', $data['descripcion']))) {
+				throw new \Exception("Se permiten solo letras y numeros");
+			  }
 
-			$result = $this->zone->create($data);
+			$data['descripcion'] = strtolower($data['descripcion']);
+
+			$result = $this->financing->create($data);
 
 			[$statusOk, $messageError] = array_values((array)$result);
 		} catch (\Exception $e) {
@@ -61,21 +57,21 @@ class Zones extends Controller
 		return $this->resjson(["success" => $statusOk, "message" => $messageError], 201);
 	}
 
-	public function getAll(Response $response)
+    public function getAll(Response $response)
 	{
-		$results = $this->zone->getAll();
+		$results = $this->financing->getAll();
 		return $this->resjson($results);
 	}
 
-	public function getById(Response $response, $id)
+    public function getById(Response $response, $id)
 	{
 
-		$result = $this->zone->findById($id);
+		$result = $this->financing->findById($id);
 
 		return $this->resjson($result);
 	}
 
-	public function update(Request $request, Response $response, $id)
+    public function update(Request $request, Response $response, $id)
 	{
 		$statusOk = false;
 		$messageError = "";
@@ -91,18 +87,18 @@ class Zones extends Controller
 			if ($id == "") {
 				throw new \Exception("No existe el id de la zona");
 			}
-			if ($data['nombre'] == "") {
-				throw new \Exception("Ingrese el nombre de la zona");
+			if ($data['descripcion'] == "") {
+				throw new \Exception("Ingrese la descripcion del financiamiento");
 			}
 			if ($data['estado'] == "") {
-				throw new \Exception("Seleccione el estado de la zona");
+				throw new \Exception("Seleccione el estado");
 			}
 
-			if (!(preg_match('/^[a-zA-Z0-9]+$/', $data['nombre']))) {
+			if (!(preg_match('/^[a-zA-Z0-9 ]+$/', $data['descripcion']))) {
 				throw new \Exception("Se permiten solo letras y numeros");
 			  }
 
-			$result = $this->zone->update($data, $id);
+			$result = $this->financing->update($data, $id);
 
 			[$statusOk, $messageError] = array_values((array)$result);
 		} catch (\Exception $e) {
@@ -112,7 +108,7 @@ class Zones extends Controller
 		return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
 	}
 
-	public function delete(Request $request, Response $response, $id)
+    public function delete(Request $request, Response $response, $id)
 	{
 		$statusOk = false;
 		$messageError = "";
@@ -120,10 +116,10 @@ class Zones extends Controller
 		try {
 
 			if ($id == "") {
-				throw new \Exception("No existe el id de la zona");
+				throw new \Exception("No existe el id del plan de financiamiento");
 			}
 
-			$result = $this->zone->delete($id);
+			$result = $this->financing->delete($id);
 
 			[$statusOk, $messageError] = array_values((array)$result);
 		} catch (\Exception $e) {
@@ -133,11 +129,9 @@ class Zones extends Controller
 		return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
 	}
 
-	public function paginator($id = 1, $q = "" )
+    public function paginator($id = 1, $q = "" )
 	{
-		return $this->zone->paginator($id, $q);
+		return $this->financing->paginator($id, $q);
 	}
-
-
 
 }

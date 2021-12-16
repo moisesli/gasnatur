@@ -2,12 +2,12 @@
 
 use Config\Model;
 
-class PersonalModel extends Model
+class SocialModel extends model
 {
     public function __construct()
-	{
-		parent::__construct();
-	}
+    {
+        parent::__construct();
+    }
 
     public function create($data)
 	{
@@ -17,9 +17,9 @@ class PersonalModel extends Model
 
 		try {
 
-			$sth = $this->db->insert("personal", $data);
+			$sth = $this->db->insert("estrato_social", $data);
 			if (!$sth) {
-				throw new \Exception("No pudimos registrar al personal");
+				throw new \Exception("No pudimos registrar");
 			}
 
 			$response->success = true;
@@ -34,27 +34,27 @@ class PersonalModel extends Model
     public function getAll()
 	{
 		try {
-			return $this->db->findAll("SELECT * FROM personal");
+			return $this->db->findAll("SELECT * FROM estrato_social");
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}
 	}
 
     public function findByComparatorRegister($comparator)
-    {
-        try {
-			$sql = "SELECT * FROM personal WHERE nombre='$comparator'";
-            return $this->db->find($sql);
-        } catch (\Exception $e) {
+	{
+		try {
+			$sql = "SELECT * FROM estrato_social WHERE nombre='$comparator'";
+			return $this->db->find($sql);
+		} catch (\Exception $e) {
 
-            return ["success" => false, "message" => $e->getMessage()];
-        }
-    }
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
 
     public function findById($id)
 	{
 		try {
-			$sql = "SELECT * FROM personal WHERE id = $id LIMIT 1";
+			$sql = "SELECT * FROM estrato_social WHERE id = $id LIMIT 1";
 
 			return $this->db->find($sql);
 		} catch (\Exception $e) {
@@ -70,9 +70,9 @@ class PersonalModel extends Model
 
 		try {
 
-			$sth = $this->db->update("personal", $data, "id={$id}");
+			$sth = $this->db->update("estrato_social", $data, "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos actualizar al personal");
+				throw new \Exception("No pudimos actualizar");
 			}
 
 			$response->success = true;
@@ -91,9 +91,9 @@ class PersonalModel extends Model
 
 		try {
 
-			$sth = $this->db->delete("personal", "id={$id}");
+			$sth = $this->db->delete("estrato_social", "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos eliminar al personal");
+				throw new \Exception("No pudimos eliminar la zona");
 			}
 
 			$response->success = true;
@@ -105,22 +105,21 @@ class PersonalModel extends Model
 		return $response;
 	}
 
-	public function paginator($pagina, $q)
+    public function paginator($pagina, $q)
 	{
 		$orderBy = 'id';
 		$palabraBuscada = "";
 		$filtro = "";
+
 		try {
 			if ($q != "") {
 				$palabraBuscada = $q;
-				$filtro = " nombres LIKE '%$q%' OR apellidos LIKE '%$q%' ";
+				$filtro = " nombre LIKE '%$q%' ";
 			}
-			return $this->db->paginator('personal', $pagina, $palabraBuscada ,$filtro, $orderBy);
+			return $this->db->paginator('estrato_social', $pagina, $palabraBuscada, $filtro, $orderBy);
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}
 	}
 
-
-	
 }
