@@ -1,18 +1,23 @@
-<script type="application/javascript">  
-  Vue.createApp({
+<script type="application/javascript">
+  const { createApp } = Vue;  
+  const app = createApp({
     data() {
       return {
-        moises: "moises",
-        modal_estado: false,
-        modal_tipo: '',               //  default: '', new, edit
-        loading_personals: false,
-        loadingPersonalEdit: false, 
-        loadingStore: false,
-        message: {
-          success: false,
-          message: ''
+        entity: 'personal',
+        search: '',
+        pagination: {
+          inicio: null,
+          fin: null,
+          totalregistros: null,
+          pagina: 1,
+          pagina_anterior: null,
+          pagina_posterior: null,
+          palabra_buscada: ''
         },
-        personal: {
+        page: 1,
+        search: '',        
+        items: [],
+        item: {
           id: '',
           id_cargo: '',
           id_tipodoc: '',
@@ -25,102 +30,125 @@
           telefono: '',
           celular: '',
           correo: '',
-          estado: ' '
+          estado: ''
         },
-        personals: []
+        loading: {                              
+          items: false,
+          store: false,
+          edit: false,          
+        },        
+        modal: {
+          show: false,
+          method: 'new|edit'
+        },
+        message: {
+          success: false,
+          message: ''
+        }        
       }
     },
-
-
-    
     methods: {
-      loadPersonals: function () {
-        this.loading_personals = true
-        axios.get('./apis/personal').then(res => {
-          this.personals = res.data.registros
-          // Agregar idenfiticador                  
-          for( const per in this.personals){
-            this.personals[per].gasnatur_estado = false;
-            // console.log(this.personals[per])
-          }
-          this.loading_personals = false
-          //console.log(res.data)
-        })
+      loadItems: function(pagina = 1, palabra_buscada = ''){  
+        if( pagina != 0 ){
+          this.loading.items = true;
+          axios.get('./apis/' + this.entity + '/'+ pagina + '/' + palabra_buscada).then(res => {
+            console.log(res.data)
+            this.items = res.data.registros;
+            this.pagination.inicio = res.data.inicio;
+            this.pagination.fin = res.data.fin;
+            this.pagination.totalregistros = res.data.totalregistros;
+            this.pagination.pagina  = res.data.pagina;
+            this.pagination.pagina_anterior = res.data.pagina_anterior;
+            this.pagination.pagina_posterior = res.data.pagina_posterior;
+            this.pagination.palabra_buscada = res.data.palabra_buscada;
+            for( const index in this.items){
+              this.items[index].loading = false;
+            }
+            this.loading.items = false;          
+          })
+        }
+        
       },
-      openModal: function() {
-        this.modal_estado = true;
-      },      
-      closeModal: function() {
-        this.modal_estado = false;
+      newItem: function(){
+        this.modal.method = 'new'
+        this.clearItem()
+        this.openModal()
+        console.log('newItem')
       },
-      newPersonal: function () {        
-        this.modal_tipo = 'new';
-        this.personal.id = '';
-        this.personal.id_cargo = '1';        
-        this.personal.id_tipodoc = '1';
-        this.personal.numero = '4569863';
-        this.personal.nombres = 'Abraham Moises';
-        this.personal.apellidos = 'Linares Oscco';
-        this.personal.fecha_nacimiento = '2021-12-12';
-        this.personal.sexo = 'M';
-        this.personal.direccion = 'Cm 40 LT 15 Mz 213 Ciudad';
-        this.personal.telefono = '952631806';
-        this.personal.celular = '952631806';
-        this.personal.correo = 'correo@gmail.com';
-        this.personal.estado = 'ACTIVO';
-        this.openModal();
-      },
-      editPersonal: function(personal) {
-        personal.gasnatur_estado = true;
-        this.message = [];
-        this.modal_tipo = 'edit';
-        this.loadingPersonalEdit = true;
-        axios.post('./apis/personal/' + personal.id).then(res => {
-          this.personal.id = res.data.id;
-          this.personal.id_cargo = res.data.id_cargo;
-          this.personal.id_tipodoc = res.data.id_tipodoc;
-          this.personal.numero = res.data.numero;
-          this.personal.nombres = res.data.nombres;
-          this.personal.apellidos = res.data.apellidos;
-          this.personal.fecha_nacimiento = res.data.fecha_nacimiento;
-          this.personal.sexo = res.data.sexo;
-          this.personal.direccion = res.data.direccion;
-          this.personal.telefono = res.data.telefono;
-          this.personal.celular = res.data.celular;
-          this.personal.celular = res.data.celular;
-          this.personal.correo = res.data.correo;
-          this.personal.estado = res.data.estado;
-          this.loadingPersonalEdit = false;
-          personal.gasnatur_estado = false;
+      editItem: function(item){
+        item.loading = true;        
+        this.modal.method = 'edit';        
+        axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
+          console.log(res.data)
+          this.item.id = res.data.id,
+          this.item.id_cargo = res.data.id_cargo;
+          this.item.id_tipodoc = res.data.id_tipodoc;
+          this.item.numero = res.data.numero;
+          this.item.nombres = res.data.nombres;
+          this.item.apellidos = res.data.apellidos;
+          this.item.fecha_nacimiento = res.data.fecha_nacimiento;
+          this.item.sexo = res.data.sexo;
+          this.item.direccion = res.data.direccion;
+          this.item.telefono = res.data.telefono;
+          this.item.celular = res.data.celular;
+          this.item.correo = res.data.correo;
+          this.item.estado = res.data.estado;               
+          item.loading = false;
           this.openModal();
         })
       },
-      store: function(){
-        this.loadingStore = true;
-        if( this.modal_tipo == 'new'){          
-          axios.post('./apis/personal', JSON.stringify(this.personal)).then(res => {
+      storeItem: function(){
+        this.loading.store = true;
+        if( this.modal.method == 'new'){   
+          console.log('entro a new')
+          axios.post('./apis/' + this.entity , JSON.stringify(this.item)).then(res => {
             this.message = res.data;
             console.log(this.message.message)
-            if(this.message.success == true){
+            if(this.message.success == true){              
               this.closeModal();
+              this.loadItems();
             }            
-            this.loadingStore = false;
+            this.loading.store = false;
           })
-        }else if( this.modal_tipo == 'edit' ){          
-          axios.put('./apis/personal/' + this.personal.id, JSON.stringify(this.personal)).then(res => {
+        }else if( this.modal.method == 'edit' ){
+          console.log('entro a edit')
+          axios.put('./apis/' + this.entity + '/' + this.item.id, JSON.stringify(this.item)).then(res => {
+            console.log(res.data)
             this.message = res.data;
             if(this.message.success == true){
               this.closeModal();
+              this.loadItems();
             }
-            console.log(res.data)            
-            this.loadingStore = false;
+            this.loading.store = false;            
           })
-        }      
+        }
+      },
+      openModal:function(){
+        this.modal.show = true;
+      },
+      closeModal: function(){
+        this.modal.show = false;
+      },
+      clearItem: function(){     
+        this.item.id = '',
+        this.item.id_cargo = '';
+        this.item.id_tipodoc = '';
+        this.item.numero = '';
+        this.item.nombres = '';
+        this.item.apellidos = '';
+        this.item.fecha_nacimiento = '';
+        this.item.sexo = '';
+        this.item.direccion = '';
+        this.item.telefono = '';
+        this.item.celular = '';
+        this.item.correo = '';
+        this.item.estado = '';      
       }
     },
     mounted(){
-      this.loadPersonals()
+      this.loadItems();
     }
-
-  }).mount('#app')
+  });  
+  app.mount('#app');
+  
 </script>

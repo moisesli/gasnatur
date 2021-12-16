@@ -83,10 +83,10 @@
           axios.post('./apis/zonas', JSON.stringify(this.item)).then(res => {
             this.message = res.data;
             console.log(this.message.message)
-            if(this.message.success == true){
+            if(this.message.success == true){              
               this.closeModal();
-            }
-            this.loadItems();
+              this.loadItems();
+            }            
             this.loading.store = false;
           })
         }else if( this.modal.method == 'edit' ){
@@ -96,8 +96,8 @@
             this.message = res.data;
             if(this.message.success == true){
               this.closeModal();
-            }            
-            this.loadItems();
+              this.loadItems();
+            }
             this.loading.store = false;            
           })
         }
