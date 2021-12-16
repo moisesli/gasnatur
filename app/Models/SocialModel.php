@@ -93,7 +93,7 @@ class SocialModel extends model
 
 			$sth = $this->db->delete("estrato_social", "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos eliminar la zona");
+				throw new \Exception("No pudimos eliminar");
 			}
 
 			$response->success = true;

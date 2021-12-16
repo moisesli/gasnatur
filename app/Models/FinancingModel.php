@@ -19,7 +19,7 @@ class FinancingModel extends model
 
 			$sth = $this->db->insert("planes_financiamiento", $data);
 			if (!$sth) {
-				throw new \Exception("No pudimos registrar el plan de financiamiento");
+				throw new \Exception("No se pudo registrar, vuelva a intentarlo");
 			}
 
 			$response->success = true;
@@ -72,7 +72,7 @@ class FinancingModel extends model
 
 			$sth = $this->db->update("planes_financiamiento", $data, "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos actualizar la zona");
+				throw new \Exception("No pudimos actualizar");
 			}
 
 			$response->success = true;
@@ -93,7 +93,7 @@ class FinancingModel extends model
 
 			$sth = $this->db->delete("planes_financiamiento", "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos eliminar la zona");
+				throw new \Exception("No pudimos eliminar");
 			}
 
 			$response->success = true;

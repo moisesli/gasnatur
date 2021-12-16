@@ -80,13 +80,6 @@ class ConcessionaireModel extends Model{
         return $response;
     }
 
-    // public function delete($id)
-    // {
-
-    //     $result = $this->db->delete('concessionaires', 'id' . '=' . $id);
-    //     return;
-    // }
-
     public function delete($id)
 	{
 		$response = new \stdClass;

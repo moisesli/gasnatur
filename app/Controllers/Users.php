@@ -132,9 +132,6 @@ class Users extends Controller
     if (!(preg_match('/^[a-zA-Z0-9]+$/', $data['usuario']))) {
       throw new \Exception("Se permiten solo letras y numeros");
     }
-    // // la contraseña debe tener letras mayusculas minunisculas caracteres especiales y numeros, 
-    // y minimo de 8 caracteres
-    // // hasta 20 caracteres
 
     if (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,20}$/', $data['clave'])) {
       throw new \Exception("El password no cumple con los requerimientos mínimos");

@@ -73,7 +73,7 @@ Class RoleModel extends Model
 
             $sth = $this->db->update("roles", $data, "id={$id}");
             if (!$sth) {
-                throw new \Exception("No pudimos actualizar el usuario");
+                throw new \Exception("No pudimos actualizar");
             }
 
             $response->success = true;

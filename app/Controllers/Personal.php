@@ -106,26 +106,31 @@ class Personal extends Controller
 			throw new \Exception("No existe parametros");
 		}
 
-		if (!(preg_match('/^[a-zA-Z ]+$/', $data['nombres']))) {
-			throw new \Exception("Se permiten solo letras");
+		if ($data['numero'] == "") {
+			throw new \Exception("Ingrese numero");
 		}
 
-		if (!(preg_match('/^[a-zA-Z ]+$/', $data['apellidos']))) {
-			throw new \Exception("Se permiten solo letras");
-		}
+		if (!preg_match('/^[0-9]{8}$/', $data['numero'])) {
+            throw new \Exception("El numero de " .$data['id_tipodoc'] . " no es correcto");
+        }
 
 		if ($data['nombres'] == "") {
 			throw new \Exception("Ingrese el nombre del personal");
+		}
+
+		if (!(preg_match('/^[a-zA-Z ]+$/', $data['nombres']))) {
+			throw new \Exception("Se permiten solo letras");
 		}
 
 		if ($data['apellidos'] == "") {
 			throw new \Exception("Ingrese el apellido del personal");
 		}
 
-		if ($data['numero'] == "") {
-			throw new \Exception("Ingrese numero");
+		if (!(preg_match('/^[a-zA-Z ]+$/', $data['apellidos']))) {
+			throw new \Exception("Se permiten solo letras");
 		}
 
+	
 		if ($data['fecha_nacimiento'] == "") {
 			throw new \Exception("Ingrese fecha de nacimiento");
 		}
@@ -136,6 +141,10 @@ class Personal extends Controller
 
 		if ($data['sexo'] == "") {
 			throw new \Exception("Seleccione su género");
+		}
+
+		if (!(preg_match('/^[F-M]{1}+$/', $data['sexo']))) {
+			throw new \Exception("Solo escriba F o M según su género");
 		}
 
 		if (!preg_match('/^[#.0-9a-zA-Z\s,-]+$/', $data['direccion'])) {

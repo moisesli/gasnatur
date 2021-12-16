@@ -17,7 +17,6 @@ class ChargeModel extends Model
 
         try {
             $sth = $this->db->insert('cargos', $data);
-            // validacion
             if ($sth) {
                 $response->success = true;
                 $response->message = "Registrado correctamente";
