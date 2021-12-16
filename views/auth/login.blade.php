@@ -7,8 +7,6 @@
 @section('content')
   @verbatim
     <main class="bg-gray-50" id="app">
-      
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
       <div class="mx-auto md:h-screen flex flex-col justify-center items-center px-6 pt-8 pt:mt-0">
 
         <a href="#"
@@ -61,7 +59,7 @@
               </div>
               <button
                 type="button"
-                @click="sendLogin"
+                @click="sendLogin()"
                 class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-200 font-medium rounded-lg text-base px-5 py-3 w-full text-center">
                 <i class="fas fa-lock mr-2"></i>Entrar al Sistema
               </button>
@@ -80,15 +78,16 @@
           password: ''
         })
         const sendLogin = () => {
-          event.preventDefault();
-          debugger;
-          console.log(this.login);
-           axios.post('./apis/login', JSON.stringify(this.login)).then(res => {
-             console.log(res.data)
+          window.location.href = "zonas";
+          //event.preventDefault();
+          //debugger;
+          //console.log(this.login);
+           //axios.post('./apis/login', JSON.stringify(this.login)).then(res => {
+           //  console.log(res.data)
         
             // window.location.href = "zonas";
             // console.log('Se envio los datos login');
-           })
+           //})
 
 
         }
