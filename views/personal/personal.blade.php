@@ -226,10 +226,45 @@
 
             <!-- Tercera Fila -->
             <div class="flex flex-col md:flex-row mt-5">
-              <div class="md:w-1/5">
+              <div class="md:w-2/5 md:mr-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Fecha Nacimiento</label>
+                <input v-model="item.fecha_nacimiento" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="">
+              </div>
+              <div class="md:w-3/5 md:ml-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Direccion</label>
+                <input v-model="item.direccion" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="">                
+              </div>              
+            </div>
+
+            <!-- Tercera Fila -->
+            <div class="flex flex-col md:flex-row mt-5">
+              <div class="md:w-3/12 md:mr-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Sexo</label>
+                <select v-model="item.sexo" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2">
+                  <option value="M">Masculino</option>
+                  <option value="F">Femenino</option>
+                  <option value="O">Otros</option>
+                </select>
+              </div>
+              <div class="md:w-3/12 md:mr-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Estado</label>
+                <select v-model="item.estado" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2">
+                  <option value="activo">Activo</option>
+                  <option value="inactivo">Inactivo</option>                  
+                </select>
+              </div>
+              <div class="md:w-3/12 md:mr-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Celular</label>
+                <input v-model="item.celular" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="">                
+              </div>
+              <div class="md:w-3/12 md:mr-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Telefono</label>
+                <input v-model="item.telefono" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="">                
               </div>
             </div>
 
+            <!-- Tercera Fila -->
+            <div class="flex flex-col md:flex-row mt-5"></div>
 
           </form>
         </div>
