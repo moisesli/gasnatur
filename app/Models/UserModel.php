@@ -13,16 +13,12 @@ class UserModel extends Model
 
     public function create($data)
     {
+        unset($data['id']);
         $response = new \stdClass;
         $response->success = false;
 
-        try {
-
-            $key = 'gas_natu_ral';
-
-            $token = array('clave' => $data['clave']);
-
-            $data['clave'] = JWT::encode($token, $key);
+        try {            
+            $data['clave'] = $this->db->encriptationInformationText($data['clave']);
 
             $sth = $this->db->insert('usuarios', $data);
 
@@ -64,7 +60,8 @@ class UserModel extends Model
     public function findByComparatorRegister($comparator)
     {
         try {
-            return $this->db->find("SELECT * FROM usuarios WHERE usuario='$comparator'");
+            $sql = "SELECT * FROM usuarios WHERE usuario='$comparator'";
+            return $this->db->find($sql);
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];

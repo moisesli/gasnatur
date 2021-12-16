@@ -27,23 +27,9 @@ class Personal extends Controller
 			$data = $request->toArray();
 			$this->validaciones($request, $response);
 
-			// if ($this->personal->findByComparatorRegister($data['nombres']) == 1) {
-			// 	throw new \Exception("La zona ya existe, por favor ingresar una nueva zona");
-			//   }
-
-			// if (count($data) == 0) {
-			// 	throw new \Exception("No existe parametros");
-			// }
-
-			// if ($data['nombres'] == "") {
-			// 	throw new \Exception("Ingrese el nombre del personal");
-			// }
-
-			// if ($data['apellidos'] == "") {
-			// 	throw new \Exception("Ingrese el apellido del personal");
-			// }
-
-			// $data['nombres'] = strtolower($data['nombres']);
+			if ($this->personal->findByComparatorRegister($data['numero'])){
+				throw new \Exception("El personal ya existe, por favor ingresar un nuevo personal");
+			}
 
 			$result = $this->personal->create($data);
 
@@ -155,8 +141,8 @@ class Personal extends Controller
 		if (!preg_match('/^[#.0-9a-zA-Z\s,-]+$/', $data['direccion'])) {
 			throw new \Exception("Solo se permiten numeros y letras");
 		}
-	
-		if (!(preg_match('/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/', $data['fecha_nacimiento']))) {
+
+		if (!(preg_match('/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/', $data['correo']))) {
 			throw new \Exception("Ingrese correctamente el correo");
 		}
 

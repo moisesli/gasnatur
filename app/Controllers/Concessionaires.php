@@ -28,7 +28,7 @@ class Concessionaires extends Controller
 
 			$data = $request->toArray();
 
-			if ($this->concessionaire->findByComparatorRegister($data['descripcion']) == 1) {
+			if ($this->concessionaire->findByComparatorRegister($data['descripcion'])) {
 				throw new \Exception("La concesionaria ya existe, por favor ingresar una nueva concesionaria");
 			}
 			if (count($data) == 0) {

@@ -10,10 +10,12 @@ Class RoleModel extends Model
 
     public function create($data)
     {
+        unset($data['id']);
         $response = new \stdClass;
         $response->success = false;
 
         try {
+            
             $sth = $this->db->insert('roles', $data);
             if ($sth) {
                 $response->success = true;
@@ -42,7 +44,8 @@ Class RoleModel extends Model
     public function findByComparatorRegister($comparator)
     {
         try {
-            return $this->db->find("SELECT * FROM roles WHERE nombre='$comparator'");
+            $sql = "SELECT * FROM roles WHERE nombre='$comparator'";
+            return $this->db->find($sql);
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];

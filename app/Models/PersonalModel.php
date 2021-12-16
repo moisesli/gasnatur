@@ -43,7 +43,8 @@ class PersonalModel extends Model
     public function findByComparatorRegister($comparator)
     {
         try {
-            return $this->db->find("SELECT * FROM personal WHERE nombre='$comparator'");
+			$sql = "SELECT * FROM personal WHERE nombre='$comparator'";
+            return $this->db->find($sql);
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];
