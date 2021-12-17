@@ -28,7 +28,7 @@ class Social extends controller
             $data = $request->toArray();
 
             if ($this->social->findByComparatorRegister($data['nombre'])) {
-                throw new \Exception("La zona ya existe, por favor ingresar una nueva zona");
+                throw new \Exception("Este registro ya existe, por favor ingresar un nuevo registro");
             }
 
             $this->validaciones($request, $response );
@@ -44,12 +44,6 @@ class Social extends controller
 
         return $this->resjson(["success" => $statusOk, "message" => $messageError], 201);
     }
-
-    // public function getAll(Response $response)
-	// {
-	// 	$results = $this->social->getAll();
-	// 	return $this->resjson($results);
-	// }
 
     public function getById(Response $response, $id)
 	{

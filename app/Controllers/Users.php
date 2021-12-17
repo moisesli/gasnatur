@@ -145,10 +145,6 @@ class Users extends Controller
       throw new \Exception("Password sin valor");
     }
 
-    // if(empty($data['id_personal'])){
-    //   throw new \Exception("El id del personal está vacío");
-    // }
-
     if ($data['id_personal'] == "" | $data['id_personal'] <= 0 | !is_int($data['id_personal'])) {
       throw new \Exception("El id del personal no es válido");
     }
@@ -199,7 +195,7 @@ class Users extends Controller
         return $token;
     }
     else{
-      return "usuario y/o password inválido";
+      return "";
     }
 
   }

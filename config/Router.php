@@ -2,19 +2,16 @@
 
 $app = new \Config\Routeparams();
 
-// Controllers
 //users
-// $app->router->get('/apis/usuarios', 'Users@getAll');
 $app->router->post('/apis/login', 'Users@login');
 $app->router->get('/apis/usuarios/:id?/:all?', 'Users@paginator');
-//el get en getById cambiarlo por post para que no confunda con el paginador, hacerlo en todas los cruds.
 $app->router->post('/apis/usuarios/:id','Users@getById'); 
 $app->router->post('/apis/usuarios', 'Users@create');
 $app->router->put('/apis/usuarios/:id', 'Users@update');
 $app->router->delete('/apis/usuarios/:id', 'Users@delete');
 
 //zones
-$app->router->get('/apis/zonas/:id?/:all?', 'Zones@paginator');
+$app->router->get('/apis/zonas/:id?/:all?', 'Zones@paginator', ['before' => 'CheckAuth']);
 $app->router->post('/apis/zonas/:id', 'Zones@getById');
 $app->router->post('/apis/zonas', 'Zones@create');
 $app->router->put('/apis/zonas/:id', 'Zones@update');
@@ -44,7 +41,6 @@ $app->router->delete('/apis/roles/:id', 'Roles@delete');
 
 
 //Personal
-
 $app->router->get('/apis/personal/:id?/:all?', 'Personal@paginator');
 $app->router->post('/apis/personal/:id','Personal@getById'); 
 $app->router->post('/apis/personal', 'Personal@create');
@@ -65,13 +61,27 @@ $app->router->post('/apis/estrato_social', 'Social@create');
 $app->router->put('/apis/estrato_social/:id', 'Social@update');
 $app->router->delete('/apis/estrato_social/:id', 'Social@delete');
 
-//Company
+//COMPANY
 $app->router->get('/apis/empresa/:id?/:all?', 'Company@paginator');
 $app->router->post('/apis/empresa/:id', 'Company@getById');
 $app->router->post('/apis/empresa', 'Company@create');
 $app->router->put('/apis/empresa/:id', 'Company@update');
 $app->router->delete('/apis/empresa/:id', 'Company@delete');
 
+//PROJECT
+$app->router->get('/apis/proyectos/:id?/:all?', 'Project@paginator');
+$app->router->post('/apis/proyectos/:id', 'Project@getById');
+$app->router->post('/apis/proyectos', 'Project@create');
+$app->router->put('/apis/proyectos/:id', 'Project@update');
+$app->router->delete('/apis/proyectos/:id', 'Project@delete');
+
+
+//MESH
+$app->router->get('/apis/mallas/:id?/:all?', 'Mesh@paginator');
+$app->router->post('/apis/mallas/:id', 'Mesh@getById');
+$app->router->post('/apis/mallas', 'Mesh@create');
+$app->router->put('/apis/mallas/:id', 'Mesh@update');
+$app->router->delete('/apis/mallas/:id', 'Mesh@delete');
 
 
 
@@ -98,7 +108,7 @@ $app->router->get('/registro', function () {
 $app->router->get('/zonas', function () {
   $front = new \Config\View();
   return $front->show('zonas.zonas');
-});
+}, ['before' => 'CheckAuth']);
 
 $app->router->get('/personal', function () {
     $front = new \Config\View();

@@ -42,6 +42,14 @@ class Company extends Controller
         return $this->resjson(["success" => $statusOk, "message" => $messageError], 201);
     }
 
+    public function getById(Response $response, $id)
+	{
+
+		$result = $this->company->findById($id);
+
+		return $this->resjson($result);
+	}
+
     public function update(Request $request, Response $response, $id)
     {
         $statusOk = false;

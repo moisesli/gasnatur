@@ -42,6 +42,8 @@ class Concessionaires extends Controller
 				throw new \Exception("Seleccione el estado de la concesionarias");
 			}
 
+			// $data['descripcion'] = strtolower($data['descripcion']);
+
 			$result = $this->concessionaire->create($data);
 
 			[$statusOk, $messageError] = array_values((array)$result);
