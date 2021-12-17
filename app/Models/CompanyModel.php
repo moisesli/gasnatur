@@ -31,6 +31,18 @@ class CompanyModel extends Model
 		return $response;
 	}
 
+	public function findById($id)
+	{
+		try {
+			$sql = "SELECT * FROM empresa WHERE id = $id LIMIT 1";
+
+			return $this->db->find($sql);
+		} catch (\Exception $e) {
+
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
+
 	public function findByComparatorRegister($comparator1, $comparator2)
 	{
 		try {

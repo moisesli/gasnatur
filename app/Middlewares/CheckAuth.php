@@ -2,14 +2,23 @@
 
 namespace App\Middlewares;
 
-class CheckAuth {
+use Buki\Router\Http\Middleware;
+use Symfony\Component\HttpFoundation\Request;
 
-    public function handle(){
+class CheckAuth extends Middleware {
+
+    public function handle(Request $request){
 
 
-     //token
+        $token = $request->cookies->get('token');
 
-        return true;
+        if( $token != "")
+        {
+            return true;
+        }else{
+            return false;
+        }
+    
 
     }
 

@@ -2,7 +2,7 @@
 
 use Config\Model;
 
-class PersonalModel extends Model
+class ProjectModel extends Model
 {
     public function __construct()
 	{
@@ -17,7 +17,7 @@ class PersonalModel extends Model
 
 		try {
 
-			$sth = $this->db->insert("personal", $data);
+			$sth = $this->db->insert("proyectos", $data);
 			if (!$sth) {
 				throw new \Exception("No pudimos registrar al personal");
 			}
@@ -31,30 +31,10 @@ class PersonalModel extends Model
 		return $response;
 	}
 
-    public function getAll()
-	{
-		try {
-			return $this->db->findAll("SELECT * FROM personal");
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
-
-    public function findByComparatorRegister($comparator)
-    {
-        try {
-			$sql = "SELECT * FROM personal WHERE numero='$comparator'";
-            return $this->db->find($sql);
-        } catch (\Exception $e) {
-
-            return ["success" => false, "message" => $e->getMessage()];
-        }
-    }
-
     public function findById($id)
 	{
 		try {
-			$sql = "SELECT * FROM personal WHERE id = $id LIMIT 1";
+			$sql = "SELECT * FROM proyectos WHERE id = $id LIMIT 1";
 
 			return $this->db->find($sql);
 		} catch (\Exception $e) {
@@ -70,7 +50,7 @@ class PersonalModel extends Model
 
 		try {
 
-			$sth = $this->db->update("personal", $data, "id={$id}");
+			$sth = $this->db->update("proyectos", $data, "id={$id}");
 			if (!$sth) {
 				throw new \Exception("No pudimos actualizar al personal");
 			}
@@ -91,7 +71,7 @@ class PersonalModel extends Model
 
 		try {
 
-			$sth = $this->db->delete("personal", "id={$id}");
+			$sth = $this->db->delete("proyectos", "id={$id}");
 			if (!$sth) {
 				throw new \Exception("No pudimos eliminar al personal");
 			}
@@ -105,7 +85,18 @@ class PersonalModel extends Model
 		return $response;
 	}
 
-	public function paginator($pagina, $q)
+    public function findByComparatorRegister($comparator)
+    {
+        try {
+			$sql = "SELECT * FROM proyectos WHERE nombre='$comparator'";
+            return $this->db->find($sql);
+        } catch (\Exception $e) {
+
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function paginator($pagina, $q)
     {
         $orderBy = 'id';
         $palabraBuscada = "";
@@ -115,12 +106,10 @@ class PersonalModel extends Model
                 $palabraBuscada = $q;
                 $filtro = " nombre LIKE '%$q%' ";
             }
-            return $this->db->paginator('usuarios', $pagina, $palabraBuscada, $filtro, $orderBy);
+            return $this->db->paginator('proyectos', $pagina, $palabraBuscada, $filtro, $orderBy);
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];
         }
     }
 
-
-	
 }

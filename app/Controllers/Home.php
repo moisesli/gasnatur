@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-// use App\Middlewares\CheckAuth;
+use App\Middlewares\CheckAuth;
 use Config\Controller;
 
 use App\Models\UserModel;
