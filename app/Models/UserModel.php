@@ -99,7 +99,7 @@ class UserModel extends Model
 
             $sth = $this->db->delete("usuarios", "id={$id}");
             if (!$sth) {
-                throw new \Exception("No pudimos eliminar la zona");
+                throw new \Exception("No pudimos eliminar");
             }
 
             $response->success = true;

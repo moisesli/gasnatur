@@ -2,12 +2,12 @@
 
 use Config\Model;
 
-class PersonalModel extends Model
+class CompanyModel extends Model
 {
     public function __construct()
-	{
-		parent::__construct();
-	}
+    {
+        parent::__construct();
+    }
 
     public function create($data)
 	{
@@ -17,9 +17,9 @@ class PersonalModel extends Model
 
 		try {
 
-			$sth = $this->db->insert("personal", $data);
+			$sth = $this->db->insert("empresa", $data);
 			if (!$sth) {
-				throw new \Exception("No pudimos registrar al personal");
+				throw new \Exception("No pudimos registrar la empresa");
 			}
 
 			$response->success = true;
@@ -31,31 +31,10 @@ class PersonalModel extends Model
 		return $response;
 	}
 
-    public function getAll()
+	public function findByComparatorRegister($comparator1, $comparator2)
 	{
 		try {
-			return $this->db->findAll("SELECT * FROM personal");
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
-
-    public function findByComparatorRegister($comparator)
-    {
-        try {
-			$sql = "SELECT * FROM personal WHERE numero='$comparator'";
-            return $this->db->find($sql);
-        } catch (\Exception $e) {
-
-            return ["success" => false, "message" => $e->getMessage()];
-        }
-    }
-
-    public function findById($id)
-	{
-		try {
-			$sql = "SELECT * FROM personal WHERE id = $id LIMIT 1";
-
+			$sql = "SELECT * FROM empresa WHERE nombre_comercial='$comparator1' OR ruc='$comparator2' ";
 			return $this->db->find($sql);
 		} catch (\Exception $e) {
 
@@ -70,9 +49,9 @@ class PersonalModel extends Model
 
 		try {
 
-			$sth = $this->db->update("personal", $data, "id={$id}");
+			$sth = $this->db->update("empresa", $data, "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos actualizar al personal");
+				throw new \Exception("No pudimos actualizar la empresa");
 			}
 
 			$response->success = true;
@@ -91,9 +70,9 @@ class PersonalModel extends Model
 
 		try {
 
-			$sth = $this->db->delete("personal", "id={$id}");
+			$sth = $this->db->delete("empresa", "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos eliminar al personal");
+				throw new \Exception("No pudimos eliminar la empresa");
 			}
 
 			$response->success = true;
@@ -105,22 +84,21 @@ class PersonalModel extends Model
 		return $response;
 	}
 
-	public function paginator($pagina, $q)
+
+    public function paginator($pagina, $q)
 	{
 		$orderBy = 'id';
 		$palabraBuscada = "";
 		$filtro = "";
+
 		try {
 			if ($q != "") {
 				$palabraBuscada = $q;
-				$filtro = " nombres LIKE '%$q%' OR apellidos LIKE '%$q%' ";
+				$filtro = " ruc LIKE '%$q%' ";
 			}
-			return $this->db->paginator('personal', $pagina, $palabraBuscada ,$filtro, $orderBy);
+			return $this->db->paginator('empresa', $pagina, $palabraBuscada, $filtro, $orderBy);
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}
 	}
-
-
-	
 }
