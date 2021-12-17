@@ -3,7 +3,7 @@
   const app = createApp({
     data() {
       return {
-        entity: 'concesionarias',
+        entity: 'empresa',
         search: '',
         pagination: {
           inicio: null,
@@ -19,8 +19,18 @@
         items: [],
         item: {
           id: '',
-          descripcion: '',
-          estado: ''
+          id_ubigeo: '',
+          ruc: '',
+          razon_social: '',
+          nombre_comercial: '',
+          direccion: '',
+          anexo: '',
+          telefono: '',
+          celular: '',
+          correo: '',
+          web: '',
+          logo: '',
+          estado: '',
         },
         loading: {                              
           items: false,
@@ -75,8 +85,18 @@
         axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
           console.log(res.data)
           this.item.id = res.data.id,
-          this.item.descripcion = res.data.descripcion;
-          this.item.estado = res.data.estado;                         
+          this.item.id_ubigeo = res.data.id_ubigeo;
+          this.item.ruc = res.data.ruc;
+          this.item.razon_social = res.data.razon_social;
+          this.item.nombre_comercial = res.data.nombre_comercial;
+          this.item.direccion = res.data.direccion;
+          this.item.anexo = res.data.anexo;
+          this.item.telefono = res.data.telefono;
+          this.item.celular = res.data.celular;
+          this.item.correo = res.data.correo;
+          this.item.web = res.data.web;
+          this.item.logo = res.data.logo;
+          this.item.estado = res.data.estado;
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -136,8 +156,18 @@
       },
       clearItem: function(){     
         this.item.id = '',
-        this.item.descripcion = '';
-        this.item.estado = '';              
+        this.item.id_ubigeo = '';
+        this.item.ruc = '';
+        this.item.razon_social = '';
+        this.item.nombre_comercial = '';
+        this.item.direccion = '';
+        this.item.anexo = '';
+        this.item.telefono = '';
+        this.item.celular = '';
+        this.item.correo = '';
+        this.item.web = '';
+        this.item.logo = '';
+        this.item.estado = '';
       }
     },
     mounted(){

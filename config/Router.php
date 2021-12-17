@@ -110,4 +110,14 @@ $app->router->get('/cargos', function () {
     return $front->show('cargos.cargos');
 });
 
+$app->router->get('/concesionarias', function () {
+    $front = new \Config\View();
+    return $front->show('concesionarias.concesionarias');
+});
+
+$app->router->get('/empresa', function () {
+    $front = new \Config\View();
+    return $front->show('empresa.empresa');
+});
+
 $app->run();
