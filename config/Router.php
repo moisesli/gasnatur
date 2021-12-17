@@ -97,4 +97,9 @@ $app->router->get('/personal', function () {
     return $front->show('personal.personal');
 });
 
+$app->router->get('/cargos', function () {
+    $front = new \Config\View();
+    return $front->show('cargos.cargos');
+});
+
 $app->run();
