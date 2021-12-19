@@ -62,10 +62,10 @@ $app->router->put('/apis/estrato_social/:id', 'Social@update');
 $app->router->delete('/apis/estrato_social/:id', 'Social@delete');
 
 //COMPANY
-$app->router->get('/apis/empresa/:id?/:all?', 'Company@paginator');
-$app->router->post('/apis/empresa/:id', 'Company@getById');
-$app->router->post('/apis/empresa', 'Company@create');
-$app->router->put('/apis/empresa/:id', 'Company@update');
+$app->router->get('/apis/empresas/:id?/:all?', 'Company@paginator');
+$app->router->post('/apis/empresas/:id', 'Company@getById');
+$app->router->post('/apis/empresas', 'Company@create');
+$app->router->put('/apis/empresas/:id', 'Company@update');
 $app->router->delete('/apis/empresa/:id', 'Company@delete');
 
 //PROJECT
@@ -125,14 +125,24 @@ $app->router->get('/concesionarias', function () {
     return $front->show('concesionarias.concesionarias');
 });
 
-$app->router->get('/empresa', function () {
+$app->router->get('/empresas', function () {
     $front = new \Config\View();
-    return $front->show('empresa.empresa');
+    return $front->show('empresas.empresas');
 });
 
 $app->router->get('/mallas', function () {
     $front = new \Config\View();
     return $front->show('mallas.mallas');
+});
+
+$app->router->get('/proyectos', function () {
+    $front = new \Config\View();
+    return $front->show('proyectos.proyectos');
+});
+
+$app->router->get('/estrato_social', function () {
+    $front = new \Config\View();
+    return $front->show('estrato_social.estrato_social');
 });
 
 $app->run();

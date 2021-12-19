@@ -124,7 +124,7 @@
                 </a>
               </li>
               <li>
-                <a href="https://demo.themesberg.com/windster-pro/kanban/" target="_blank"
+                <a href="./proyectos"
                    class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                   <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -137,7 +137,7 @@
                 </a>
               </li>
               <li>
-                <a href="./empresa"
+                <a href="./empresas"
                    class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                   <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -163,7 +163,7 @@
                 </a>
               </li>
               <li>
-                <a href="https://demo.themesberg.com/windster/e-commerce/products/"
+                <a href="./manzanas"
                    class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                   <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -214,6 +214,11 @@
                         clip-rule="evenodd"></path>
                 </svg>
                 <span class="ml-3">Cargos</span>
+              </a>
+              <a href="./estrato_social"
+                 class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2">
+                <i class="fab fa-black-tie w-6 text-lg text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"></i>
+                <span class="ml-3">Estrato Social</span>
               </a>
               <a href="./personal"
                  class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2">

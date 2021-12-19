@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
-@section('title','Empresa')
+@section('title','Proyecto')
 @section('vuejs')
-  @include('empresa.empresajs')
+  @include('proyectos.proyectosjs')
 @endsection
 @section('content')
   @verbatim
@@ -84,10 +84,11 @@
           <thead class="bg-gray-100">
             <tr>
               <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">#id</th>
-              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Razon Social</th>
-              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Celular</th>
-              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Correo</th>
-              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>              
+              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Nombre</th>              
+              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Empresa</th>
+              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Concesionaria</th>
+              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
+              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Numero</th>
               <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
             </tr>
           </thead>
@@ -97,19 +98,22 @@
                 <div class="flex items-center text-gray-500">{{ item.id }}</div>
               </td>
               <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                <div class="text-base font-semibold text-gray-900">{{ item.razon_social }}<div>
-                <div class="text-sm font-normal text-gray-500">{{ item.ruc }}<div>                
+                <div class="text-base font-semibold text-gray-900">{{ item.nombre }}<div>
+                <div class="text-sm font-normal text-gray-500">{{ item.estado }}<div>                
               </td>
               <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                <div class="text-base font-semibold text-gray-900">{{ item.celular }}<div>
-                <div class="text-sm font-normal text-gray-500">{{ item.telefono }}<div>
+                <div class="text-base font-semibold text-gray-900">{{ item.id_empresa }}<div>                
               </td>
               <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                <div class="text-base font-semibold text-gray-900">{{ item.correo }}<div>
-                <div class="text-sm font-normal text-gray-500">{{ item.web }}<div>
+                <div class="text-base font-semibold text-gray-900">{{ item.id_concesionaria }}<div>                
               </td> 
               <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                <div class="text-sm font-normal text-gray-500">{{ item.estado }}<div>                
+                <div class="text-base font-semibold text-gray-900">{{ item.fecha_inicio }}<div>
+                <div class="text-sm font-normal text-gray-500">{{ item.fecha_fin }}<div>
+              </td>
+              <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                <div class="text-base font-semibold text-gray-900">{{ item.numero_inicial }}<div>
+                <div class="text-sm font-normal text-gray-500">{{ item.numero_final }}<div>
               </td>             
               <td class="p-4 whitespace-nowrap space-x-2">
                 <!-- Button Edit -->
@@ -162,7 +166,6 @@
 </div>
 
 <!-- Modal -->
-
 <div v-bind:class="{ hidden: !modal.show }">
   <div  class="overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full flex" id="user-modal" aria-modal="true" role="dialog">
     <div class="relative w-full max-w-2xl px-4 h-full md:h-auto">
@@ -190,75 +193,71 @@
 
             <!-- Primera Fila -->
             <div class="flex flex-col md:flex-row">
-              <div class="md:w-3/12 md:mr-2.5">
-                <label class="text-sm font-medium text-gray-900 block mb-2">Ubigeo</label>
-                <input v-model="item.id_ubigeo" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" required="">
+              <div class="md:w-2/3 md:mr-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Nombre del Proyecto</label>
+                <input v-model="item.nombre" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2">
               </div>
-              <div class="md:w-3/12 md:ml-2.5 md:mr-2.5">
-                <label class="text-sm font-medium text-gray-900 block mb-2">RUC</label>
-                <input v-model="item.ruc" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" required="">
-              </div>              
-              <div class="md:w-6/12 md:ml-2.5">
-                <label class="text-sm font-medium text-gray-900 block mb-2">Razon Social</label>
-                <input v-model="item.razon_social" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" required="">
-              </div>              
+              <div class="md:w-1/3 md:ml-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Fecha Registro</label>
+                <input v-model="item.fecha_registro" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2">
+              </div>
             </div>
 
             <!-- Segunda Fila -->
             <div class="flex flex-col md:flex-row mt-5">
-              <div class="md:w-1/2 md:mr-2.5">
-                <label class="text-sm font-medium text-gray-900 block mb-2">Nombre Comercial</label>
-                <input v-model="item.nombre_comercial" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" >
+              <div class="md:w-1/3 md:mr-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Empresas</label>
+                <select v-model="item.id_empresa" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
+                    <option v-for="empresa in empresas" :value="empresa.id">{{ empresa.razon_social }}</option>                    
+                </select>                
               </div>
-              <div class="md:w-1/2 md:ml-2.5">
-              <label class="text-sm font-medium text-gray-900 block mb-2">Direccion</label>
-                <input v-model="item.direccion" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" >
-              </div>
+              <div class="md:w-1/3 md:ml-2.5 md:mr-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Concesionaria</label>
+                <select v-model="item.id_concesionaria" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
+                    <option v-for="concesionaria in concesionarias" :value="concesionaria.id">{{ concesionaria.descripcion }}</option>                    
+                </select>
+              </div>              
+              <div class="md:w-1/3 md:ml-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Zona</label>
+                <select v-model="item.id_zona" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
+                  <option v-for="zona in zonas" :value="zona.id">{{ zona.nombre }}</option>                    
+                </select>
+              </div>              
             </div>
 
             <!-- Tercera Fila -->
             <div class="flex flex-col md:flex-row mt-5">
-              <div class="md:w-1/3 md:mr-2.5">
-                <label class="text-sm font-medium text-gray-900 block mb-2">Anexo</label>
-                <input v-model="item.anexo" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" >
+              <div class="md:w-1/2 md:mr-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Fecha Inicio</label>
+                <input v-model="item.fecha_inicio" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" >
               </div>
-              <div class="md:w-1/3 md:mr-2.5">
-                <label class="text-sm font-medium text-gray-900 block mb-2">Telefono</label>
-                <input v-model="item.telefono" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" >
-              </div>
-              <div class="md:w-1/3 md:ml-2.5">
-                <label class="text-sm font-medium text-gray-900 block mb-2">Celular</label>
-                <input v-model="item.celular" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" >
-              </div>
+              <div class="md:w-1/2 md:ml-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Fecha Final</label>
+                <input v-model="item.fecha_fin" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" >
+              </div>              
             </div>
 
             <!-- Cuarta Fila -->
             <div class="flex flex-col md:flex-row mt-5">
-              <div class="md:w-1/2 md:mr-2.5">
-                <label class="text-sm font-medium text-gray-900 block mb-2">Correo</label>
-                <input v-model="item.correo" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" >
+              <div class="md:w-1/3 md:mr-2.5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Numero Inicial</label>
+                <input v-model="item.numero_inicial" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" >
               </div>
-              <div class="md:w-1/2 md:ml-2.5">
-                <label class="text-sm font-medium text-gray-900 block mb-2">Logo</label>
-                <input v-model="item.logo" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" >
+              <div class="md:w-1/3 md:ml-2.5">
+              <label class="text-sm font-medium text-gray-900 block mb-2">Numero Final</label>
+                <input v-model="item.direccion" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" >
               </div>
-            </div>
-
-
-            <!-- Quinta Fila -->
-            <div class="flex flex-col md:flex-row mt-5">
-              <div class="md:w-1/2 md:mr-2.5">
-                <label class="text-sm font-medium text-gray-500 block mb-2">Web</label>
-                <input v-model="item.web" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" >
-              </div>
-              <div class="md:w-1/2 md:ml-2.5">
-                <label class="text-sm font-medium text-gray-500 block mb-2">Estado</label>
+              <div class="md:w-1/3 md:ml-5">
+                <label class="text-sm font-medium text-gray-900 block mb-2">Estado</label>
                 <select v-model="item.estado" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2">
-                  <option value="activo">Activo</option>
-                  <option value="inactivo">Inactivo</option>                  
-                </select>                
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>                  
+                </select>
               </div>
             </div>
+
+            
+
           </form>
         </div>
 
