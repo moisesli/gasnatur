@@ -83,6 +83,50 @@ $app->router->post('/apis/mallas', 'Mesh@create');
 $app->router->put('/apis/mallas/:id', 'Mesh@update');
 $app->router->delete('/apis/mallas/:id', 'Mesh@delete');
 
+//CONTRACT
+$app->router->get('/apis/contratos/:id?/:all?', 'Contract@paginator');
+$app->router->post('/apis/contratos/:id', 'Contract@getById');
+$app->router->post('/apis/contratos', 'Contract@create');
+$app->router->put('/apis/contratos/:id', 'Contract@update');
+$app->router->delete('/apis/contratos/:id', 'Contract@delete');
+
+//APPLE
+$app->router->get('/apis/manzanas/:id?/:all?', 'Apple@paginator');
+$app->router->post('/apis/manzanas/:id', 'Apple@getById');
+$app->router->post('/apis/manzanas', 'Apple@create');
+$app->router->put('/apis/manzanas/:id', 'Apple@update');
+$app->router->delete('/apis/manzanas/:id', 'Apple@delete');
+
+//ACCESS
+$app->router->get('/apis/permisos/:id?/:all?', 'Access@paginator');
+$app->router->get('/apis/permisosrol/:id', 'Access@getByIdRole');
+$app->router->post('/apis/permisos', 'Access@create');
+$app->router->put('/apis/permisos/:id', 'Access@update');
+$app->router->delete('/apis/permisos/:id', 'Access@delete');
+
+//Nationality
+$app->router->get('/apis/nacionalidades/:id?/:all?', 'Nationality@paginator');
+$app->router->post('/apis/nacionalidades/:id','Nationality@getById'); 
+$app->router->post('/apis/nacionalidades', 'Nationality@create');
+$app->router->put('/apis/nacionalidades/:id', 'Nationality@update');
+$app->router->delete('/apis/nacionalidades/:id', 'Nationality@delete');
+
+//Client
+$app->router->get('/apis/clientes/:id?/:all?', 'Client@paginator');
+$app->router->post('/apis/clientes/:id','Client@getById'); 
+$app->router->post('/apis/clientes', 'Client@create');
+$app->router->put('/apis/clientes/:id', 'Client@update');
+$app->router->delete('/apis/clientes/:id', 'Client@delete');
+
+//Material
+$app->router->get('/apis/tipomaterial/:id?/:all?', 'Material@paginator');
+$app->router->post('/apis/tipomaterial/:id','Material@getById'); 
+$app->router->post('/apis/tipomaterial', 'Material@create');
+$app->router->put('/apis/tipomaterial/:id', 'Material@update');
+$app->router->delete('/apis/tipomaterial/:id', 'Material@delete');
+
+
+
 
 
 

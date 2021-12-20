@@ -41,7 +41,7 @@ class Financing extends Controller
 				throw new \Exception("Seleccione el estado");
 			}
 
-			if (!(preg_match('/^[a-zA-Z0-9]+$/', $data['descripcion']))) {
+			if (!(preg_match('/^[a-zA-Z0-9 ]+$/', $data['descripcion']))) {
 				throw new \Exception("Se permiten solo letras y numeros");
 			  }
 

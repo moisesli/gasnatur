@@ -4,12 +4,12 @@ use Config\Model;
 
 class SocialModel extends model
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-    public function create($data)
+	public function create($data)
 	{
 		unset($data['id']);
 		$response = new \stdClass;
@@ -31,7 +31,7 @@ class SocialModel extends model
 		return $response;
 	}
 
-    public function getAll()
+	public function getAll()
 	{
 		try {
 			return $this->db->findAll("SELECT * FROM estrato_social");
@@ -40,7 +40,7 @@ class SocialModel extends model
 		}
 	}
 
-    public function findByComparatorRegister($comparator)
+	public function findByComparatorRegister($comparator)
 	{
 		try {
 			$sql = "SELECT * FROM estrato_social WHERE nombre='$comparator'";
@@ -51,7 +51,7 @@ class SocialModel extends model
 		}
 	}
 
-    public function findById($id)
+	public function findById($id)
 	{
 		try {
 			$sql = "SELECT * FROM estrato_social WHERE id = $id LIMIT 1";
@@ -63,7 +63,7 @@ class SocialModel extends model
 		}
 	}
 
-    public function update($data, $id)
+	public function update($data, $id)
 	{
 		$response = new \stdClass;
 		$response->success = false;
@@ -84,7 +84,7 @@ class SocialModel extends model
 		return $response;
 	}
 
-    public function delete($id)
+	public function delete($id)
 	{
 		$response = new \stdClass;
 		$response->success = false;
@@ -105,7 +105,7 @@ class SocialModel extends model
 		return $response;
 	}
 
-    public function paginator($pagina, $q)
+	public function paginator($pagina, $q)
 	{
 		$orderBy = 'id';
 		$palabraBuscada = "";
@@ -121,5 +121,4 @@ class SocialModel extends model
 			return ["success" => false, "message" => $e->getMessage()];
 		}
 	}
-
 }

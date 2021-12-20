@@ -1,8 +1,9 @@
 <?php
 use Config\Model;
 
-Class RoleModel extends Model
+Class NationalityModel extends Model
 {
+    
     public function __construct()
     {
         parent::__construct();
@@ -16,7 +17,7 @@ Class RoleModel extends Model
 
         try {
             
-            $sth = $this->db->insert('roles', $data);
+            $sth = $this->db->insert('nacionalidades', $data);
             if ($sth) {
                 $response->success = true;
                 $response->message = "Registrado correctamente";
@@ -29,22 +30,10 @@ Class RoleModel extends Model
         return $response;
     }
 
-    public function getAll()
-    {
-
-        try {
-            return $this->db->findAll("SELECT * FROM roles");
-        } catch (\Exception $e) {
-
-            return ["success" => false, "message" => $e->getMessage()];
-        }
-
-    }
-
     public function findByComparatorRegister($comparator)
     {
         try {
-            $sql = "SELECT * FROM roles WHERE nombre='$comparator'";
+            $sql = "SELECT * FROM nacionalidades WHERE descripcion='$comparator'";
             return $this->db->find($sql);
         } catch (\Exception $e) {
 
@@ -55,7 +44,7 @@ Class RoleModel extends Model
     public function findById($id)
 	{
 		try {
-			$sql = "SELECT * FROM roles WHERE id = $id LIMIT 1";
+			$sql = "SELECT * FROM nacionalidades WHERE id = $id LIMIT 1";
 
 			return $this->db->find($sql);
 		} catch (\Exception $e) {
@@ -71,7 +60,7 @@ Class RoleModel extends Model
 
         try {
 
-            $sth = $this->db->update("roles", $data, "id={$id}");
+            $sth = $this->db->update("nacionalidades", $data, "id={$id}");
             if (!$sth) {
                 throw new \Exception("No pudimos actualizar");
             }
@@ -85,7 +74,6 @@ Class RoleModel extends Model
         return $response;
     }
 
-    
     public function delete($id)
 	{
 		$response = new \stdClass;
@@ -93,7 +81,7 @@ Class RoleModel extends Model
 
 		try {
 
-			$sth = $this->db->delete("roles", "id={$id}");
+			$sth = $this->db->delete("nacionalidades", "id={$id}");
 			if (!$sth) {
 				throw new \Exception("No pudimos eliminar el rol");
 			}
@@ -115,9 +103,9 @@ Class RoleModel extends Model
 		try {
 			if ($q != "") {
                 $palabraBuscada=$q;
-				$filtro = " nombre LIKE '%$q%' ";
+				$filtro = " descripcion LIKE '%$q%' ";
 			}
-			return $this->db->paginator('roles', $pagina, $palabraBuscada ,$filtro, $orderBy);
+			return $this->db->paginator('nacionalidades', $pagina, $palabraBuscada ,$filtro, $orderBy);
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}
