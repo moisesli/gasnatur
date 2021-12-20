@@ -4,8 +4,7 @@
     data() {
       return {
         entity: 'planes_financiamientos',
-        name: 'Planes de Financiamiento',
-        open: false,
+        name: 'Planes de Financiamiento',        
         search: '',
         pagination: {
           inicio: null,
@@ -40,10 +39,7 @@
         }        
       }
     },
-    methods: {
-      changeMenu: function(){
-        this.open = !this.open;
-      },
+    methods: {      
       loadItems: function(pagina = 1, palabra_buscada = ''){  
         if( pagina != 0 ){
           this.loading.items = true;
