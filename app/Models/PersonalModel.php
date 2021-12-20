@@ -115,7 +115,7 @@ class PersonalModel extends Model
                 $palabraBuscada = $q;
                 $filtro = " nombre LIKE '%$q%' ";
             }
-            return $this->db->paginator('usuarios', $pagina, $palabraBuscada, $filtro, $orderBy);
+            return $this->db->paginator('personal', $pagina, $palabraBuscada, $filtro, $orderBy);
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];
         }
