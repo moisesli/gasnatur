@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
-@section('title','Concesionarias')
+@section('title','Planes de Financiamiento')
 @section('vuejs')
-  @include('concesionarias.concesionariasjs')
+  @include('planes_financiamientos.planes_financiamientosjs')
 @endsection
 @section('content')
   @verbatim
@@ -28,14 +28,14 @@
             <div class="flex items-center">
               <i class="fas fa-chevron-right text-gray-400 ml-2 mr-2 text-sm"></i>
               <span class="text-gray-400 ml-1 md:ml-2 text-sm font-medium" aria-current="page">
-                {{ entity }}
+                {{ name }}
               </span>
             </div>
           </li>
         </ol>
       </nav>
       <h1 class="text-xl sm:text-2xl font-semibold text-gray-900">
-        Lista de {{ entity }}
+        Lista de {{ name }}
       </h1>
     </div>
     <div class="block sm:flex items-center md:divide-x md:divide-gray-100">
@@ -84,7 +84,7 @@
           <thead class="bg-gray-100">
             <tr>
               <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">#id</th>
-              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Nombre</th>
+              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Descripcion</th>
               <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>              
               <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
             </tr>
@@ -92,13 +92,13 @@
           <tbody class="bg-white divide-y divide-gray-200">
             <tr class="hover:bg-gray-100" v-for="(item, index) in items">
               <td class="p-4 w-4">
-                <div class="flex items-center">{{ item.id }}</div>
+                <div class="flex items-center text-gray-500">{{ item.id }}</div>
               </td>
               <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
                 <div class="text-base font-semibold text-gray-900">{{ item.descripcion }}<div>                
               </td>
               <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                <div class="text-base font-semibold text-gray-900">{{ item.estado }}<div>
+                <div class="text-base font-semibold text-gray-900">{{ item.estado }}<div>                
               </td>              
               <td class="p-4 whitespace-nowrap space-x-2">
                 <!-- Button Edit -->
@@ -151,7 +151,6 @@
 </div>
 
 <!-- Modal -->
-
 <div v-bind:class="{ hidden: !modal.show }">
   <div  class="overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full flex" id="user-modal" aria-modal="true" role="dialog">
     <div class="relative w-full max-w-2xl px-4 h-full md:h-auto">
@@ -183,11 +182,12 @@
                 <label class="text-sm font-medium text-gray-900 block mb-2">Descripcion</label>
                 <input v-model="item.descripcion" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" required="">
               </div>
-              <div class="md:w-1/2 md:ml-2.5">
+              <div class="md:w-1/2 md:ml-2.5 md:ml-2.5">
                 <label class="text-sm font-medium text-gray-900 block mb-2">Estado</label>
                 <input v-model="item.estado" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" required="">
               </div>              
             </div>
+
           </form>
         </div>
 

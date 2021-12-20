@@ -3,7 +3,8 @@
   const app = createApp({
     data() {
       return {
-        entity: 'concesionarias',
+        entity: 'estrato_social',
+        name: 'Estrato Social',
         search: '',
         pagination: {
           inicio: null,
@@ -19,8 +20,9 @@
         items: [],
         item: {
           id: '',
-          descripcion: '',
-          estado: ''
+          nombre: '',
+          numero: '',
+          porc_devolucion: '',          
         },
         loading: {                              
           items: false,
@@ -75,8 +77,9 @@
         axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
           console.log(res.data)
           this.item.id = res.data.id,
-          this.item.descripcion = res.data.descripcion;
-          this.item.estado = res.data.estado;                         
+          this.item.nombre = res.data.nombre;
+          this.item.numero = res.data.numero;
+          this.item.porc_devolucion = res.data.porc_devolucion;          
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -136,8 +139,9 @@
       },
       clearItem: function(){     
         this.item.id = '',
-        this.item.descripcion = '';
-        this.item.estado = '';              
+        this.item.nombre = '';
+        this.item.numero = '';
+        this.item.porc_devolucion = '';        
       }
     },
     mounted(){

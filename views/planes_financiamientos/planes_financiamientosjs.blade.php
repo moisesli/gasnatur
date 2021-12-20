@@ -3,7 +3,8 @@
   const app = createApp({
     data() {
       return {
-        entity: 'concesionarias',
+        entity: 'planes_financiamientos',
+        name: 'Planes de Financiamiento',        
         search: '',
         pagination: {
           inicio: null,
@@ -20,7 +21,7 @@
         item: {
           id: '',
           descripcion: '',
-          estado: ''
+          estado: '',          
         },
         loading: {                              
           items: false,
@@ -38,7 +39,7 @@
         }        
       }
     },
-    methods: {
+    methods: {      
       loadItems: function(pagina = 1, palabra_buscada = ''){  
         if( pagina != 0 ){
           this.loading.items = true;
@@ -76,7 +77,7 @@
           console.log(res.data)
           this.item.id = res.data.id,
           this.item.descripcion = res.data.descripcion;
-          this.item.estado = res.data.estado;                         
+          this.item.estado = res.data.estado;          
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -137,7 +138,7 @@
       clearItem: function(){     
         this.item.id = '',
         this.item.descripcion = '';
-        this.item.estado = '';              
+        this.item.estado = '';        
       }
     },
     mounted(){

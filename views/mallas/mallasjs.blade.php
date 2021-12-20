@@ -3,7 +3,7 @@
   const app = createApp({
     data() {
       return {
-        entity: 'concesionarias',
+        entity: 'mallas',
         search: '',
         pagination: {
           inicio: null,
@@ -19,8 +19,8 @@
         items: [],
         item: {
           id: '',
-          descripcion: '',
-          estado: ''
+          id_proyecto: '',
+          nombre: ''
         },
         loading: {                              
           items: false,
@@ -42,7 +42,8 @@
       loadItems: function(pagina = 1, palabra_buscada = ''){  
         if( pagina != 0 ){
           this.loading.items = true;
-          axios.get('./apis/' + this.entity + '/'+ pagina + '/' + palabra_buscada).then(res => {            
+          axios.get('./apis/' + this.entity + '/'+ pagina + '/' + palabra_buscada).then(res => {
+            console.log(res.data)
             this.items = res.data.registros;
             this.pagination.inicio = res.data.inicio;
             this.pagination.fin = res.data.fin;
@@ -63,7 +64,8 @@
       newItem: function(){
         this.modal.action = 'new'
         this.clearItem()
-        this.openModal()        
+        this.openModal()
+        console.log('newItem')
       },
       editItem: function(item, action = ''){
         if( action == 'edit' ){          
@@ -75,8 +77,8 @@
         axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
           console.log(res.data)
           this.item.id = res.data.id,
-          this.item.descripcion = res.data.descripcion;
-          this.item.estado = res.data.estado;                         
+          this.item.id_proyecto = res.data.id_proyecto;
+          this.item.nombre = res.data.nombre;                         
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -136,8 +138,8 @@
       },
       clearItem: function(){     
         this.item.id = '',
-        this.item.descripcion = '';
-        this.item.estado = '';              
+        this.item.id_proyecto = '';
+        this.item.nombre = '';              
       }
     },
     mounted(){

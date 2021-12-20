@@ -2,8 +2,24 @@
   const { createApp } = Vue;  
   const app = createApp({
     data() {
-      return {
-        entity: 'concesionarias',
+      return {          
+        entity: 'proyectos',
+        item: {
+          id: '',
+          id_empresa: '',
+          id_concesionaria: '',
+          id_zona: '',
+          fecha_registro: '',
+          nombre: '',
+          fecha_inicio: '',
+          fecha_fin: '',
+          numero_inicial: '',
+          estado: ''          
+        },
+        items: [],
+        empresas: [],
+        concesionarias: [],        
+        zonas: [],
         search: '',
         pagination: {
           inicio: null,
@@ -15,13 +31,7 @@
           palabra_buscada: ''
         },
         page: 1,
-        search: '',        
-        items: [],
-        item: {
-          id: '',
-          descripcion: '',
-          estado: ''
-        },
+        search: '',                
         loading: {                              
           items: false,
           store: false,
@@ -44,7 +54,7 @@
           this.loading.items = true;
           axios.get('./apis/' + this.entity + '/'+ pagina + '/' + palabra_buscada).then(res => {            
             this.items = res.data.registros;
-            this.pagination.inicio = res.data.inicio;
+            this.pagination.inicio = res.data.inicio; 
             this.pagination.fin = res.data.fin;
             this.pagination.totalregistros = res.data.totalregistros;
             this.pagination.pagina  = res.data.pagina;
@@ -57,8 +67,21 @@
             }
             this.loading.items = false;          
           })
-        }
-        
+        }        
+      },
+      loadForeignKey: function(){        
+        axios.get('/apis/empresas').then(res => {
+          this.empresas = res.data.registros;     
+          console.log(this.empresas)
+        })        
+        axios.get('/apis/concesionarias').then(res => {
+          this.concesionarias = res.data.registros;
+          console.log(this.concesionarias)
+        })
+        axios.get('/apis/zonas').then(res => {
+          this.zonas = res.data.registros
+          console.log(this.zonas)
+        })
       },
       newItem: function(){
         this.modal.action = 'new'
@@ -70,13 +93,21 @@
           item.loading = true;
         } else {
           item.loadingDelete = true;
-        }                
+        }        
         this.modal.action = action;
         axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
           console.log(res.data)
           this.item.id = res.data.id,
-          this.item.descripcion = res.data.descripcion;
-          this.item.estado = res.data.estado;                         
+          this.item.id_empresa = res.data.id_empresa;
+          this.item.id_concesionaria = res.data.id_concesionaria;
+          this.item.id_zona = res.data.id_zona;
+          this.item.fecha_registro = res.data.fecha_registro;
+          this.item.nombre = res.data.nombre;
+          this.item.fecha_inicio = res.data.fecha_inicio;
+          this.item.fecha_fin = res.data.fecha_fin;
+          this.item.numero_inicial = res.data.numero_inicial;
+          this.item.numero_final = res.data.numero_final;          
+          this.item.estado = res.data.estado;
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -136,11 +167,20 @@
       },
       clearItem: function(){     
         this.item.id = '',
-        this.item.descripcion = '';
-        this.item.estado = '';              
+        this.item.id_empresa = '';
+        this.item.id_concesionaria = '';
+        this.item.id_zona = '';
+        this.item.fecha_registro = '';
+        this.item.nombre = '';
+        this.item.fecha_inicio = '';
+        this.item.fecha_fin = '';
+        this.item.numero_inicial = '';
+        this.item.numero_final = '';
+        this.item.estado = '';        
       }
     },
     mounted(){
+      this.loadForeignKey();
       this.loadItems();
     }
   });  

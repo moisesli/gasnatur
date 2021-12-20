@@ -48,11 +48,11 @@ $app->router->put('/apis/personal/:id', 'Personal@update');
 $app->router->delete('/apis/personal/:id', 'Personal@delete');
 
 //FINANCING PLANS
-$app->router->get('/apis/planes_financiamiento/:id?/:all?', 'Financing@paginator');
-$app->router->post('/apis/planes_financiamiento/:id', 'Financing@getById');
-$app->router->post('/apis/planes_financiamiento', 'Financing@create');
-$app->router->put('/apis/planes_financiamiento/:id', 'Financing@update');
-$app->router->delete('/apis/planes_financiamiento/:id', 'Financing@delete');
+$app->router->get('/apis/planes_financiamientos/:id?/:all?', 'Financing@paginator');
+$app->router->post('/apis/planes_financiamientos/:id', 'Financing@getById');
+$app->router->post('/apis/planes_financiamientos', 'Financing@create');
+$app->router->put('/apis/planes_financiamientos/:id', 'Financing@update');
+$app->router->delete('/apis/planes_financiamientos/:id', 'Financing@delete');
 
 //SOCIAL
 $app->router->get('/apis/estrato_social/:id?/:all?', 'Social@paginator');
@@ -62,10 +62,10 @@ $app->router->put('/apis/estrato_social/:id', 'Social@update');
 $app->router->delete('/apis/estrato_social/:id', 'Social@delete');
 
 //COMPANY
-$app->router->get('/apis/empresa/:id?/:all?', 'Company@paginator');
-$app->router->post('/apis/empresa/:id', 'Company@getById');
-$app->router->post('/apis/empresa', 'Company@create');
-$app->router->put('/apis/empresa/:id', 'Company@update');
+$app->router->get('/apis/empresas/:id?/:all?', 'Company@paginator');
+$app->router->post('/apis/empresas/:id', 'Company@getById');
+$app->router->post('/apis/empresas', 'Company@create');
+$app->router->put('/apis/empresas/:id', 'Company@update');
 $app->router->delete('/apis/empresa/:id', 'Company@delete');
 
 //PROJECT
@@ -152,7 +152,7 @@ $app->router->get('/registro', function () {
 $app->router->get('/zonas', function () {
   $front = new \Config\View();
   return $front->show('zonas.zonas');
-}, ['before' => 'CheckAuth']);
+});
 
 $app->router->get('/personal', function () {
     $front = new \Config\View();
@@ -162,6 +162,36 @@ $app->router->get('/personal', function () {
 $app->router->get('/cargos', function () {
     $front = new \Config\View();
     return $front->show('cargos.cargos');
+});
+
+$app->router->get('/concesionarias', function () {
+    $front = new \Config\View();
+    return $front->show('concesionarias.concesionarias');
+});
+
+$app->router->get('/empresas', function () {
+    $front = new \Config\View();
+    return $front->show('empresas.empresas');
+});
+
+$app->router->get('/mallas', function () {
+    $front = new \Config\View();
+    return $front->show('mallas.mallas');
+});
+
+$app->router->get('/proyectos', function () {
+    $front = new \Config\View();
+    return $front->show('proyectos.proyectos');
+});
+
+$app->router->get('/estrato_social', function () {
+    $front = new \Config\View();
+    return $front->show('estrato_social.estrato_social');
+});
+
+$app->router->get('/planes_financiamientos', function () {
+    $front = new \Config\View();
+    return $front->show('planes_financiamientos.planes_financiamientos');
 });
 
 $app->run();
