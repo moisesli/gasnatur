@@ -2,12 +2,12 @@
 
 use Config\Model;
 
-class CompanyModel extends Model
+class AppleModel extends model
 {
     public function __construct()
-    {
-        parent::__construct();
-    }
+	{
+		parent::__construct();
+	}
 
     public function create($data)
 	{
@@ -17,9 +17,9 @@ class CompanyModel extends Model
 
 		try {
 
-			$sth = $this->db->insert("empresas", $data);
+			$sth = $this->db->insert("manzanas", $data);
 			if (!$sth) {
-				throw new \Exception("No pudimos registrar la empresa");
+				throw new \Exception("No pudimos registrar");
 			}
 
 			$response->success = true;
@@ -31,11 +31,10 @@ class CompanyModel extends Model
 		return $response;
 	}
 
-	public function findById($id)
+    public function findByComparatorRegister($comparator)
 	{
 		try {
-			$sql = "SELECT * FROM empresas WHERE id = $id LIMIT 1";
-
+			$sql = "SELECT * FROM manzanas WHERE numero='$comparator'";
 			return $this->db->find($sql);
 		} catch (\Exception $e) {
 
@@ -43,10 +42,11 @@ class CompanyModel extends Model
 		}
 	}
 
-	public function findByComparatorRegister($comparator1, $comparator2)
+    public function findById($id)
 	{
 		try {
-			$sql = "SELECT * FROM empresas WHERE nombre_comercial='$comparator1' OR ruc='$comparator2' ";
+			$sql = "SELECT * FROM manzanas WHERE id = $id LIMIT 1";
+
 			return $this->db->find($sql);
 		} catch (\Exception $e) {
 
@@ -61,9 +61,9 @@ class CompanyModel extends Model
 
 		try {
 
-			$sth = $this->db->update("empresas", $data, "id={$id}");
+			$sth = $this->db->update("manzanas", $data, "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos actualizar la empresa");
+				throw new \Exception("No pudimos actualizar");
 			}
 
 			$response->success = true;
@@ -82,9 +82,9 @@ class CompanyModel extends Model
 
 		try {
 
-			$sth = $this->db->delete("empresas", "id={$id}");
+			$sth = $this->db->delete("manzanas", "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos eliminar la empresa");
+				throw new \Exception("No pudimos eliminar");
 			}
 
 			$response->success = true;
@@ -96,7 +96,6 @@ class CompanyModel extends Model
 		return $response;
 	}
 
-
     public function paginator($pagina, $q)
 	{
 		$orderBy = 'id';
@@ -106,11 +105,13 @@ class CompanyModel extends Model
 		try {
 			if ($q != "") {
 				$palabraBuscada = $q;
-				$filtro = " ruc LIKE '%$q%' ";
+				$filtro = " nombre LIKE '%$q%' ";
 			}
-			return $this->db->paginator('empresas', $pagina, $palabraBuscada, $filtro, $orderBy);
+			return $this->db->paginator('manzanas', $pagina, $palabraBuscada, $filtro, $orderBy);
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}
 	}
+
+
 }

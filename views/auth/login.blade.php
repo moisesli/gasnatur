@@ -86,7 +86,7 @@ Login de usuario
           if(res.data == ""){
             alert("Usuario y/o contraseña");//modal
           }else{
-            document.cookie = "token=" + res.data;
+            document.cookie = "jwt=" + res.data;
             window.location.href = "zonas";
           }
 

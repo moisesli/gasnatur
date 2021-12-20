@@ -115,16 +115,31 @@ class Database extends \PDO
 
             $time = time();
             $key = 'gas_natu_ral';
-            $token = array(
+            $data = array(
                 'exp' => $time + (60 * 60),
                 'data' => [ 
                     'id' => $usuarioData[0]->id,
                     'id_role' => $usuarioData[0]->id_role,
-                    'usuario' => $usuario
+                    'usuario' => $usuario,
+                    'permisos'=> [
+                        'zonas' => [
+                            'consultar' => 1,
+                            'insertar' => 1,
+                            'editar' => 1,
+                            'borrar' => 1
+                        ],
+
+                        'concesionarias' => [
+                            'consultar' => 1,
+                            'insertar' => 1,
+                            'editar' => 1,
+                            'borrar' => 1
+                        ]
+                    ]
                 ]
             );
             
-            $jwt = JWT::encode($token, $key); 
+            $jwt = JWT::encode($data, $key); 
 
             return $jwt;
 

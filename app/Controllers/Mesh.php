@@ -34,7 +34,7 @@ class Mesh extends Controller
 			}
 
 			if ($data['nombre'] == "") {
-				throw new \Exception("Ingrese el nombre del cargo");
+				throw new \Exception("Ingrese el nombre");
 			}
 
             $data['descripcion'] = strtolower($data['descripcion']);
@@ -71,11 +71,11 @@ class Mesh extends Controller
 			}
 
 			if ($id == "") {
-				throw new \Exception("No existe el id del cargo");
+				throw new \Exception("No existe el id");
 			}
 
 			if ($data['nombre'] == "") {
-				throw new \Exception("Ingrese el nombre del cargo");
+				throw new \Exception("Ingrese el nombre");
 			}
 
 			$result = $this->mesh->update($data, $id);
@@ -96,7 +96,7 @@ class Mesh extends Controller
 		try {
 
 			if ($id == null) {
-				throw new \Exception("No existe el id del cargo");
+				throw new \Exception("No existe el id");
 			}
 
 			$result = $this->mesh->delete($id);

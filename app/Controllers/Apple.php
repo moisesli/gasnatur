@@ -3,19 +3,18 @@
 namespace App\Controllers;
 
 use Config\Controller;
-use App\Models\SocialModel;
+use App\Models\AppleModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Social extends controller
+class Apple extends Controller
 {
-    public $social;
+    public $apple;
 
     public function __construct()
     {
-        $this->social = $this->loadModel('Social');
+        $this->apple = $this->loadModel('Apple');
     }
-
 
     public function create(Request $request, Response $response)
     {
@@ -27,15 +26,15 @@ class Social extends controller
 
             $data = $request->toArray();
 
-            if ($this->social->findByComparatorRegister($data['nombre'])) {
+            if ($this->apple->findByComparatorRegister($data['numero'])) {
                 throw new \Exception("Este registro ya existe, por favor ingresar un nuevo registro");
             }
 
-            $this->validaciones($request, $response );
+            // $this->validaciones($request, $response );
 
-            $data['nombre'] = strtolower($data['nombre']);
+            // $data['nombre'] = strtolower($data['nombre']);
 
-            $result = $this->social->create($data);
+            $result = $this->apple->create($data);
 
             [$statusOk, $messageError] = array_values((array)$result);
         } catch (\Exception $e) {
@@ -48,7 +47,7 @@ class Social extends controller
     public function getById(Response $response, $id)
 	{
 
-		$result = $this->social->findById($id);
+		$result = $this->apple->findById($id);
 
 		return $this->resjson($result);
 	}
@@ -84,7 +83,7 @@ class Social extends controller
                 throw new \Exception("Se permiten solo letras");
             }
 
-			$result = $this->social->update($data, $id);
+			$result = $this->apple->update($data, $id);
 
 			[$statusOk, $messageError] = array_values((array)$result);
 		} catch (\Exception $e) {
@@ -105,7 +104,7 @@ class Social extends controller
 				throw new \Exception("No existe el id");
 			}
 
-			$result = $this->social->delete($id);
+			$result = $this->apple->delete($id);
 
 			[$statusOk, $messageError] = array_values((array)$result);
 		} catch (\Exception $e) {
@@ -117,50 +116,6 @@ class Social extends controller
 
     public function paginator($id = 1, $q = "" )
 	{
-		return $this->social->paginator($id, $q);
-	}
-
-    private function validaciones(Request $request, Response $response)
-	{
-
-		$data = $request->toArray();
-
-		if (count($data) == 0) {
-			throw new \Exception("No existe parametros");
-		}
-
-		if (!(preg_match('/^[a-zA-Z ]+$/', $data['nombre']))) {
-			throw new \Exception("Se permiten solo letras");
-		}
-
-        if (count($data) == 0) {
-            throw new \Exception("No existe parametros");
-        }
-
-        if ($data['nombre'] == "") {
-            throw new \Exception("Ingrese el nombre");
-        }
-
-        if ($data['numero'] == "") {
-            throw new \Exception("Ingrese el numero");
-        }
-
-		if (!preg_match('/^[0-9]{11}$/', $data['numero'])) {
-            throw new \Exception("Ingrese correctamente el número que cumpla con los parámetros, maximo 11 numeros");
-        }
-
-        if ($data['porc_devolucion'] == "") {
-            throw new \Exception("Ingrese el porcentaje");
-        }
-
-        if (!is_int($data['numero'])) {
-			throw new \Exception("Se permiten solo numeros");
-		}
-
-        // if (!(preg_match('/^[1-9]\d*(,\d+)?$/', $data['porc_devolucion']))) {
-		// 	throw new \Exception("El formato no coincide");
-		// }
-
-
+		return $this->apple->paginator($id, $q);
 	}
 }

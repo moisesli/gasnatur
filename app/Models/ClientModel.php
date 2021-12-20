@@ -1,7 +1,8 @@
 <?php
+
 use Config\Model;
 
-Class RoleModel extends Model
+class ClientModel extends Model
 {
     public function __construct()
     {
@@ -14,9 +15,10 @@ Class RoleModel extends Model
         $response = new \stdClass;
         $response->success = false;
 
-        try {
-            
-            $sth = $this->db->insert('roles', $data);
+        try {            
+            $sth = $this->db->insert('clientes', $data);
+
+            // validacion
             if ($sth) {
                 $response->success = true;
                 $response->message = "Registrado correctamente";
@@ -27,42 +29,29 @@ Class RoleModel extends Model
             $response->message = $e->getMessage();
         }
         return $response;
+        //return true;
     }
 
-    public function getAll()
+    public function findById($id)
     {
-
         try {
-            return $this->db->findAll("SELECT * FROM roles");
+            return $this->db->find("SELECT * FROM clientes WHERE id={$id}");
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];
         }
-
     }
 
     public function findByComparatorRegister($comparator)
     {
         try {
-            $sql = "SELECT * FROM roles WHERE nombre='$comparator'";
+            $sql = "SELECT * FROM clientes WHERE numero='$comparator'";
             return $this->db->find($sql);
         } catch (\Exception $e) {
 
             return ["success" => false, "message" => $e->getMessage()];
         }
     }
-
-    public function findById($id)
-	{
-		try {
-			$sql = "SELECT * FROM roles WHERE id = $id LIMIT 1";
-
-			return $this->db->find($sql);
-		} catch (\Exception $e) {
-
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
 
     public function update($data, $id)
     {
@@ -71,9 +60,9 @@ Class RoleModel extends Model
 
         try {
 
-            $sth = $this->db->update("roles", $data, "id={$id}");
+            $sth = $this->db->update("clientes", $data, "id={$id}");
             if (!$sth) {
-                throw new \Exception("No pudimos actualizar");
+                throw new \Exception("No pudimos actualizar el usuario");
             }
 
             $response->success = true;
@@ -84,42 +73,41 @@ Class RoleModel extends Model
 
         return $response;
     }
-
-    
     public function delete($id)
-	{
-		$response = new \stdClass;
-		$response->success = false;
+    {
+        $response = new \stdClass;
+        $response->success = false;
 
-		try {
+        try {
 
-			$sth = $this->db->delete("roles", "id={$id}");
-			if (!$sth) {
-				throw new \Exception("No pudimos eliminar el rol");
-			}
+            $sth = $this->db->delete("clientes", "id={$id}");
+            if (!$sth) {
+                throw new \Exception("No pudimos eliminar");
+            }
 
-			$response->success = true;
-			$response->message = "Eliminado correctamente";
-		} catch (\Exception $e) {
-			$response->message = $e->getMessage();
-		}
+            $response->success = true;
+            $response->message = "Eliminado correctamente";
+        } catch (\Exception $e) {
+            $response->message = $e->getMessage();
+        }
 
-		return $response;
-	}
+        return $response;
+    }
 
     public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
+    {
+        $orderBy = 'id';
         $palabraBuscada = "";
-		$filtro = "";
-		try {
-			if ($q != "") {
-                $palabraBuscada=$q;
-				$filtro = " nombre LIKE '%$q%' ";
-			}
-			return $this->db->paginator('roles', $pagina, $palabraBuscada ,$filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+        $filtro = "";
+        try {
+            if ($q != "") {
+                $palabraBuscada = $q;
+                $filtro = " numero LIKE '%$q%' ";
+            }
+            return $this->db->paginator('clientes', $pagina, $palabraBuscada, $filtro, $orderBy);
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
+
 }
