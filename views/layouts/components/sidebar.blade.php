@@ -12,30 +12,29 @@
               <span class="ml-3">Concecionarias</span>
             </a>
           </li>
-          <!-- Item -->
-          <li>
-            <!-- Drop Down -->
-            <div>
-              <button @click="changeMenu()" class="w-full flex justify-between text-base text-gray-600 font-medium rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2">
-                <span class="flex items-center">
-                  <i class="fas fa-adjust ml-1 flex-shrink-0 group-hover:text-gray-900 transition duration-75"></i>
-                  <span class="mx-4">Configuracion</span>
-                </span>
-
-                <span>
-                  <i v-show="!open" class="fas fa-angle-right"></i>
-                  <i v-show="open" class="fas fa-angle-down"></i>
-                </span>
-              </button>
-
-              <div v-show="open" class="ml-8">
-                <a class="p-2 block text-base text-gray-600 hover:bg-blue-500 hover:text-white" href="#">Manage
-                  Accounts</a>
-                <a class="p-2 block text-base text-gray-600 hover:bg-blue-500 hover:text-white" href="#">Manage
-                  Tickets</a>
-              </div>
-            </div>
-            <!-- End Drop Down -->
+          <!-- Item Drop Down-->
+          <li>            
+            <button @click="changeMenu()" class="w-full flex justify-between text-base text-gray-800 font-normal rounded-lg hover:bg-gray-100 transition duration-75 flex items-center p-2">
+              <span class="flex items-center">
+                <i class="fas fa-adjust ml-1 flex-shrink-0 text-gray-500 transition duration-75"></i>
+                <span class="mx-4">Configuracion</span>
+              </span>
+              <span>
+                <i v-show="!open" class="fas fa-angle-right"></i>
+                <i v-show="open" class="fas fa-angle-down"></i>
+              </span>
+            </button>
+            <div v-show="open">
+              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Material</a>
+              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Instalacion</a>
+              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Gabinete</a>
+              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Proyecto</a>
+              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Acometida</a>
+              <a href="./estrato_social" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Estrato Social</a>
+              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Estados Acometida</a>
+              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Categoria Proyecto</a>
+              <a href="./planes_financiamientos" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Planes Financiamiento</a>
+            </div>                        
           </li>
           <li>
             <a href="./proyectos" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group">
@@ -120,14 +119,6 @@
                 clip-rule="evenodd"></path>
             </svg>
             <span class="ml-3">Cargos</span>
-          </a>
-          <a href="./planes_financiamientos" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2">
-            <i class="fab fa-black-tie w-6 text-lg text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"></i>
-            <span class="ml-3">Planes Financiamiento</span>
-          </a>
-          <a href="./estrato_social" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2">
-            <i class="fab fa-black-tie w-6 text-lg text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"></i>
-            <span class="ml-3">Estrato Social</span>
           </a>
           <a href="./personal" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2">
             <i class="far fa-address-book w-6 text-lg text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"></i>
