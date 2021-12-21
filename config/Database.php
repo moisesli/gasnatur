@@ -80,7 +80,14 @@ class Database extends \PDO
         $resultado = [];
         $resultado["registros"] = $registros;
         $resultado["inicio"] = $inicio +1 ;
-        $resultado["fin"] = $inicio + $totalregistros;
+        if($totalregistros < $regpagina){
+            $resultado["fin"] = $inicio + $totalregistros;
+        }
+
+        else{
+            $resultado["fin"] = $inicio + $regpagina;
+        }
+
         $resultado["totalregistros"] = $totalregistros;
         $resultado["pagina"] = intval($pagina);
 
