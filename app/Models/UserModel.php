@@ -122,11 +122,14 @@ class UserModel extends Model
                 $filtro = " usuario LIKE '%$q%' ";
             }
 
+            $sql = "usuarios 
+			INNER JOIN personal ON usuarios.id_personal=personal.id
+			INNER JOIN roles ON usuarios.id_role = roles.id";
             
-			$camposADevolver=" usuarios.id, usuarios.nombre, empresas.nombre_comercial as empresa, 
-			concesionarias.descripcion AS concesionaria,
-			proyectos.fecha_inicio, proyectos.numero_inicial";
-            return $this->db->paginator('usuarios', $pagina, $palabraBuscada, $filtro, $orderBy);
+			$camposADevolver=" usuarios.id, usuarios.usuario, personal.nombres as nombres, 
+			roles.nombre AS rol";
+
+            return $this->db->paginator($sql, $pagina, $palabraBuscada, $filtro, $orderBy,[],$camposADevolver = $camposADevolver);
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];
         }
