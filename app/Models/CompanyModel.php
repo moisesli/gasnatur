@@ -106,7 +106,7 @@ class CompanyModel extends Model
 		try {
 			if ($q != "") {
 				$palabraBuscada = $q;
-				$filtro = " ruc LIKE '%$q%' ";
+				$filtro = " ruc LIKE '%$q%' OR razon_social LIKE '%$q%' OR nombre_comercial LIKE '%$q%'" ;
 			}
 			return $this->db->paginator('empresas', $pagina, $palabraBuscada, $filtro, $orderBy);
 		} catch (\Exception $e) {

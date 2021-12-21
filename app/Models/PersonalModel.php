@@ -40,6 +40,16 @@ class PersonalModel extends Model
 		}
 	}
 
+	public function getInnerJoin()
+	{
+		try {
+			$sql = "SELECT empresas.nombre, animales.Animales FROM especie INNER JOIN animales ON especie.id=animales.IdEspecie where animales.IdEspecie=1";
+			return $this->db->findAll($sql);
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
+
     public function findByComparatorRegister($comparator)
     {
         try {
@@ -113,7 +123,7 @@ class PersonalModel extends Model
         try {
             if ($q != "") {
                 $palabraBuscada = $q;
-                $filtro = " nombre LIKE '%$q%' ";
+                $filtro = " apellidos LIKE '%$q%' ";
             }
             return $this->db->paginator('personal', $pagina, $palabraBuscada, $filtro, $orderBy);
         } catch (\Exception $e) {
