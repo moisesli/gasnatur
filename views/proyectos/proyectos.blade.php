@@ -97,22 +97,22 @@
               <td class="p-4 w-4">
                 <div class="flex items-center text-gray-500">{{ item.id }}</div>
               </td>
-              <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                <div class="text-base font-semibold text-gray-900">{{ item.nombre }}<div>
+              <td class="p-4 whitespace-nowrap text-sm font-normal">
+                <div class="text-base font-semibold text-gray-700">{{ item.nombre }}<div>
                 <div class="text-sm font-normal text-gray-500">{{ item.estado }}<div>                
               </td>
-              <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                <div class="text-base font-semibold text-gray-900">{{ item.id_empresa }}<div>                
+              <td class="p-4 whitespace-nowrap text-sm font-normal">
+                <div class="text-base font-semibold text-gray-700">{{ item.empresa }}<div>                
               </td>
-              <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                <div class="text-base font-semibold text-gray-900">{{ item.id_concesionaria }}<div>                
+              <td class="p-4 whitespace-nowrap text-sm font-normal">
+                <div class="text-base font-semibold text-gray-700">{{ item.concesionaria }}<div>                
               </td> 
-              <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                <div class="text-base font-semibold text-gray-900">{{ item.fecha_inicio }}<div>
+              <td class="p-4 whitespace-nowrap text-sm font-normal">
+                <div class="text-base font-semibold text-gray-700">{{ item.fecha_inicio }}<div>
                 <div class="text-sm font-normal text-gray-500">{{ item.fecha_fin }}<div>
               </td>
-              <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                <div class="text-base font-semibold text-gray-900">{{ item.numero_inicial }}<div>
+              <td class="p-4 whitespace-nowrap text-sm font-normal">
+                <div class="text-base font-semibold text-gray-700">{{ item.numero_inicial }}<div>
                 <div class="text-sm font-normal text-gray-500">{{ item.numero_final }}<div>
               </td>             
               <td class="p-4 whitespace-nowrap space-x-2">
