@@ -35,7 +35,7 @@
         </ol>
       </nav>
       <h1 class="text-xl sm:text-2xl font-semibold text-gray-900">
-        Lista de {{ entity }}
+        Lista de {{ name }}
       </h1>
     </div>
     <div class="block sm:flex items-center md:divide-x md:divide-gray-100">
@@ -116,15 +116,15 @@
               </div>
               <td class="p-4 whitespace-nowrap space-x-2">
                 <!-- Button Edit -->
-                <button @click="editItem(item)" type="button" data-modal-toggle="product-modal" class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
+                <button @click="editItem(item,'edit')" type="button" data-modal-toggle="product-modal" class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
                   <i v-show="!item.loading" class="mr-2 text-base fa fa-edit"></i>
                   <i v-show="item.loading" class="text-base fas fa-spinner fa-spin mr-2"></i>
                   Editar
                 </button>
                 <!-- Button Delete -->
-                <button type="button" data-modal-toggle="delete-product-modal" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
-                  <i v-show="!loading.edit" class="mr-2 text-base fa fa-trash"></i>
-                  <i v-show="loading.edit" class="fas fa-spinner fa-spin mr-2"></i>
+                <button @click="editItem(item,'delete')" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
+                  <i v-show="!item.loadingDelete" class="mr-2 text-base fa fa-trash"></i>
+                  <i v-show="item.loadingDelete" class="text-base fas fa-spinner fa-spin mr-2"></i>                               
                   Borrar
                 </button>
               </td>
