@@ -40,16 +40,6 @@ class PersonalModel extends Model
 		}
 	}
 
-	public function getInnerJoin()
-	{
-		try {
-			$sql = "SELECT empresas.nombre, animales.Animales FROM especie INNER JOIN animales ON especie.id=animales.IdEspecie where animales.IdEspecie=1";
-			return $this->db->findAll($sql);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
-
     public function findByComparatorRegister($comparator)
     {
         try {

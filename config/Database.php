@@ -48,19 +48,20 @@ class Database extends \PDO
         return $sth->rowCount();
     }
 
-    public function paginator($table, $pagina, $palabraBuscada, $filtro, $orderBy = "id", $array = [], $fetchMode = \PDO::FETCH_OBJ)
+    public function paginator($table, $pagina, $palabraBuscada, $filtro, $orderBy = "id",$array = [],$camposADevolver ="*", $fetchMode = \PDO::FETCH_OBJ)
     {
         $regpagina = 10;
 
         $inicio = ($pagina >= 1) ? (($pagina * $regpagina) - $regpagina) : 0;
 
+
         if ($filtro == "") {
-            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table ORDER BY $orderBy DESC LIMIT $inicio,$regpagina";
+            $sql = "SELECT SQL_CALC_FOUND_ROWS $camposADevolver FROM $table ORDER BY $orderBy DESC LIMIT $inicio,$regpagina";
         } else {
-            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table WHERE $filtro ORDER BY $orderBy DESC LIMIT $inicio,$regpagina";
+            $sql = "SELECT SQL_CALC_FOUND_ROWS $camposADevolver FROM $table WHERE $filtro ORDER BY $orderBy DESC LIMIT $inicio,$regpagina";
         }
 
-        // return $sql;
+        //return $sql;
 
         $registros = $this->prepare($sql);
 
@@ -82,6 +83,7 @@ class Database extends \PDO
         $resultado["fin"] = $inicio + $regpagina;
         $resultado["totalregistros"] = $totalregistros;
         $resultado["pagina"] = intval($pagina);
+
         if($pagina >= $numeropaginas){
             $resultado["pagina_anterior"] = $pagina - 1;
             $resultado["pagina_posterior"] = 0;

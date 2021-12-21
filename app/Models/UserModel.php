@@ -121,6 +121,11 @@ class UserModel extends Model
                 $palabraBuscada = $q;
                 $filtro = " usuario LIKE '%$q%' ";
             }
+
+            
+			$camposADevolver=" usuarios.id, usuarios.nombre, empresas.nombre_comercial as empresa, 
+			concesionarias.descripcion AS concesionaria,
+			proyectos.fecha_inicio, proyectos.numero_inicial";
             return $this->db->paginator('usuarios', $pagina, $palabraBuscada, $filtro, $orderBy);
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];

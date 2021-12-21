@@ -53,6 +53,18 @@ class Project extends Controller
     return $this->resjson($result);
   }
 
+  public function getInnerJoin(Response $response, $id)
+  {
+
+    $result = $this->project->getInnerJoin($id);
+
+    return $this->resjson($result);
+  }
+
+
+
+
+
   public function update(Request $request, Response $response, $id)
 	{
 		$statusOk = false;

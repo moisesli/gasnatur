@@ -43,6 +43,21 @@ class ProjectModel extends Model
 		}
 	}
 
+	public function getInnerJoin()
+	{
+		try {
+			$sql = "SELECT proyectos.id, proyectos.nombre, empresas.nombre_comercial as empresa, 
+			concesionarias.descripcion AS concesionaria,
+			proyectos.fecha_inicio, proyectos.numero_inicial
+			FROM proyectos 
+			INNER JOIN empresas ON proyectos.id_empresa=empresas.id
+			INNER JOIN concesionarias ON proyectos.id_concesionaria = concesionarias.id WHERE";
+			return $this->db->findAll($sql);
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
+
     public function update($data, $id)
 	{
 		$response = new \stdClass;
@@ -98,7 +113,7 @@ class ProjectModel extends Model
 
     public function paginator($pagina, $q)
     {
-        $orderBy = 'id';
+        $orderBy = 'proyectos.id';
         $palabraBuscada = "";
         $filtro = "";
         try {
@@ -106,7 +121,17 @@ class ProjectModel extends Model
                 $palabraBuscada = $q;
                 $filtro = " nombre LIKE '%$q%' ";
             }
-            return $this->db->paginator('proyectos', $pagina, $palabraBuscada, $filtro, $orderBy);
+
+			$sql = "proyectos 
+			INNER JOIN empresas ON proyectos.id_empresa=empresas.id
+			INNER JOIN concesionarias ON proyectos.id_concesionaria = concesionarias.id";
+
+			$camposADevolver=" proyectos.id, proyectos.nombre
+			,proyectos.id_empresa, empresas.nombre_comercial as empresa 
+			,proyectos.id_concesionaria,concesionarias.descripcion AS concesionaria,
+			proyectos.fecha_inicio, proyectos.numero_inicial";
+
+        	return $this->db->paginator($sql, $pagina, $palabraBuscada, $filtro, $orderBy,[],$camposADevolver = $camposADevolver);
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];
         }
