@@ -126,7 +126,7 @@ $app->router->put('/apis/tipomaterial/:id', 'Material@update');
 $app->router->delete('/apis/tipomaterial/:id', 'Material@delete');
 
 
-//Material
+//TypeDoc
 $app->router->get('/apis/tipodocumentoidentidad', 'TypeDoc@getAll');
 
 
