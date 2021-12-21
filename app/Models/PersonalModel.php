@@ -115,7 +115,14 @@ class PersonalModel extends Model
                 $palabraBuscada = $q;
                 $filtro = " apellidos LIKE '%$q%' ";
             }
-            return $this->db->paginator('personal', $pagina, $palabraBuscada, $filtro, $orderBy);
+			$sql = "personal 
+			INNER JOIN cargos ON personal.id_cargo=cargos.id
+			INNER JOIN tipo_documentos_identidad ON personal.id_tipodoc = tipo_documentos_identidad.id";
+
+			$camposADevolver=" personal.id, personal.nombres, personal.id_cargo, cargos.nombre
+			,personal.id_tipodoc, tipo_documentos_identidad.descripcion as documento";
+
+        	return $this->db->paginator($sql, $pagina, $palabraBuscada, $filtro, $orderBy,[],$camposADevolver = $camposADevolver);
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];
         }

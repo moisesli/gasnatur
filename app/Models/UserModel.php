@@ -126,8 +126,8 @@ class UserModel extends Model
 			INNER JOIN personal ON usuarios.id_personal=personal.id
 			INNER JOIN roles ON usuarios.id_role = roles.id";
             
-			$camposADevolver=" usuarios.id, usuarios.usuario, personal.nombres as nombres, 
-			roles.nombre AS rol";
+			$camposADevolver=" usuarios.id, usuarios.usuario, usuarios.id_personal, personal.nombres as nombres, 
+            usuarios.id_role, roles.nombre AS rol";
 
             return $this->db->paginator($sql, $pagina, $palabraBuscada, $filtro, $orderBy,[],$camposADevolver = $camposADevolver);
         } catch (\Exception $e) {
