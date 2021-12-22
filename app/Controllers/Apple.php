@@ -30,9 +30,12 @@ class Apple extends Controller
                 throw new \Exception("Este registro ya existe, por favor ingresar un nuevo registro");
             }
 
-            // $this->validaciones($request, $response );
-
-            // $data['nombre'] = strtolower($data['nombre']);
+			if ($data['nombre'] == "") {
+				throw new \Exception("Ingrese el nombre");
+			}
+			if ($data['numero'] == "") {
+                throw new \Exception("Ingrese el numero");
+            }
 
             $result = $this->apple->create($data);
 
@@ -73,10 +76,6 @@ class Apple extends Controller
 			}
 			if ($data['numero'] == "") {
                 throw new \Exception("Ingrese el numero");
-            }
-
-            if ($data['porc_devolucion'] == "") {
-                throw new \Exception("Ingrese el porcentaje");
             }
 
 			if (!(preg_match('/^[a-zA-Z ]+$/', $data['nombre']))) {
