@@ -129,6 +129,42 @@ $app->router->delete('/apis/tipomaterial/:id', 'Material@delete');
 //TypeDoc
 $app->router->get('/apis/tipodocumentoidentidad', 'TypeDoc@getAll');
 
+//Type_Installation
+$app->router->get('/apis/tipoinstalacion/:id?/:all?', 'Installation@paginator');
+$app->router->post('/apis/tipoinstalacion/:id','Installation@getById'); 
+$app->router->post('/apis/tipoinstalacion', 'Installation@create');
+$app->router->put('/apis/tipoinstalacion/:id', 'Installation@update');
+$app->router->delete('/apis/tipoinstalacion/:id', 'Installation@delete');
+
+//Type_Cabinet
+$app->router->get('/apis/tipogabinete/:id?/:all?', 'Cabinet@paginator');
+$app->router->post('/apis/tipogabinete/:id','Cabinet@getById'); 
+$app->router->post('/apis/tipogabinete', 'Cabinet@create');
+$app->router->put('/apis/tipogabinete/:id', 'Cabinet@update');
+$app->router->delete('/apis/tipogabinete/:id', 'Cabinet@delete');
+
+//Type_Project
+$app->router->get('/apis/tipoproyecto/:id?/:all?', 'TypeProject@paginator');
+$app->router->post('/apis/tipoproyecto/:id','TypeProject@getById'); 
+$app->router->post('/apis/tipoproyecto', 'TypeProject@create');
+$app->router->put('/apis/tipoproyecto/:id', 'TypeProject@update');
+$app->router->delete('/apis/tipoproyecto/:id', 'TypeProject@delete');
+
+//Estates_Acometida
+$app->router->get('/apis/estadosacometida/:id?/:all?', 'EstatesAcometida@paginator');
+$app->router->post('/apis/estadosacometida/:id','EstatesAcometida@getById'); 
+$app->router->post('/apis/estadosacometida', 'EstatesAcometida@create');
+$app->router->put('/apis/estadosacometida/:id', 'EstatesAcometida@update');
+$app->router->delete('/apis/estadosacometida/:id', 'EstatesAcometida@delete');
+
+//Category_Project
+$app->router->get('/apis/categoriaprojecto/:id?/:all?', 'CategoryProject@paginator');
+$app->router->post('/apis/categoriaprojecto/:id','CategoryProject@getById'); 
+$app->router->post('/apis/categoriaprojecto', 'CategoryProject@create');
+$app->router->put('/apis/categoriaprojecto/:id', 'CategoryProject@update');
+$app->router->delete('/apis/categoriaprojecto/:id', 'CategoryProject@delete');
+
+
 
 
 
