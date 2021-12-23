@@ -9,15 +9,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Client extends controller
 {
-    public $client;
+  public $client;
 
-    public function __construct()
-    {
-      $this->client = $this->loadModel('Client');
-      session_start();
-    }
+  public function __construct()
+  {
+    $this->client = $this->loadModel('Client');
+    session_start();
+  }
 
-    public function create(Request $request, Response $response)
+  public function create(Request $request, Response $response)
   {
     $statusOk = false;
     $messageError = "";
@@ -31,7 +31,7 @@ class Client extends controller
 
       $this->validaciones($request, $response);
 
-    //   $data['usuario'] = strtolower($data['usuario']);
+      //   $data['usuario'] = strtolower($data['usuario']);
 
       date_default_timezone_set('America/Lima');
       $data['fecha_registro'] = Date('y-m-d H:m:s');
@@ -102,48 +102,48 @@ class Client extends controller
   }
 
   private function validaciones(Request $request, Response $response)
-	{
+  {
 
-		$data = $request->toArray();
+    $data = $request->toArray();
 
-		if (count($data) == 0) {
-			throw new \Exception("No existe parametros");
-		}
+    if (count($data) == 0) {
+      throw new \Exception("No existe parametros");
+    }
 
-		if ($data['numero'] == "") {
-			throw new \Exception("Ingrese numero");
-		}
+    if ($data['numero'] == "") {
+      throw new \Exception("Ingrese numero");
+    }
 
-		if (!preg_match('/^[0-9]{8,11}$/', $data['numero'])) {
-            throw new \Exception("El numero del documento de identidad no es correcto");
-        }
+    if (!preg_match('/^[0-9]{8,11}$/', $data['numero'])) {
+      throw new \Exception("El numero del documento de identidad no es correcto");
+    }
 
-		if ($data['nombres'] == "") {
-			throw new \Exception("Ingrese el nombre del personal");
-		}
+    if ($data['nombres'] == "") {
+      throw new \Exception("Ingrese el nombre del personal");
+    }
 
-		if (!(preg_match('/^[a-zA-Z ]+$/', $data['nombres']))) {
-			throw new \Exception("Se permiten solo letras");
-		}
+    if (!(preg_match('/^[a-zA-Z ]+$/', $data['nombres']))) {
+      throw new \Exception("Se permiten solo letras");
+    }
 
-		if ($data['estado_civil'] == "") {
-			throw new \Exception("Seleccione su estado civil");
-		}
+    if ($data['estado_civil'] == "") {
+      throw new \Exception("Seleccione su estado civil");
+    }
 
-        if ($data['direccion'] == "") {
-            throw new \Exception("Ingrese la direccion");
-        }
+    if ($data['direccion'] == "") {
+      throw new \Exception("Ingrese la direccion");
+    }
 
-        if (!preg_match('/^[#.0-9a-zA-Z\s,-]+$/', $data['direccion'])) {
-            throw new \Exception("Por favor escribir la dirección correctamente");
-        }
+    if (!preg_match('/^[#.0-9a-zA-Z\s,-]+$/', $data['direccion'])) {
+      throw new \Exception("Por favor escribir la dirección correctamente");
+    }
 
-        if ($data['recibo_digital'] == "") {
-            throw new \Exception("Seleccione Sí o No");
-        }
+    if ($data['recibo_digital'] == "") {
+      throw new \Exception("Seleccione Sí o No");
+    }
 
-		if ($data['estado'] == "") {
-			throw new \Exception("Seleccione el estado");
-		}
-	}
+    if ($data['estado'] == "") {
+      throw new \Exception("Seleccione el estado");
+    }
+  }
 }

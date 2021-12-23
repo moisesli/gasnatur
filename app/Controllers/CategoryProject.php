@@ -102,6 +102,7 @@ class CategoryProject extends Controller
     return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
   }
 
+
   public function delete(Request $request, Response $response, $id)
 	{
 		$statusOk = false;
@@ -127,6 +128,4 @@ class CategoryProject extends Controller
   {
     return $this->categoryproject->paginator($id, $q);
   }
-
-
 }

@@ -173,6 +173,27 @@ $app->router->post('/apis/categoriaprojecto', 'CategoryProject@create');
 $app->router->put('/apis/categoriaprojecto/:id', 'CategoryProject@update');
 $app->router->delete('/apis/categoriaprojecto/:id', 'CategoryProject@delete');
 
+//Type_Acometida
+$app->router->get('/apis/tiposacometida/:id?/:all?', 'TypeAcometida@paginator');
+$app->router->post('/apis/tiposacometida/:id','TypeAcometida@getById'); 
+$app->router->post('/apis/tiposacometida', 'TypeAcometida@create');
+$app->router->put('/apis/tiposacometida/:id', 'TypeAcometida@update');
+$app->router->delete('/apis/tiposacometida/:id', 'TypeAcometida@delete');
+
+//Predios
+$app->router->get('/apis/predios/:id?/:all?', 'Predios@paginator');
+$app->router->post('/apis/predios/:id','Predios@getById'); 
+$app->router->post('/apis/predios', 'Predios@create');
+$app->router->put('/apis/predios/:id', 'Predios@update');
+$app->router->delete('/apis/predios/:id', 'Predios@delete');
+
+//Category_tarifaria
+$app->router->get('/apis/categoriatarifaria/:id?/:all?', 'CategoryFare@paginator');
+$app->router->post('/apis/categoriatarifaria/:id','CategoryFare@getById'); 
+$app->router->post('/apis/categoriatarifaria', 'CategoryFare@create');
+$app->router->put('/apis/categoriatarifaria/:id', 'CategoryFare@update');
+
+
 
 
 
