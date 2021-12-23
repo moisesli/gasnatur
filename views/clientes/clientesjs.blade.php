@@ -2,17 +2,28 @@
   const { createApp } = Vue;  
   const app = createApp({
     data() {
-      return {          
-        entity: 'distritos',
+      return {        
+        name: 'Clientes',
+        entity: 'clientes',
         item: {
           id: '',
-          id_provincia: '',
-          descripcion: '',                  
+          id_tipodoc: '',
+          id_nacionalidad: '',
+          fecha_registro: '',
+          numero: '',
+          nombres: '',
+          fecha_nacimiento: '',
+          estado_civil: '',
+          direccion: '',
+          telefono: '',
+          celular: '',
+          correo: '',
+          recibo_digital: '',
+          estado: '',
         },
         items: [],
-        empresas: [],
-        concesionarias: [],        
-        zonas: [],
+        tipodocs: [],
+        nacionalidades: [],        
         search: '',
         pagination: {
           inicio: null,
@@ -63,18 +74,14 @@
         }        
       },
       loadForeignKey: function(){        
-        axios.get('/apis/empresas').then(res => {
-          this.empresas = res.data.registros;     
-          console.log(this.empresas)
+        axios.get('/apis/tipodocumentoidentidad').then(res => {
+          this.tipodocs = res.data;     
+          console.log(this.tipodocs)
         })        
-        axios.get('/apis/concesionarias').then(res => {
-          this.concesionarias = res.data.registros;
-          console.log(this.concesionarias)
-        })
-        axios.get('/apis/zonas').then(res => {
-          this.zonas = res.data.registros
-          console.log(this.zonas)
-        })
+        axios.get('/apis/nacionalidadesall').then(res => {
+          this.nacionalidades = res.data;
+          console.log(this.nacionalidades)
+        })        
       },
       newItem: function(){
         this.modal.action = 'new'
@@ -91,8 +98,20 @@
         axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
           console.log(res.data)
           this.item.id = res.data.id,
-          this.item.id_provincia = res.data.id_provincia;
-          this.item.descripcion = res.data.descripcion;          
+          this.item.id_tipodoc = res.data.id_tipodoc;
+          this.item.id_nacionalidad = res.data.id_nacionalidad;
+          this.item.fecha_registro = res.data.fecha_registro;
+          this.item.numero = res.data.numero;
+          this.item.nombres = res.data.nombres;
+          this.item.fecha_nacimiento = res.data.fecha_nacimiento;
+          this.item.estado_civil = res.data.estado_civil;
+          this.item.direccion = res.data.direccion;
+          this.item.numero_final = res.data.numero_final;          
+          this.item.telefono = res.data.telefono;
+          this.item.celular = res.data.celular;
+          this.item.correo = res.data.correo;
+          this.item.recibo_digital = res.data.recibo_digital;
+          this.item.estado = res.data.estado;
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -105,7 +124,7 @@
       storeItem: function(){
         this.loading.store = true;
         if( this.modal.action == 'new'){   
-          console.log('entro a new')          
+          console.log('entro a new')
           axios.post('./apis/' + this.entity , JSON.stringify(this.item)).then(res => {
             this.message = res.data;
             console.log(this.message.message)
@@ -152,15 +171,36 @@
       },
       clearItem: function(){     
         this.item.id = '',
-        this.item.id_provincia = '';
-        this.item.descripcion = '';               
-      }
+        this.item.id_tipodoc = '';
+        this.item.id_nacionalidad = '';
+        this.item.fecha_registro = '';
+        this.item.numero = '';
+        this.item.nombres = '';
+        this.item.fecha_nacimiento = '';
+        this.item.estado_civil = '';
+        this.item.direccion = '';
+        this.item.numero_final = '';
+        this.item.telefono = '';
+        this.item.celular = '';
+        this.item.correo = '';
+        this.item.recibo_digital = '';
+        this.item.estado = '';
+      },      
+    },  
+    computed: {      
     },
     mounted(){
       this.loadForeignKey();
       this.loadItems();
-    }
+    },
+    
   });  
+  app.config.globalProperties.$filters = {
+    cutString(string,length) {      
+      var trimmedString = string.length > length ? string.substring(0, length - 3) + "..." : string;
+      return trimmedString;
+    }
+  }
   app.mount('#app');
   
 </script>

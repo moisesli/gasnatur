@@ -3,11 +3,13 @@
   const app = createApp({
     data() {
       return {          
-        entity: 'distritos',
+        entity: 'manzanas',
         item: {
           id: '',
-          id_provincia: '',
-          descripcion: '',                  
+          id_estrato: '',
+          id_malla: '',
+          nombre: '',
+          numero: '',                   
         },
         items: [],
         empresas: [],
@@ -91,8 +93,10 @@
         axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
           console.log(res.data)
           this.item.id = res.data.id,
-          this.item.id_provincia = res.data.id_provincia;
-          this.item.descripcion = res.data.descripcion;          
+          this.item.id_estrato = res.data.id_estrato;
+          this.item.id_malla = res.data.id_malla;
+          this.item.nombre = res.data.nombre;
+          this.item.numero = res.data.numero;          
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -105,7 +109,7 @@
       storeItem: function(){
         this.loading.store = true;
         if( this.modal.action == 'new'){   
-          console.log('entro a new')          
+          console.log('entro a new')
           axios.post('./apis/' + this.entity , JSON.stringify(this.item)).then(res => {
             this.message = res.data;
             console.log(this.message.message)
@@ -152,8 +156,10 @@
       },
       clearItem: function(){     
         this.item.id = '',
-        this.item.id_provincia = '';
-        this.item.descripcion = '';               
+        this.item.id_estrato = '';
+        this.item.id_malla = '';
+        this.item.nombre = '';
+        this.item.numero = '';      
       }
     },
     mounted(){

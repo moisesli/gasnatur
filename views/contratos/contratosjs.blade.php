@@ -3,11 +3,14 @@
   const app = createApp({
     data() {
       return {          
-        entity: 'distritos',
+        entity: 'contratos',
         item: {
           id: '',
-          id_provincia: '',
-          descripcion: '',                  
+          id_proyecto: '',
+          id_personal: '',
+          numero: '',
+          etapa: '',
+          estado: '',             
         },
         items: [],
         empresas: [],
@@ -91,8 +94,11 @@
         axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
           console.log(res.data)
           this.item.id = res.data.id,
-          this.item.id_provincia = res.data.id_provincia;
-          this.item.descripcion = res.data.descripcion;          
+          this.item.id_proyecto = res.data.id_proyecto;
+          this.item.id_personal = res.data.id_personal;
+          this.item.numero = res.data.numero;
+          this.item.etapa = res.data.etapa;
+          this.item.estado = res.data.estado;          
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -105,7 +111,7 @@
       storeItem: function(){
         this.loading.store = true;
         if( this.modal.action == 'new'){   
-          console.log('entro a new')          
+          console.log('entro a new')
           axios.post('./apis/' + this.entity , JSON.stringify(this.item)).then(res => {
             this.message = res.data;
             console.log(this.message.message)
@@ -152,8 +158,11 @@
       },
       clearItem: function(){     
         this.item.id = '',
-        this.item.id_provincia = '';
-        this.item.descripcion = '';               
+        this.item.id_proyecto = '';
+        this.item.id_personal = '';
+        this.item.numero = '';
+        this.item.etapa = '';
+        this.item.estado = '';          
       }
     },
     mounted(){

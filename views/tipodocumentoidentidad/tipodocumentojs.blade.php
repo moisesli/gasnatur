@@ -2,17 +2,9 @@
   const { createApp } = Vue;  
   const app = createApp({
     data() {
-      return {          
-        entity: 'distritos',
-        item: {
-          id: '',
-          id_provincia: '',
-          descripcion: '',                  
-        },
-        items: [],
-        empresas: [],
-        concesionarias: [],        
-        zonas: [],
+      return {
+        entity: 'estrato_social',
+        name: 'Estrato Social',
         search: '',
         pagination: {
           inicio: null,
@@ -24,7 +16,14 @@
           palabra_buscada: ''
         },
         page: 1,
-        search: '',                
+        search: '',        
+        items: [],
+        item: {
+          id: '',
+          nombre: '',
+          numero: '',
+          porc_devolucion: '',          
+        },
         loading: {                              
           items: false,
           store: false,
@@ -47,7 +46,7 @@
           this.loading.items = true;
           axios.get('./apis/' + this.entity + '/'+ pagina + '/' + palabra_buscada).then(res => {            
             this.items = res.data.registros;
-            this.pagination.inicio = res.data.inicio; 
+            this.pagination.inicio = res.data.inicio;
             this.pagination.fin = res.data.fin;
             this.pagination.totalregistros = res.data.totalregistros;
             this.pagination.pagina  = res.data.pagina;
@@ -60,21 +59,8 @@
             }
             this.loading.items = false;          
           })
-        }        
-      },
-      loadForeignKey: function(){        
-        axios.get('/apis/empresas').then(res => {
-          this.empresas = res.data.registros;     
-          console.log(this.empresas)
-        })        
-        axios.get('/apis/concesionarias').then(res => {
-          this.concesionarias = res.data.registros;
-          console.log(this.concesionarias)
-        })
-        axios.get('/apis/zonas').then(res => {
-          this.zonas = res.data.registros
-          console.log(this.zonas)
-        })
+        }
+        
       },
       newItem: function(){
         this.modal.action = 'new'
@@ -86,13 +72,14 @@
           item.loading = true;
         } else {
           item.loadingDelete = true;
-        }        
+        }                
         this.modal.action = action;
         axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
           console.log(res.data)
           this.item.id = res.data.id,
-          this.item.id_provincia = res.data.id_provincia;
-          this.item.descripcion = res.data.descripcion;          
+          this.item.nombre = res.data.nombre;
+          this.item.numero = res.data.numero;
+          this.item.porc_devolucion = res.data.porc_devolucion;          
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -105,7 +92,7 @@
       storeItem: function(){
         this.loading.store = true;
         if( this.modal.action == 'new'){   
-          console.log('entro a new')          
+          console.log('entro a new')
           axios.post('./apis/' + this.entity , JSON.stringify(this.item)).then(res => {
             this.message = res.data;
             console.log(this.message.message)
@@ -152,12 +139,12 @@
       },
       clearItem: function(){     
         this.item.id = '',
-        this.item.id_provincia = '';
-        this.item.descripcion = '';               
+        this.item.nombre = '';
+        this.item.numero = '';
+        this.item.porc_devolucion = '';        
       }
     },
     mounted(){
-      this.loadForeignKey();
       this.loadItems();
     }
   });  

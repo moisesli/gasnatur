@@ -105,6 +105,7 @@ $app->router->put('/apis/permisos/:id', 'Access@update');
 $app->router->delete('/apis/permisos/:id', 'Access@delete');
 
 //Nationality
+$app->router->get('/apis/nacionalidadesall', 'Nationality@getAll');
 $app->router->get('/apis/nacionalidades/:id?/:all?', 'Nationality@paginator');
 $app->router->post('/apis/nacionalidades/:id','Nationality@getById'); 
 $app->router->post('/apis/nacionalidades', 'Nationality@create');
@@ -128,6 +129,14 @@ $app->router->delete('/apis/tipomaterial/:id', 'Material@delete');
 
 //TypeDoc
 $app->router->get('/apis/tipodocumentoidentidad', 'TypeDoc@getAll');
+
+//Districts
+$app->router->get('/apis/distritosall', 'Districts@getAll');
+$app->router->get('/apis/distritos/:id?/:all?', 'Districts@paginator');
+$app->router->post('/apis/distritos/:id','Districts@getById'); 
+$app->router->post('/apis/distritos', 'Districts@create');
+$app->router->put('/apis/distritos/:id', 'Districts@update');
+$app->router->delete('/apis/distritos/:id', 'Districts@delete');
 
 //Type_Installation
 $app->router->get('/apis/tipoinstalacion/:id?/:all?', 'Installation@paginator');
@@ -260,6 +269,26 @@ $app->router->get('/estrato_social', function () {
 $app->router->get('/planes_financiamientos', function () {
     $front = new \Config\View();
     return $front->show('planes_financiamientos.planes_financiamientos');
+});
+
+$app->router->get('/contratos', function () {
+    $front = new \Config\View();
+    return $front->show('contratos.contratos');
+});
+
+$app->router->get('/manzanas', function () {
+    $front = new \Config\View();
+    return $front->show('manzanas.manzanas');
+});
+
+$app->router->get('/distritos', function () {
+    $front = new \Config\View();
+    return $front->show('distritos.distritos');
+});
+
+$app->router->get('/clientes', function () {
+    $front = new \Config\View();
+    return $front->show('clientes.clientes');
 });
 
 $app->run();
