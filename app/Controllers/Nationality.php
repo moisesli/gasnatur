@@ -16,6 +16,12 @@ class Nationality extends Controller
     $this->nationality = $this->loadModel('Nationality');
   }
 
+  public function getAll(Response $response)
+	{
+		$results = $this->nationality->getAll();
+		return $this->resjson($results);
+	}
+
   public function create(Request $request, Response $response)
   {
 

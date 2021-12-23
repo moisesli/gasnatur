@@ -2,13 +2,17 @@
   const sidebar = createApp({
     data() {
       return {
-        open: false,
+        uno: false,
+        dos: false
       }
     },
     methods:{
-      changeMenu: function(){
-        this.open = !this.open;
+      changeMenu1: function(){
+        this.uno = !this.uno;
       },
+      changeMenu2: function(){
+        this.dos = !this.dos;
+      }
     }
   })
   sidebar.mount('#sidebar');

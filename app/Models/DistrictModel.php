@@ -1,24 +1,22 @@
 <?php
+
 use Config\Model;
 
-Class NationalityModel extends Model
+class DistrictModel extends Model
 {
-    
     public function __construct()
-    {
-        parent::__construct();
-    }
-    
+	{
+		parent::__construct();
+	}
 
-    public function create($data)
+	public function create($data)
     {
-        unset($data['id']);
+        //unset($data['id']);
         $response = new \stdClass;
         $response->success = false;
 
         try {
-            
-            $sth = $this->db->insert('nacionalidades', $data);
+            $sth = $this->db->insert('distritos', $data);
             if ($sth) {
                 $response->success = true;
                 $response->message = "Registrado correctamente";
@@ -29,12 +27,13 @@ Class NationalityModel extends Model
             $response->message = $e->getMessage();
         }
         return $response;
+        //return true;
     }
 
-    public function findByComparatorRegister($comparator)
+	public function findByComparatorRegister($comparator)
     {
         try {
-            $sql = "SELECT * FROM nacionalidades WHERE descripcion='$comparator'";
+            $sql = "SELECT * FROM distritos WHERE descripcion='$comparator'";
             return $this->db->find($sql);
         } catch (\Exception $e) {
 
@@ -42,11 +41,20 @@ Class NationalityModel extends Model
         }
     }
 
-    public function findById($id)
+    public function getAll()
 	{
 		try {
-			$sql = "SELECT * FROM nacionalidades WHERE id = $id LIMIT 1";
+			return $this->db->findAll("SELECT * FROM distritos");
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
 
+	public function findById($id)
+	{
+		try {
+			$sql = "SELECT * FROM distritos WHERE id = $id LIMIT 1";
+			
 			return $this->db->find($sql);
 		} catch (\Exception $e) {
 
@@ -54,16 +62,16 @@ Class NationalityModel extends Model
 		}
 	}
 
-    public function update($data, $id)
+	public function update($data, $id)
     {
         $response = new \stdClass;
         $response->success = false;
 
         try {
 
-            $sth = $this->db->update("nacionalidades", $data, "id={$id}");
+            $sth = $this->db->update("distritos", $data, "id={$id}");
             if (!$sth) {
-                throw new \Exception("No pudimos actualizar");
+                throw new \Exception("No pudimos actualizar el distrito");
             }
 
             $response->success = true;
@@ -82,9 +90,9 @@ Class NationalityModel extends Model
 
 		try {
 
-			$sth = $this->db->delete("nacionalidades", "id={$id}");
+			$sth = $this->db->delete("distritos", "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos eliminar el rol");
+				throw new \Exception("No pudimos eliminar el distrito");
 			}
 
 			$response->success = true;
@@ -96,26 +104,18 @@ Class NationalityModel extends Model
 		return $response;
 	}
 
-    public function getAll()
-	{
-		try {
-			return $this->db->findAll("SELECT * FROM nacionalidades");
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
-
-    public function paginator($pagina, $q)
+	public function paginator($pagina, $q)
 	{
 		$orderBy = 'id';
-        $palabraBuscada = "";
+		$palabraBuscada = "";
 		$filtro = "";
+
 		try {
 			if ($q != "") {
-                $palabraBuscada=$q;
+				$palabraBuscada = $q;
 				$filtro = " descripcion LIKE '%$q%' ";
 			}
-			return $this->db->paginator('nacionalidades', $pagina, $palabraBuscada ,$filtro, $orderBy);
+			return $this->db->paginator('distritos', $pagina, $palabraBuscada, $filtro, $orderBy);
 		} catch (\Exception $e) {
 			return ["success" => false, "message" => $e->getMessage()];
 		}
