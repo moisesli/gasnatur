@@ -102,19 +102,28 @@ class ConcessionaireModel extends Model{
 	}
 
     public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
-        $palabraBuscada = "";
-		$filtro = "";
-		try {
-			if ($q != "") {
-                $palabraBuscada = $q;
-				$filtro = " descripcion LIKE '%$q%' ";
-			}
-			return $this->db->paginator('concesionarias', $pagina, $palabraBuscada ,$filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+    {
 
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
+
+            if ($q != "") {
+                $filtro = " descripcion LIKE '%$q%' ";
+            }
+			
+			$result  = $this->db
+				->select("*")
+
+				->table("concesionarias c")
+			    ->where($filtro)
+				->orderBy("c.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }

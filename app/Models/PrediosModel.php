@@ -85,18 +85,35 @@ class PrediosModel extends Model
 	}
 
     public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
-        $palabraBuscada = "";
-		$filtro = "";
-		try {
-			if ($q != "") {
-                $palabraBuscada=$q;
-				$filtro = " numero LIKE '%$q%' ";
-			}
-			return $this->db->paginator('predios', $pagina, $palabraBuscada ,$filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+    {
+
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
+
+            if ($q != "") {
+                $filtro = " nombre_via LIKE '%$q%' ";
+            }
+			
+			$result  = $this->db
+				->select("p.id, c.nombres AS CLIENTE, co.numero AS NUMERO_CONTRATO
+                ,d.descripcion AS DISTRITO, m.nombre AS MANZANA
+                ,p.fecha_registro AS FECHA_REGISTRO,p.nombre_via AS NOMBRE_VIA, p.tipo_via AS VIA, p.numero AS NUMERO
+                ,p.lote AS LOTE, p.edificio AS EDIFICIO, p.piso AS PISO, p.dpto AS DEPARTAMENTO")
+
+				->table("predios p
+					INNER JOIN clientes c ON p.id_cliente=c.id
+					INNER JOIN contratos co ON p.id_contrato=co.id
+                    INNER JOIN distritos d ON p.id_ubigeo=d.id
+					INNER JOIN manzanas m ON p.id_manzana=m.id")
+			    ->where($filtro)
+				->orderBy("p.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }

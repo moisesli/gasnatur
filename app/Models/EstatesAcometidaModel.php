@@ -84,20 +84,30 @@ Class EstatesAcometidaModel extends Model
 	}
 
     public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
-        $palabraBuscada = "";
-		$filtro = "";
-		try {
-			if ($q != "") {
-                $palabraBuscada=$q;
-				$filtro = " descripcion LIKE '%$q%' ";
-			}
-			return $this->db->paginator('estados_acometida', $pagina, $palabraBuscada ,$filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+    {
+
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
+
+            if ($q != "") {
+                $filtro = " descripcion LIKE '%$q%' ";
+            }
+			
+			$projects  = $this->db
+				->select("*")
+
+				->table("estados_acometida e")
+			    ->where($filtro)
+				->orderBy("e.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $projects;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }
 
 

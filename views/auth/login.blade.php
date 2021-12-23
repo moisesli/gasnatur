@@ -6,7 +6,6 @@ Login de usuario
 
 @section('content')
 @verbatim
-@section('vuejs')
 <main class="bg-gray-50" id="app">
   <div class="mx-auto md:h-screen flex flex-col justify-center items-center px-6 pt-8 pt:mt-0">
 

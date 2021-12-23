@@ -84,19 +84,29 @@ Class CategoryProjectModel extends Model
 	}
 
     public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
-        $palabraBuscada = "";
-		$filtro = "";
-		try {
-			if ($q != "") {
-                $palabraBuscada=$q;
-				$filtro = " descripcion LIKE '%$q%' ";
-			}
-			return $this->db->paginator('categoria_proyecto', $pagina, $palabraBuscada ,$filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+    {
 
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
+
+            if ($q != "") {
+                $filtro = " descripcion LIKE '%$q%' ";
+            }
+			
+			$result  = $this->db
+				->select("c.id, t.descripcion AS TIPO_PROYECTO, c.descripcion AS DESCRIPCION")
+
+				->table("categoria_proyecto c
+					INNER JOIN tipo_proyecto t ON c.id_tipoproyecto=t.id")
+			    ->where($filtro)
+				->orderBy("c.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }

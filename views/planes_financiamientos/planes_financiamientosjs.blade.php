@@ -21,6 +21,7 @@
         item: {
           id: '',
           descripcion: '',
+          coutas:'',
           estado: '',          
         },
         loading: {                              
@@ -75,9 +76,10 @@
         this.modal.action = action;
         axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
           console.log(res.data)
-          this.item.id = res.data.id,
+          this.item.id = res.data.id,                  
           this.item.descripcion = res.data.descripcion;
-          this.item.estado = res.data.estado;          
+          this.item.coutas = res.data.coutas;          
+          this.item.estado = res.data.estado;           
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -138,6 +140,7 @@
       clearItem: function(){     
         this.item.id = '',
         this.item.descripcion = '';
+        this.item.cuotas = '';
         this.item.estado = '';        
       }
     },

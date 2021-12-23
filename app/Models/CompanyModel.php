@@ -96,28 +96,57 @@ class CompanyModel extends Model
 		return $response;
 	}
 
+	public function paginator($pagina, $q)
+    {
 
-    public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
-		$palabraBuscada = "";
-		$filtro = "";
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
 
-		try {
-			if ($q != "") {
+            if ($q != "") {
+                $filtro = " ruc LIKE '%$q%' ";
+            }
+			
+			$result  = $this->db
+				->select("e.id, d.descripcion AS DISTRITO, e.ruc, e.razon_social,
+				e.nombre_comercial AS NOMBRE, e.direccion AS DIRECCION, e.anexo AS ANEXO,
+				e.telefono AS TELEFONO, e.celular AS CELULAR, e.correo AS CORREO, e.web AS WEB ,e.estado AS ESTADO")
+
+				->table("empresas e
+					INNER JOIN distritos d ON e.id_ubigeo=d.id")
+			    ->where($filtro)
+				->orderBy("e.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
+
+
+    // public function paginator($pagina, $q)
+	// {
+	// 	$orderBy = 'id';
+	// 	$palabraBuscada = "";
+	// 	$filtro = "";
+
+	// 	try {
+	// 		if ($q != "") {
 				
-				$palabraBuscada = $q;
+	// 			$palabraBuscada = $q;
 
-				if(is_numeric($q)){
-				$filtro = " ruc LIKE '%$q%'";
-				}else{
-				$filtro = " nombre_comercial LIKE '%$q%' OR razon_social LIKE '%$q%'" ;
-				}
+	// 			if(is_numeric($q)){
+	// 			$filtro = " ruc LIKE '%$q%'";
+	// 			}else{
+	// 			$filtro = " nombre_comercial LIKE '%$q%' OR razon_social LIKE '%$q%'" ;
+	// 			}
 
-			}
-			return $this->db->paginator('empresas', $pagina, $palabraBuscada, $filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+	// 		}
+	// 		return $this->db->paginator('empresas', $pagina, $palabraBuscada, $filtro, $orderBy);
+	// 	} catch (\Exception $e) {
+	// 		return ["success" => false, "message" => $e->getMessage()];
+	// 	}
+	// }
 }

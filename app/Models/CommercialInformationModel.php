@@ -1,7 +1,8 @@
 <?php
+
 use Config\Model;
 
-Class TypeAcometidaModel extends Model
+class CommercialInformationModel extends Model
 {
     public function __construct()
     {
@@ -16,7 +17,7 @@ Class TypeAcometidaModel extends Model
 
         try {
             
-            $sth = $this->db->insert('tipos_acometida', $data);
+            $sth = $this->db->insert('informacion_comercial', $data);
             if ($sth) {
                 $response->success = true;
                 $response->message = "Registrado correctamente";
@@ -32,7 +33,7 @@ Class TypeAcometidaModel extends Model
     public function findById($id)
 	{
 		try {
-			$sql = "SELECT * FROM tipos_acometida WHERE id = $id LIMIT 1";
+			$sql = "SELECT * FROM informacion_comercial WHERE id = $id LIMIT 1";
 
 			return $this->db->find($sql);
 		} catch (\Exception $e) {
@@ -48,7 +49,7 @@ Class TypeAcometidaModel extends Model
 
         try {
 
-            $sth = $this->db->update("tipos_acometida", $data, "id={$id}");
+            $sth = $this->db->update("informacion_comercial", $data, "id={$id}");
             if (!$sth) {
                 throw new \Exception("No pudimos actualizar");
             }
@@ -69,9 +70,9 @@ Class TypeAcometidaModel extends Model
 
 		try {
 
-			$sth = $this->db->delete("tipos_acometida", "id={$id}");
+			$sth = $this->db->delete("informacion_comercial", "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos eliminar el rol");
+				throw new \Exception("No pudimos eliminar");
 			}
 
 			$response->success = true;
@@ -91,17 +92,22 @@ Class TypeAcometidaModel extends Model
         try {
 
             if ($q != "") {
-                $filtro = " codigo LIKE '%$q%' ";
+                $filtro = " consumo_prom_mensual LIKE '%$q%' ";
             }
 			
 			$result  = $this->db
-				->select("ta.id, tg.descripcion AS TIPO_GABINETE, ta.descripcion AS DESCRIPCION
-                ,ta.codigo AS CODIGO")
+				->select("i.id, c.numero AS NUMERO_CONTRATO, tp.descripcion AS TIPO_PROYECTO
+                ,ct.nombre AS CATEGORIA_TARIFARIA, i.fecha_registro AS FECHA_REGISTRO
+                ,i.volumen_contratado AS VOLUMEN_CONTRATADO, i.consumo_prom_mensual AS COMSUMO_PROMEDIO_MENSUAL
+                ,i.condiciones_esp_acometida AS CONDICIONES_ACOMETIDA, i.observaciones AS OBSERVACIONES
+                ,i.presion_minima AS PRESION_MINIMA, i.presion_maxima AS PRESION_MAXIMA")
 
-				->table("tipos_acometida ta
-					INNER JOIN tipo_gabinete tg ON ta.id_tipogabinete=tg.id")
+				->table("informacion_comercial i
+					INNER JOIN contratos c ON i.id_contrato=c.id
+					INNER JOIN tipo_proyecto tp ON i.id_tipoproyecto=tp.id
+                    INNER JOIN categoria_tarifaria ct ON id_categtarifaria=ct.id")
 			    ->where($filtro)
-				->orderBy("ta.id", "DESC")
+				->orderBy("i.id", "DESC")
 
 				->paginator($pagina, $palabraBuscada);
 
@@ -110,8 +116,6 @@ Class TypeAcometidaModel extends Model
             return ["success" => false, "message" => $e->getMessage()];
         }
     }
+
+
 }
-
-
-
-
