@@ -39,7 +39,7 @@ class TypeAcometida extends Controller
             }
 
 
-            if (!preg_match('/^[0-9]$/', $data['codigo'])) {
+            if (!preg_match('/^[0-9]+$/', $data['codigo'])) {
                 throw new \Exception(" Ingrese solo numeros");
             }
 
@@ -97,7 +97,7 @@ class TypeAcometida extends Controller
                 throw new \Exception("Ingrese el codigo del tipo de acometida ");
             }
 
-            if (!(preg_match('/^[a-zA-Z ]+$/', $data['descripcion']))) {
+            if (!(preg_match('/^[a-zA-Z]+$/', $data['descripcion']))) {
                 throw new \Exception("Se permiten solo letras");
             }
 
@@ -136,4 +136,10 @@ class TypeAcometida extends Controller
     {
         return $this->typeAcometida->paginator($id, $q);
     }
+
+    public function getAll(Response $response)
+	{
+		$results = $this->typeAcometida->getAll();
+		return $this->resjson($results);
+	}
 }

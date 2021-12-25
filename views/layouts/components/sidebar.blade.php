@@ -25,14 +25,14 @@
               </span>
             </button>
             <div v-show="uno">
-              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Material</a>
-              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Instalacion</a>
-              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Gabinete</a>
-              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Proyecto</a>
-              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Acometida</a>
+              <a href="./tipomaterial" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Material</a>
+              <a href="./tipoinstalacion" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Instalacion</a>
+              <a href="./tipogabinete" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Gabinete</a>
+              <a href="./tipoproyecto" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Proyecto</a>
+              <a href="./tipoacometida" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Acometida</a>
               <a href="./estrato_social" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Estrato Social</a>
-              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Estados Acometida</a>
-              <a href="#" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Categoria Proyecto</a>
+              <a href="./estadosacometida" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Estados Acometida</a>
+              <a href="./categoriaproyecto" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Categoria Proyecto</a>
               <a href="./planes_financiamientos" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Planes Financiamiento</a>
             </div>                        
           </li>

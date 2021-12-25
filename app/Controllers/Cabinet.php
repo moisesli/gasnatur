@@ -114,7 +114,13 @@ class Cabinet extends Controller
 		return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
 	}
 
-    public function paginator($id = 1, $q = "")
+  public function getAll(Response $response)
+	{
+		$results = $this->cabinet->getAll();
+		return $this->resjson($results);
+	}
+
+  public function paginator($id = 1, $q = "")
   {
     return $this->cabinet->paginator($id, $q);
   }

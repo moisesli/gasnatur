@@ -117,7 +117,7 @@ $app->router->get('/apis/clientes/:id?/:all?', 'Client@paginator');
 $app->router->post('/apis/clientes/:id','Client@getById'); 
 $app->router->post('/apis/clientes', 'Client@create');
 $app->router->put('/apis/clientes/:id', 'Client@update');
-$app->router->delete('/apis/clientes/:id', 'Client@delete');
+$app->router->delete('/apis/clientesE¿/:id', 'Client@delete');
 
 //Material
 $app->router->get('/apis/tipomaterial/:id?/:all?', 'Material@paginator');
@@ -146,6 +146,7 @@ $app->router->put('/apis/tipoinstalacion/:id', 'Installation@update');
 $app->router->delete('/apis/tipoinstalacion/:id', 'Installation@delete');
 
 //Type_Cabinet
+$app->router->get('/apis/tipogabineteall', 'Cabinet@getAll');
 $app->router->get('/apis/tipogabinete/:id?/:all?', 'Cabinet@paginator');
 $app->router->post('/apis/tipogabinete/:id','Cabinet@getById'); 
 $app->router->post('/apis/tipogabinete', 'Cabinet@create');
@@ -281,6 +282,31 @@ $app->router->get('/distritos', function () {
 $app->router->get('/clientes', function () {
     $front = new \Config\View();
     return $front->show('clientes.clientes');
+});
+
+$app->router->get('/tipomaterial', function () {
+    $front = new \Config\View();
+    return $front->show('tipomaterial.tipomaterial');
+});
+
+$app->router->get('/tipoinstalacion', function () {
+    $front = new \Config\View();
+    return $front->show('tipoinstalacion.tipoinstalacion');
+});
+
+$app->router->get('/tipogabinete', function () {
+    $front = new \Config\View();
+    return $front->show('tipogabinete.tipogabinete');
+});
+
+$app->router->get('/tipoproyecto', function () {
+    $front = new \Config\View();
+    return $front->show('tipoproyecto.tipoproyecto');
+});
+
+$app->router->get('/tipoacometida', function () {
+    $front = new \Config\View();
+    return $front->show('tipoacometida.tipoacometida');
 });
 
 $app->run();

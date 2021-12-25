@@ -116,6 +116,6 @@ class Installation extends Controller
 
   public function paginator($id = 1, $q = "")
   {
-    return $this->cabinet->paginator($id, $q);
+    return $this->installation->paginator($id, $q);
   }
 }

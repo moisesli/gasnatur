@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
-@section('title','Tipo Material')
+@section('title','Tipo Instalacion')
 @section('vuejs')
-  @include('tipomaterial.tipomaterialjs')
+  @include('tipoinstalacion.tipoinstalacionjs')
 @endsection
 @section('content')
   @verbatim
@@ -85,7 +85,6 @@
             <tr>
               <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">#id</th>
               <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Descripcion</th>              
-              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>              
               <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
             </tr>
           </thead>
@@ -96,9 +95,6 @@
               </td>
               <td class="p-4 whitespace-nowrap text-sm font-normal">
                 <div class="text-base font-semibold text-gray-700">{{ item.descripcion }}<div>                
-              </td>
-              <td class="p-4 whitespace-nowrap text-sm font-normal">
-                <div class="text-base font-semibold text-gray-700">{{ item.estado }}<div>                
               </td>              
               <td class="p-4 whitespace-nowrap space-x-2">
                 <!-- Button Edit -->
@@ -178,16 +174,9 @@
 
             <!-- Primera Fila -->
             <div class="flex flex-col md:flex-row">
-              <div class="md:w-1/2 md:mr-2.5">
+              <div class="">
                 <label class="text-sm font-medium text-gray-900 block mb-2">Descripcion</label>
                 <input v-model="item.descripcion" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2">
-              </div>
-              <div class="md:w-1/2 md:ml-2.5">
-                <label class="text-sm font-medium text-gray-900 block mb-2">Estado</label>
-                <select v-model="item.estado" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
-                  <option value="activo">Activo</option>
-                  <option value="noactivo">No Activo</option>
-                </select>
               </div>              
             </div>
 
@@ -224,5 +213,3 @@
 </div>
   @endverbatim
 @endsection
-
-

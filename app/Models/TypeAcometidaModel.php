@@ -82,6 +82,14 @@ Class TypeAcometidaModel extends Model
 
 		return $response;
 	}
+    public function getAll()
+	{
+		try {
+			return $this->db->findAll("SELECT * FROM tipos_acometida");
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
 
     public function paginator($pagina, $q)
 	{

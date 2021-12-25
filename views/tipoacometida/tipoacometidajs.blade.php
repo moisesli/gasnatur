@@ -3,16 +3,16 @@
   const app = createApp({
     data() {
       return {        
-        name: 'Tipo Material',
-        entity: 'tipomaterial',
+        name: 'Tipo Acometida',
+        entity: 'tiposacometida',
         item: {
           id: '',
+          id_tipogabinete: '',
           descripcion: '',
-          estado: '',          
+          codigo: '',
         },
         items: [],
-        tipodocs: [],
-        nacionalidades: [],        
+        tipogabinetes: [],        
         search: '',
         pagination: {
           inicio: null,
@@ -63,14 +63,10 @@
         }        
       },
       loadForeignKey: function(){        
-        axios.get('/apis/tipodocumentoidentidad').then(res => {
-          this.tipodocs = res.data;     
-          console.log(this.tipodocs)
-        })        
-        axios.get('/apis/nacionalidadesall').then(res => {
-          this.nacionalidades = res.data;
-          console.log(this.nacionalidades)
-        })        
+        axios.get('/apis/tipogabineteall').then(res => {
+          this.tipogabinetes = res.data;     
+          console.log(this.tipogabinetes)
+        })               
       },
       newItem: function(){
         this.modal.action = 'new'
@@ -87,8 +83,9 @@
         axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
           console.log(res.data)
           this.item.id = res.data.id,
+          this.item.id_tipogabinete = res.data.id_tipogabinete;
           this.item.descripcion = res.data.descripcion;
-          this.item.estado = res.data.estado;          
+          this.item.codigo = res.data.codigo;
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -101,7 +98,7 @@
       storeItem: function(){
         this.loading.store = true;
         if( this.modal.action == 'new'){   
-          console.log('entro a new')
+          console.log(this.item)
           axios.post('./apis/' + this.entity , JSON.stringify(this.item)).then(res => {
             this.message = res.data;
             console.log(this.message.message)
@@ -148,8 +145,9 @@
       },
       clearItem: function(){     
         this.item.id = '',
+        this.item.id_tipogabinete = '';
         this.item.descripcion = '';
-        this.item.estado = '';        
+        this.item.codigo = '';
       },      
     },  
     computed: {      

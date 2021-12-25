@@ -3,12 +3,11 @@
   const app = createApp({
     data() {
       return {        
-        name: 'Tipo Material',
-        entity: 'tipomaterial',
+        name: 'Tipo de Proyecto',
+        entity: 'tipoproyecto',
         item: {
           id: '',
-          descripcion: '',
-          estado: '',          
+          descripcion: '',          
         },
         items: [],
         tipodocs: [],
@@ -87,8 +86,7 @@
         axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
           console.log(res.data)
           this.item.id = res.data.id,
-          this.item.descripcion = res.data.descripcion;
-          this.item.estado = res.data.estado;          
+          this.item.descripcion = res.data.descripcion;               
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -148,8 +146,7 @@
       },
       clearItem: function(){     
         this.item.id = '',
-        this.item.descripcion = '';
-        this.item.estado = '';        
+        this.item.descripcion = '';            
       },      
     },  
     computed: {      
