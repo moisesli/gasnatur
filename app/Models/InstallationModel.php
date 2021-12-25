@@ -71,7 +71,7 @@ Class InstallationModel extends Model
 
 			$sth = $this->db->delete("tipo_instalacion", "id={$id}");
 			if (!$sth) {
-				throw new \Exception("No pudimos eliminar el rol");
+				throw new \Exception("No pudimos eliminar");
 			}
 
 			$response->success = true;
@@ -84,25 +84,28 @@ Class InstallationModel extends Model
 	}
 
     public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
-        $palabraBuscada = "";
-		$filtro = "";
-		try {
-			if ($q != "") {
-                $palabraBuscada=$q;
-				$filtro = " descripcion LIKE '%$q%' ";
-			}
-			return $this->db->paginator('tipo_instalacion', $pagina, $palabraBuscada ,$filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+    {
 
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
 
+            if ($q != "") {
+                $filtro = " descripcion LIKE '%$q%' ";
+            }
+			
+			$result  = $this->db
+				->select("*")
 
+				->table("tipo_instalacion t")
+			    ->where($filtro)
+				->orderBy("t.id", "DESC")
 
+				->paginator($pagina, $palabraBuscada);
 
-
-
+			return $result;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }

@@ -43,20 +43,20 @@ class ProjectModel extends Model
 		}
 	}
 
-	public function getInnerJoin()
-	{
-		try {
-			$sql = "SELECT proyectos.id, proyectos.nombre, empresas.nombre_comercial as empresa, 
-			concesionarias.descripcion AS concesionaria,
-			proyectos.fecha_inicio, proyectos.numero_inicial
-			FROM proyectos 
-			INNER JOIN empresas ON proyectos.id_empresa=empresas.id
-			INNER JOIN concesionarias ON proyectos.id_concesionaria = concesionarias.id WHERE";
-			return $this->db->findAll($sql);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+	// public function getInnerJoin()
+	// {
+	// 	try {
+	// 		$sql = "SELECT proyectos.id, proyectos.nombre, empresas.nombre_comercial as empresa, 
+	// 		concesionarias.descripcion AS concesionaria,
+	// 		proyectos.fecha_inicio, proyectos.numero_inicial
+	// 		FROM proyectos 
+	// 		INNER JOIN empresas ON proyectos.id_empresa=empresas.id
+	// 		INNER JOIN concesionarias ON proyectos.id_concesionaria = concesionarias.id WHERE";
+	// 		return $this->db->findAll($sql);
+	// 	} catch (\Exception $e) {
+	// 		return ["success" => false, "message" => $e->getMessage()];
+	// 	}
+	// }
 
     public function update($data, $id)
 	{
@@ -113,25 +113,30 @@ class ProjectModel extends Model
 
     public function paginator($pagina, $q)
     {
-        $orderBy = 'proyectos.id';
-        $palabraBuscada = "";
-        $filtro = "";
+
+		$palabraBuscada = $q;
+        $filtro = null;
         try {
+
             if ($q != "") {
-                $palabraBuscada = $q;
                 $filtro = " nombre LIKE '%$q%' ";
             }
+			
+			$projects  = $this->db
+				->select("p.id, p.nombre
+					,p.id_empresa, e.nombre_comercial as empresa 
+					,p.id_concesionaria,c.descripcion AS concesionaria,
+					p.fecha_inicio, p.numero_inicial")
 
-			$sql = "proyectos 
-			INNER JOIN empresas ON proyectos.id_empresa=empresas.id
-			INNER JOIN concesionarias ON proyectos.id_concesionaria = concesionarias.id";
+				->table("proyectos p
+					INNER JOIN empresas e ON p.id_empresa=e.id
+					INNER JOIN concesionarias c ON c.id=p.id_concesionaria")
+			    ->where($filtro)
+				->orderBy("p.id", "DESC")
 
-			$camposADevolver=" proyectos.id, proyectos.nombre
-			,proyectos.id_empresa, empresas.nombre_comercial as empresa 
-			,proyectos.id_concesionaria,concesionarias.descripcion AS concesionaria,
-			proyectos.fecha_inicio, proyectos.numero_inicial";
+				->paginator($pagina, $palabraBuscada);
 
-        	return $this->db->paginator($sql, $pagina, $palabraBuscada, $filtro, $orderBy,[],$camposADevolver = $camposADevolver);
+			return $projects;
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];
         }

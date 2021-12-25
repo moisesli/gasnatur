@@ -88,6 +88,28 @@ class CategoryFare extends Controller
         return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
     }
 
+    public function delete(Request $request, Response $response, $id)
+    {
+        $statusOk = false;
+        $messageError = "";
+
+        try {
+
+            if ($id == "") {
+                throw new \Exception("No existe el id del gabinete");
+            }
+
+            $result = $this->categoryFare->delete($id);
+
+            [$statusOk, $messageError] = array_values((array)$result);
+        } catch (\Exception $e) {
+            $messageError = $e->getMessage();
+        }
+
+        return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
+    }
+
+
     public function paginator($id = 1, $q = "")
     {
         return $this->categoryFare->paginator($id, $q);

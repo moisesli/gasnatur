@@ -97,18 +97,29 @@ class MeshModel extends Model
 	}
 
     public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
-        $palabraBuscada = "";
-		$filtro = "";
-		try {
-			if ($q != "") {
-                $palabraBuscada = $q;
-				$filtro = " nombre LIKE '%$q%' ";
-			}
-			return $this->db->paginator('mallas', $pagina, $palabraBuscada ,$filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+    {
+
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
+
+            if ($q != "") {
+                $filtro = " nombre LIKE '%$q%' ";
+            }
+			
+			$result  = $this->db
+				->select("m.id, p.nombre AS PROYECTO, m.nombre AS DESCRIPCION")
+
+				->table("mallas m
+                INNER JOIN proyectos p ON m.id_proyecto=p.id")
+			    ->where($filtro)
+				->orderBy("m.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }

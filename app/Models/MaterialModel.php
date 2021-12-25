@@ -97,20 +97,29 @@ class MaterialModel extends model
 	}
 
     public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
-		$palabraBuscada = "";
-		$filtro = "";
+    {
 
-		try {
-			if ($q != "") {
-				$palabraBuscada = $q;
-				$filtro = " descripcion LIKE '%$q%' ";
-			}
-			return $this->db->paginator('tipo_material', $pagina, $palabraBuscada, $filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
+
+            if ($q != "") {
+                $filtro = " descripcion LIKE '%$q%' ";
+            }
+			
+			$material  = $this->db
+				->select("*")
+
+				->table("tipo_material t")
+			    ->where($filtro)
+				->orderBy("t.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $material;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 
 }

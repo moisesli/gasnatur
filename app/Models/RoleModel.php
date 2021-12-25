@@ -108,18 +108,28 @@ Class RoleModel extends Model
 	}
 
     public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
-        $palabraBuscada = "";
-		$filtro = "";
-		try {
-			if ($q != "") {
-                $palabraBuscada=$q;
-				$filtro = " nombre LIKE '%$q%' ";
-			}
-			return $this->db->paginator('roles', $pagina, $palabraBuscada ,$filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+    {
+
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
+
+            if ($q != "") {
+                $filtro = " nombre LIKE '%$q%' ";
+            }
+			
+			$result  = $this->db
+				->select("*")
+
+				->table("roles r")
+			    ->where($filtro)
+				->orderBy("r.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }

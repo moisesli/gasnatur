@@ -98,16 +98,28 @@ class ContractModel extends model
 
     public function paginator($pagina, $q)
     {
-        $orderBy = 'id';
-        $palabraBuscada = "";
-        $filtro = "";
 
+		$palabraBuscada = $q;
+        $filtro = null;
         try {
+
             if ($q != "") {
-                $palabraBuscada = $q;
-                $filtro = " etapa LIKE '%$q%' ";
+                $filtro = " numero LIKE '%$q%' ";
             }
-            return $this->db->paginator('contratos', $pagina, $palabraBuscada, $filtro, $orderBy);
+			
+			$result  = $this->db
+				->select("c.id, p.nombre AS PROYECTO, pe.nombres AS NOMBRES,
+                pe.apellidos AS APELLIDOS, c.numero AS NUMERO, c.etapa AS ETAPA, c.estado AS ESTADO")
+
+				->table("contratos c
+                INNER JOIN proyectos p ON c.id_proyecto=p.id
+                INNER JOIN personal pe ON c.id_personal=pe.id")
+			    ->where($filtro)
+				->orderBy("c.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];
         }

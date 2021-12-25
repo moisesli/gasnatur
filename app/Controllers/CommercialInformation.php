@@ -3,17 +3,17 @@
 namespace App\Controllers;
 
 use Config\Controller;
-use App\Models\PrediosModel;
+use App\Models\CommercialInformationModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Predios extends Controller
+class CommercialInformation extends Controller
 {
-    public $predios;
+    public $commercialInformation;
 
     public function __construct()
     {
-        $this->predios = $this->loadModel('Predios');
+        $this->commercialInformation = $this->loadModel('CommercialInformation');
     }
 
     public function create(Request $request, Response $response)
@@ -26,24 +26,24 @@ class Predios extends Controller
 
             $data = $request->toArray();
 
-            if ($data['id_cliente'] == "") {
-                throw new \Exception("Ingrese el id del cliente");
+            if (count($data) == 0) {
+                throw new \Exception("No existe parámetros");
             }
+
             if ($data['id_contrato'] == "") {
                 throw new \Exception("Ingrese el id del contrato");
             }
-            if ($data['id_ubigeo'] == "") {
-                throw new \Exception("Ingrese el codigo de ubigeo del distrito");
+            if ($data['id_tipoproyecto'] == "") {
+                throw new \Exception("Ingrese el id del contrato");
             }
-
-            if ($data['id_manzana'] == "") {
-                throw new \Exception("Ingrese el id de la manzana");
+            if ($data['id_categtarifaria'] == "") {
+                throw new \Exception("Ingrese el codigo de ubigeo del distrito");
             }
 
             date_default_timezone_set('America/Lima');
             $data['fecha_registro'] = Date('y-m-d H:m:s');
 
-            $result = $this->predios->create($data);
+            $result = $this->commercialInformation->create($data);
 
             [$statusOk, $messageError] = array_values((array)$result);
         } catch (\Exception $e) {
@@ -56,7 +56,7 @@ class Predios extends Controller
     public function getById(Response $response, $id)
     {
 
-        $result = $this->predios->findById($id);
+        $result = $this->commercialInformation->findById($id);
 
         return $this->resjson($result);
     }
@@ -74,24 +74,17 @@ class Predios extends Controller
                 throw new \Exception("No existe parámetros");
             }
 
-            if ($id == "") {
-                throw new \Exception("No existe el id del tipo de acometida");
-            }
-
-            if ($data['id_cliente'] == "") {
-                throw new \Exception("Ingrese el id del cliente");
-            }
             if ($data['id_contrato'] == "") {
                 throw new \Exception("Ingrese el id del contrato");
             }
-            if ($data['id_ubigeo'] == "") {
+            if ($data['id_tipoproyecto'] == "") {
+                throw new \Exception("Ingrese el id del contrato");
+            }
+            if ($data['id_categtarifaria'] == "") {
                 throw new \Exception("Ingrese el codigo de ubigeo del distrito");
             }
-            if ($data['id_manzana'] == "") {
-                throw new \Exception("Ingrese el id de la manzana");
-            }
 
-            $result = $this->predios->update($data, $id);
+            $result = $this->commercialInformation->update($data, $id);
 
             [$statusOk, $messageError] = array_values((array)$result);
         } catch (\Exception $e) {
@@ -103,27 +96,27 @@ class Predios extends Controller
 
     public function delete(Request $request, Response $response, $id)
     {
-        $statusOk = false;
-        $messageError = "";
-
-        try {
-
-            if ($id == "") {
-                throw new \Exception("No existe el id del gabinete");
-            }
-
-            $result = $this->predios->delete($id);
-
-            [$statusOk, $messageError] = array_values((array)$result);
-        } catch (\Exception $e) {
-            $messageError = $e->getMessage();
+      $statusOk = false;
+      $messageError = "";
+  
+      try {
+  
+        if ($id == "") {
+          throw new \Exception("No existe el id de la zona");
         }
-
-        return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
+  
+        $result = $this->commercialInformation->delete($id);
+  
+        [$statusOk, $messageError] = array_values((array)$result);
+      } catch (\Exception $e) {
+        $messageError = $e->getMessage();
+      }
+  
+      return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
     }
 
     public function paginator($id = 1, $q = "")
     {
-        return $this->predios->paginator($id, $q);
+      return $this->commercialInformation->paginator($id, $q);
     }
 }

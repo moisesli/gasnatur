@@ -111,25 +111,30 @@ class UserModel extends Model
         return $response;
     }
 
+
     public function paginator($pagina, $q)
     {
-        $orderBy = 'id';
-        $palabraBuscada = "";
-        $filtro = "";
+
+		$palabraBuscada = $q;
+        $filtro = null;
         try {
+
             if ($q != "") {
-                $palabraBuscada = $q;
                 $filtro = " usuario LIKE '%$q%' ";
             }
+			
+			$result  = $this->db
+				->select(" u.id, u.usuario, u.id_personal, p.nombres as nombres, 
+                u.id_role, r.nombre AS rol")
+				->table("usuarios u
+                INNER JOIN personal p ON u.id_personal=p.id
+                INNER JOIN roles r ON u.id_role = r.id")
+			    ->where($filtro)
+				->orderBy("u.id", "DESC")
 
-            $sql = "usuarios 
-			INNER JOIN personal ON usuarios.id_personal=personal.id
-			INNER JOIN roles ON usuarios.id_role = roles.id";
-            
-			$camposADevolver=" usuarios.id, usuarios.usuario, usuarios.id_personal, personal.nombres as nombres, 
-            usuarios.id_role, roles.nombre AS rol";
+				->paginator($pagina, $palabraBuscada);
 
-            return $this->db->paginator($sql, $pagina, $palabraBuscada, $filtro, $orderBy,[],$camposADevolver = $camposADevolver);
+			return $result;
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];
         }

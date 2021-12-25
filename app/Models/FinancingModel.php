@@ -105,21 +105,31 @@ class FinancingModel extends model
 		return $response;
 	}
 
-    public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
-		$palabraBuscada = "";
-		$filtro = "";
 
-		try {
-			if ($q != "") {
-				$palabraBuscada = $q;
-				$filtro = " descripcion LIKE '%$q%' ";
-			}
-			return $this->db->paginator('planes_financiamiento', $pagina, $palabraBuscada, $filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+	public function paginator($pagina, $q)
+    {
+
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
+
+            if ($q != "") {
+                $filtro = " descripcion LIKE '%$q%' ";
+            }
+			
+			$result  = $this->db
+				->select("*")
+
+				->table("planes_financiamiento p")
+			    ->where($filtro)
+				->orderBy("p.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }	
 
 }

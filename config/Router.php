@@ -193,6 +193,14 @@ $app->router->get('/apis/categoriatarifaria/:id?/:all?', 'CategoryFare@paginator
 $app->router->post('/apis/categoriatarifaria/:id','CategoryFare@getById'); 
 $app->router->post('/apis/categoriatarifaria', 'CategoryFare@create');
 $app->router->put('/apis/categoriatarifaria/:id', 'CategoryFare@update');
+$app->router->delete('/apis/categoriatarifaria/:id', 'CategoryFare@delete');
+
+//CommercialInformation
+$app->router->get('/apis/informacioncomercial/:id?/:all?', 'CommercialInformation@paginator');
+$app->router->post('/apis/informacioncomercial/:id','CommercialInformation@getById'); 
+$app->router->post('/apis/informacioncomercial', 'CommercialInformation@create');
+$app->router->put('/apis/informacioncomercial/:id', 'CommercialInformation@update');
+$app->router->delete('/apis/informacioncomercial/:id', 'CommercialInformation@delete');
 
 
 

@@ -96,22 +96,33 @@ class AppleModel extends model
 		return $response;
 	}
 
-    public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
-		$palabraBuscada = "";
-		$filtro = "";
 
-		try {
-			if ($q != "") {
-				$palabraBuscada = $q;
-				$filtro = " nombre LIKE '%$q%' ";
-			}
-			return $this->db->paginator('manzanas', $pagina, $palabraBuscada, $filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+	public function paginator($pagina, $q)
+    {
 
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
 
+            if ($q != "") {
+                $filtro = " nombre LIKE '%$q%' ";
+            }
+			
+			$result  = $this->db
+				->select("m.id, e.nombre AS ESTRATO_SOCIAL
+					,ma.nombre AS MALLA, m.nombre AS NOMBRE, m.numero AS NUMERO")
+
+				->table("manzanas m
+					INNER JOIN estrato_social e ON m.id_estrato=e.id
+					INNER JOIN mallas ma ON m.id=ma.id")
+			    ->where($filtro)
+				->orderBy("m.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }

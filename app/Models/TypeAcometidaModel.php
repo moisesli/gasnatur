@@ -92,20 +92,32 @@ Class TypeAcometidaModel extends Model
 	}
 
     public function paginator($pagina, $q)
-	{
-		$orderBy = 'id';
-        $palabraBuscada = "";
-		$filtro = "";
-		try {
-			if ($q != "") {
-                $palabraBuscada=$q;
-				$filtro = " descripcion LIKE '%$q%' ";
-			}
-			return $this->db->paginator('tipos_acometida', $pagina, $palabraBuscada ,$filtro, $orderBy);
-		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
-		}
-	}
+    {
+
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
+
+            if ($q != "") {
+                $filtro = " codigo LIKE '%$q%' ";
+            }
+			
+			$result  = $this->db
+				->select("ta.id, tg.descripcion AS TIPO_GABINETE, ta.descripcion AS DESCRIPCION
+                ,ta.codigo AS CODIGO")
+
+				->table("tipos_acometida ta
+					INNER JOIN tipo_gabinete tg ON ta.id_tipogabinete=tg.id")
+			    ->where($filtro)
+				->orderBy("ta.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }
 
 

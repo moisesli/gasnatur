@@ -6,6 +6,11 @@ use Firebase\JWT\JWT;
 
 class Database extends \PDO
 {
+    protected $select = "*";
+    protected $from = null;
+    protected $orderBy = null;
+    protected $where = null;
+
     public function __construct($DBTYPE, $DBHOST, $DBNAME, $DBUSER, $DBPASS, $CHAR)
     {
         $OPCIONES = array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $CHAR);
@@ -48,20 +53,44 @@ class Database extends \PDO
         return $sth->rowCount();
     }
 
-    public function paginator($table, $pagina, $palabraBuscada, $filtro, $orderBy = "id",$array = [],$camposADevolver ="*", $fetchMode = \PDO::FETCH_OBJ)
+    public function select($fields){
+        $this->select = $fields;
+        return $this;
+    }
+
+    public function table($table){
+        $this->from = $table;
+        return $this;
+    }
+
+    public function orderBy($orderBy, $orderDir = null){
+        if(!is_null($orderDir)){
+            $this->orderBy = "ORDER BY ". $orderBy." ".$orderDir;
+        }else{
+            $this->orderBy = "ORDER BY ". $orderBy." ASC";
+        }
+        return $this;
+    }
+
+    public function where($where){
+        $this->where = $where;
+        return $this;
+    }
+
+    public function paginator($pagina, $palabraBuscada,$array = [], $fetchMode = \PDO::FETCH_OBJ)
     {
         $regpagina = 10;
 
         $inicio = ($pagina >= 1) ? (($pagina * $regpagina) - $regpagina) : 0;
 
-
-        if ($filtro == "") {
-            $sql = "SELECT SQL_CALC_FOUND_ROWS $camposADevolver FROM $table ORDER BY $orderBy DESC LIMIT $inicio,$regpagina";
+        // echo $this->from;
+        if (is_null($this->where)) {
+            $sql = "SELECT SQL_CALC_FOUND_ROWS $this->select FROM {$this->from} {$this->orderBy} LIMIT $inicio,$regpagina";
         } else {
-            $sql = "SELECT SQL_CALC_FOUND_ROWS $camposADevolver FROM $table WHERE $filtro ORDER BY $orderBy DESC LIMIT $inicio,$regpagina";
+            $sql = "SELECT SQL_CALC_FOUND_ROWS $this->select FROM {$this->from} WHERE {$this->where} {$this->orderBy} LIMIT $inicio,$regpagina";
         }
 
-        //return $sql;
+        // return $sql;
 
         $registros = $this->prepare($sql);
 
@@ -101,6 +130,8 @@ class Database extends \PDO
         $resultado["palabra_buscada"] = $palabraBuscada;
         return $resultado;
     }
+
+    
 
     public function login($usuario, $clave, $array = [], $fetchMode = \PDO::FETCH_OBJ)
     {

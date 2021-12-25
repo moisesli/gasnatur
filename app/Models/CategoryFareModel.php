@@ -62,21 +62,52 @@ Class CategoryFareModel extends Model
         return $response;
     }
 
-    public function paginator($pagina, $q)
+    public function delete($id)
 	{
-		$orderBy = 'id';
-        $palabraBuscada = "";
-		$filtro = "";
+		$response = new \stdClass;
+		$response->success = false;
+
 		try {
-			if ($q != "") {
-                $palabraBuscada=$q;
-				$filtro = " nombre LIKE '%$q%' ";
+
+			$sth = $this->db->delete("categoria_tarifaria", "id={$id}");
+			if (!$sth) {
+				throw new \Exception("No pudimos eliminar el rol");
 			}
-			return $this->db->paginator('categoria_tarifaria', $pagina, $palabraBuscada ,$filtro, $orderBy);
+
+			$response->success = true;
+			$response->message = "Eliminado correctamente";
 		} catch (\Exception $e) {
-			return ["success" => false, "message" => $e->getMessage()];
+			$response->message = $e->getMessage();
 		}
+
+		return $response;
 	}
+
+    public function paginator($pagina, $q)
+    {
+
+		$palabraBuscada = $q;
+        $filtro = null;
+        try {
+
+            if ($q != "") {
+                $filtro = " nombre LIKE '%$q%' ";
+            }
+			
+			$result  = $this->db
+				->select("*")
+
+				->table("categoria_tarifaria c")
+			    ->where($filtro)
+				->orderBy("c.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
+        } catch (\Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 
 }
    

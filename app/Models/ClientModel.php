@@ -96,18 +96,51 @@ class ClientModel extends Model
 
     public function paginator($pagina, $q)
     {
-        $orderBy = 'id';
-        $palabraBuscada = "";
-        $filtro = "";
+
+		$palabraBuscada = $q;
+        $filtro = null;
         try {
+
             if ($q != "") {
-                $palabraBuscada = $q;
-                $filtro = " numero LIKE '%$q%' ";
+                $filtro = " nombres LIKE '%$q%' ";
             }
-            return $this->db->paginator('clientes', $pagina, $palabraBuscada, $filtro, $orderBy);
+			
+			$result  = $this->db
+				->select("c.id, t.descripcion AS DOCUMENTO_IDENTIDAD
+					,n.descripcion AS NACIONALIDAD, c.fecha_registro AS REGISTRO
+                    ,c.numero AS NUMERO, c.nombres AS NOMBRES, c.fecha_nacimiento AS FECHA_NACIMIENTO
+                    ,c.estado_civil AS ESTADO_CIVIL, c.direccion  AS DIRECCION, c.telefono AS TELEFONO
+                    ,c.celular AS CELULAR, c.correo AS CORREO, c.recibo_digital AS RECIBO_DIGITAL
+                    ,c.estado AS ESTADO")
+
+				->table("clientes c
+					INNER JOIN tipo_documentos_identidad t ON c.id_tipodoc=t.id
+					INNER JOIN nacionalidades n ON c.id_nacionalidad=n.id")
+			    ->where($filtro)
+				->orderBy("c.id", "DESC")
+
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];
         }
     }
+
+    // public function paginator($pagina, $q)
+    // {
+    //     $orderBy = 'id';
+    //     $palabraBuscada = "";
+    //     $filtro = "";
+    //     try {
+    //         if ($q != "") {
+    //             $palabraBuscada = $q;
+    //             $filtro = " numero LIKE '%$q%' ";
+    //         }
+    //         return $this->db->paginator('clientes', $pagina, $palabraBuscada, $filtro, $orderBy);
+    //     } catch (\Exception $e) {
+    //         return ["success" => false, "message" => $e->getMessage()];
+    //     }
+    // }
 
 }

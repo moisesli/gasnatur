@@ -105,29 +105,33 @@ class PersonalModel extends Model
 		return $response;
 	}
 
+
 	public function paginator($pagina, $q)
     {
-        $orderBy = 'id';
-        $palabraBuscada = "";
-        $filtro = "";
+
+		$palabraBuscada = $q;
+        $filtro = null;
         try {
+
             if ($q != "") {
-                $palabraBuscada = $q;
-                $filtro = " apellidos LIKE '%$q%' ";
+                $filtro = " numero LIKE '%$q%' ";
             }
-			$sql = "personal 
-			INNER JOIN cargos ON personal.id_cargo=cargos.id
-			INNER JOIN tipo_documentos_identidad ON personal.id_tipodoc = tipo_documentos_identidad.id";
+			
+			$result  = $this->db
+				->select("p.id, p.nombres, p.id_cargo, c.nombre
+				,p.id_tipodoc, t.descripcion as documento")
 
-			$camposADevolver=" personal.id, personal.nombres, personal.id_cargo, cargos.nombre
-			,personal.id_tipodoc, tipo_documentos_identidad.descripcion as documento";
+				->table("personal p
+				INNER JOIN cargos c ON p.id_cargo = c.id
+				INNER JOIN tipo_documentos_identidad t ON p.id_tipodoc = t.id")
+			    ->where($filtro)
+				->orderBy("p.id", "DESC")
 
-        	return $this->db->paginator($sql, $pagina, $palabraBuscada, $filtro, $orderBy,[],$camposADevolver = $camposADevolver);
+				->paginator($pagina, $palabraBuscada);
+
+			return $result;
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];
         }
-    }
-
-
-	
+    }	
 }
