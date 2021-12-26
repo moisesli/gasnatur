@@ -103,16 +103,11 @@ Class TypeAcometidaModel extends Model
             }
 			
 			$result  = $this->db
-				->select("ta.id, tg.descripcion AS TIPO_GABINETE, ta.descripcion AS DESCRIPCION
-                ,ta.codigo AS CODIGO")
-
-				->table("tipos_acometida ta
-					INNER JOIN tipo_gabinete tg ON ta.id_tipogabinete=tg.id")
+				->select("ta.id, ta.id_tipogabinete, tg.descripcion AS id_tipogabinete_nombre, ta.descripcion AS descripcion ,ta.codigo AS codigo")
+				->table("tipos_acometida ta INNER JOIN tipo_gabinete tg ON ta.id_tipogabinete=tg.id")
 			    ->where($filtro)
 				->orderBy("ta.id", "DESC")
-
 				->paginator($pagina, $palabraBuscada);
-
 			return $result;
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];

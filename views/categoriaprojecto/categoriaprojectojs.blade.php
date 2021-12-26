@@ -3,15 +3,15 @@
   const app = createApp({
     data() {
       return {        
-        name: 'Tipo de Proyecto',
-        entity: 'tipoproyecto',
+        name: 'Categoria de Proyectos',
+        entity: 'categoriaprojecto',
         item: {
           id: '',
+          id_tipoproyecto: '',
           descripcion: '',          
         },
         items: [],
-        tipodocs: [],
-        nacionalidades: [],        
+        tipoproyectos: [],        
         search: '',
         pagination: {
           inicio: null,
@@ -62,6 +62,12 @@
           })
         }        
       },
+      loadForeignKey: function(){        
+        axios.get('/apis/tipoproyectoall').then(res => {
+          this.tipoproyectos = res.data;     
+          console.log(this.tipoproyectos)
+        })              
+      },
       newItem: function(){
         this.modal.action = 'new'
         this.clearItem()
@@ -77,7 +83,8 @@
         axios.post('./apis/' + this.entity + '/' + item.id).then(res => {
           console.log(res.data)
           this.item.id = res.data.id,
-          this.item.descripcion = res.data.descripcion;               
+          this.item.id_tipoproyecto = res.data.id_tipoproyecto;
+          this.item.descripcion = res.data.descripcion;
           if( action == 'edit' ){
             item.loading = false;            
           } else {
@@ -136,12 +143,14 @@
       },
       clearItem: function(){     
         this.item.id = '',
+        this.item.id_tipoproyecto = '',
         this.item.descripcion = '';            
       },      
     },  
     computed: {      
     },
     mounted(){      
+      this.loadForeignKey();
       this.loadItems();
     },
     

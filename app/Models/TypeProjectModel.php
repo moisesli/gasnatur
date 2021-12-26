@@ -83,6 +83,15 @@ Class TypeProjectModel extends Model
 		return $response;
 	}
 
+    public function getAll()
+	{
+		try {
+			return $this->db->findAll("SELECT * FROM tipo_proyecto");
+		} catch (\Exception $e) {
+			return ["success" => false, "message" => $e->getMessage()];
+		}
+	}
+
     public function paginator($pagina, $q)
     {
 

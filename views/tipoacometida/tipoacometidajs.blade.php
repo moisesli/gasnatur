@@ -45,7 +45,8 @@
       loadItems: function(pagina = 1, palabra_buscada = ''){  
         if( pagina != 0 ){
           this.loading.items = true;
-          axios.get('./apis/' + this.entity + '/'+ pagina + '/' + palabra_buscada).then(res => {            
+          axios.get('./apis/' + this.entity + '/'+ pagina + '/' + palabra_buscada).then(res => {
+            console.log(res.data.registros)
             this.items = res.data.registros;
             this.pagination.inicio = res.data.inicio; 
             this.pagination.fin = res.data.fin;

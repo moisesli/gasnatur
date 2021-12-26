@@ -3,8 +3,8 @@
   const app = createApp({
     data() {
       return {        
-        name: 'Tipo de Proyecto',
-        entity: 'tipoproyecto',
+        name: 'Estados de Acometida',
+        entity: 'estadosacometida',
         item: {
           id: '',
           descripcion: '',          

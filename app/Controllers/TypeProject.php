@@ -114,7 +114,13 @@ class TypeProject extends Controller
 		return $this->resjson(["success" => $statusOk, "message" => $messageError], 200);
 	}
 
-    public function paginator($id = 1, $q = "")
+  public function getAll(Response $response)
+	{
+		$results = $this->typeproject->getAll();
+		return $this->resjson($results);
+	}
+
+  public function paginator($id = 1, $q = "")
   {
     return $this->typeproject->paginator($id, $q);
   }

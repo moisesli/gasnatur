@@ -154,6 +154,7 @@ $app->router->put('/apis/tipogabinete/:id', 'Cabinet@update');
 $app->router->delete('/apis/tipogabinete/:id', 'Cabinet@delete');
 
 //Type_Project
+$app->router->get('/apis/tipoproyectoall', 'TypeProject@getAll');
 $app->router->get('/apis/tipoproyecto/:id?/:all?', 'TypeProject@paginator');
 $app->router->post('/apis/tipoproyecto/:id','TypeProject@getById'); 
 $app->router->post('/apis/tipoproyecto', 'TypeProject@create');
@@ -315,6 +316,16 @@ $app->router->get('/tipoproyecto', function () {
 $app->router->get('/tipoacometida', function () {
     $front = new \Config\View();
     return $front->show('tipoacometida.tipoacometida');
+});
+
+$app->router->get('/estadosacometida', function () {
+    $front = new \Config\View();
+    return $front->show('estadosacometida.estadosacometida');
+});
+
+$app->router->get('/categoriaprojecto', function () {
+    $front = new \Config\View();
+    return $front->show('categoriaprojecto.categoriaprojecto');
 });
 
 $app->run();

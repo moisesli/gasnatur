@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
-@section('title','Tipo Acometida')
+@section('title','Proyectos Categorias')
 @section('vuejs')
-  @include('tipoacometida.tipoacometidajs')
+  @include('categoriaprojecto.categoriaprojectojs')
 @endsection
 @section('content')
   @verbatim
@@ -85,8 +85,7 @@
             <tr>
               <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">#id</th>
               <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Descripcion</th>
-              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Codigo</th>
-              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Tipo Gabinete</th>
+              <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Tipo de Proyecto</th>
               <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
             </tr>
           </thead>
@@ -97,13 +96,10 @@
               </td>
               <td class="p-4 whitespace-nowrap text-sm font-normal">
                 <div class="text-base font-semibold text-gray-700">{{ item.descripcion }}<div>                
-              </td>              
+              </td>
               <td class="p-4 whitespace-nowrap text-sm font-normal">
-                <div class="text-base font-semibold text-gray-700">{{ item.codigo }}<div>                
-              </td>              
-              <td class="p-4 whitespace-nowrap text-sm font-normal">
-                <div class="text-base font-semibold text-gray-700">{{ item.id_tipogabinete_nombre }}<div>                
-              </td>              
+                <div class="text-base font-semibold text-gray-700">{{ item.id_tipoproyecto_name }}<div>                
+              </td>
               <td class="p-4 whitespace-nowrap space-x-2">
                 <!-- Button Edit -->
                 <button @click="editItem(item,'edit')" type="button" data-modal-toggle="product-modal" class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
@@ -182,18 +178,14 @@
 
             <!-- Primera Fila -->
             <div class="flex flex-col md:flex-row">
-              <div class="md:w-1/3 md:mr-2.5">
+              <div class="md:w-2/3 md:mr-2.5">
                 <label class="text-sm font-medium text-gray-900 block mb-2">Descripcion</label>
-                <input v-model="item.descripcion" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" required="">
+                <input v-model="item.descripcion" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2">
               </div>
               <div class="md:w-1/3 md:ml-2.5">
-                <label class="text-sm font-medium text-gray-900 block mb-2">Codigo</label>
-                <input v-model="item.codigo" type="number" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2" placeholder="" required="">
-              </div>              
-              <div class="md:w-1/3 md:ml-5">
-                <label class="text-sm font-medium text-gray-900 block mb-2">Tipo Gabinete</label>
-                <select v-model="item.id_tipogabinete" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
-                  <option v-for="tipogabinete in tipogabinetes" :value="tipogabinete.id">{{ tipogabinete.descripcion }}</option>                    
+                <label class="text-sm font-medium text-gray-900 block mb-2">Tipo Proyecto</label>
+                <select v-model="item.id_tipoproyecto" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg outline-none focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
+                  <option v-for="tipoproyecto in tipoproyectos" :value="tipoproyecto.id">{{ tipoproyecto.descripcion }}</option>                    
                 </select>
               </div>              
             </div>

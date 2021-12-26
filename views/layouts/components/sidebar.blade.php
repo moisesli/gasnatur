@@ -32,7 +32,7 @@
               <a href="./tipoacometida" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Tipo Acometida</a>
               <a href="./estrato_social" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Estrato Social</a>
               <a href="./estadosacometida" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Estados Acometida</a>
-              <a href="./categoriaproyecto" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Categoria Proyecto</a>
+              <a href="./categoriaprojecto" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Categoria Proyecto</a>
               <a href="./planes_financiamientos" class="pl-12 mt-2 pt-2 pb-2 rounded-lg block text-base font-normal text-gray-600 hover:bg-gray-100">Planes Financiamiento</a>
             </div>                        
           </li>

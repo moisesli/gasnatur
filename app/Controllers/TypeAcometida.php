@@ -97,7 +97,7 @@ class TypeAcometida extends Controller
                 throw new \Exception("Ingrese el codigo del tipo de acometida ");
             }
 
-            if (!(preg_match('/^[a-zA-Z]+$/', $data['descripcion']))) {
+            if (!(preg_match('/[^a-zA-Z\s]+$/', $data['descripcion']))) {
                 throw new \Exception("Se permiten solo letras");
             }
 

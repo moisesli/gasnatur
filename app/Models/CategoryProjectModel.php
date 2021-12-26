@@ -95,15 +95,12 @@ Class CategoryProjectModel extends Model
             }
 			
 			$result  = $this->db
-				->select("c.id, t.descripcion AS TIPO_PROYECTO, c.descripcion AS DESCRIPCION")
-
+				->select("c.id, c.id_tipoproyecto, t.descripcion AS id_tipoproyecto_name, c.descripcion AS descripcion")
 				->table("categoria_proyecto c
 					INNER JOIN tipo_proyecto t ON c.id_tipoproyecto=t.id")
 			    ->where($filtro)
 				->orderBy("c.id", "DESC")
-
 				->paginator($pagina, $palabraBuscada);
-
 			return $result;
         } catch (\Exception $e) {
             return ["success" => false, "message" => $e->getMessage()];
