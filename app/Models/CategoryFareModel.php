@@ -15,7 +15,6 @@ Class CategoryFareModel extends Model
         $response->success = false;
 
         try {
-            
             $sth = $this->db->insert('categoria_tarifaria', $data);
             if ($sth) {
                 $response->success = true;
@@ -63,6 +62,8 @@ Class CategoryFareModel extends Model
     }
 
     public function delete($id)
+
+
 	{
 		$response = new \stdClass;
 		$response->success = false;
@@ -96,11 +97,9 @@ Class CategoryFareModel extends Model
 			
 			$result  = $this->db
 				->select("*")
-
 				->table("categoria_tarifaria c")
 			    ->where($filtro)
 				->orderBy("c.id", "DESC")
-
 				->paginator($pagina, $palabraBuscada);
 
 			return $result;

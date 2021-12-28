@@ -1,0 +1,5 @@
+GET {{host}}/clientes
+Accept: application/json
+
+###
+GET {{host}}/proyectos

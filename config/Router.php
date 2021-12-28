@@ -113,11 +113,18 @@ $app->router->put('/apis/nacionalidades/:id', 'Nationality@update');
 $app->router->delete('/apis/nacionalidades/:id', 'Nationality@delete');
 
 //Client
+/*
 $app->router->get('/apis/clientes/:id?/:all?', 'Client@paginator');
 $app->router->post('/apis/clientes/:id','Client@getById'); 
-$app->router->post('/apis/clientes', 'Client@create');
+$app->router->post('/apis/clientes', 'Client@cremate');
 $app->router->put('/apis/clientes/:id', 'Client@update');
 $app->router->delete('/apis/clientesE¿/:id', 'Client@delete');
+*/
+$app->router->get('/apis/clientes/:id?/:all?', 'ClientesController@index');
+$app->router->post('/apis/clientes/:id','Client@edit');
+$app->router->post('/apis/clientes', 'Client@create');
+$app->router->put('/apis/clientes/:id', 'Client@update');
+$app->router->delete('/apis/clientesE¿/:id', 'Client@destroy');
 
 //Material
 $app->router->get('/apis/tipomaterial/:id?/:all?', 'Material@paginator');
@@ -204,6 +211,8 @@ $app->router->put('/apis/informacioncomercial/:id', 'CommercialInformation@updat
 $app->router->delete('/apis/informacioncomercial/:id', 'CommercialInformation@delete');
 
 
+// Test
+$app->router->get('/apis/test','TestController@list');
 
 
 
