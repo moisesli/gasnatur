@@ -121,10 +121,10 @@ $app->router->put('/apis/clientes/:id', 'Client@update');
 $app->router->delete('/apis/clientesE¿/:id', 'Client@delete');
 */
 $app->router->get('/apis/clientes/:id?/:all?', 'ClientesController@index');
-$app->router->post('/apis/clientes/:id','Client@edit');
-$app->router->post('/apis/clientes', 'Client@create');
-$app->router->put('/apis/clientes/:id', 'Client@update');
-$app->router->delete('/apis/clientesE¿/:id', 'Client@destroy');
+$app->router->post('/apis/clientes/:id','ClientesController@edit');
+$app->router->post('/apis/clientes', 'ClientesController@create');
+$app->router->put('/apis/clientes/:id', 'ClientesController@update');
+$app->router->delete('/apis/clientesE¿/:id', 'ClientesController@destroy');
 
 //Material
 $app->router->get('/apis/tipomaterial/:id?/:all?', 'Material@paginator');

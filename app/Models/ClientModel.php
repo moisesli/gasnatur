@@ -113,11 +113,11 @@ class ClientModel extends Model
                     ,c.celular AS CELULAR, c.correo AS CORREO, c.recibo_digital AS RECIBO_DIGITAL
                     ,c.estado AS ESTADO")
 
-				->table("clientes c
+			    ->where($filtro)
+                ->table("clientes c
 					INNER JOIN tipo_documentos_identidad t ON c.id_tipodoc=t.id
 					INNER JOIN nacionalidades n ON c.id_nacionalidad=n.id")
-			    ->where($filtro)
-				->orderBy("c.id", "DESC")
+                ->orderBy("c.id", "DESC")
 
 				->paginator($pagina, $palabraBuscada);
 

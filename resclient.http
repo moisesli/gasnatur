@@ -1,5 +1,5 @@
-GET {{host}}/clientes
+POST {{host}}/clientes/1
 Accept: application/json
 
 ###
-GET {{host}}/proyectos
+POST {{host}}/clientes/1

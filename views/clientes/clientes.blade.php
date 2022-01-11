@@ -152,14 +152,15 @@
     </a>
     <span class="text-sm font-normal text-gray-500">Viendo <span
         class="text-gray-900 font-semibold">{{ pagination.inicio }}-{{ pagination.fin }}</span> de <span
-        class="text-gray-900 font-semibold">{{ pagination.totalregistros }}</span></span>
+        class="text-gray-900 font-semibold">{{ pagination.totalregistros }}</span>
+      </span>
   </div>
   <div class="flex items-center space-x-3">
-    <button v-if="pagination.pagina_anterior != 0" @click="loadItems(pagination.pagina_anterior,pagination.palabra_buscada)" class="flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center">
+    <button v-if="pagination.pagina_anterior != 0" @click="loadItems(pagination.pagina_anterior,pagination.palabra_buscada)" class="flex-1 text-gray-500 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center">
       <i class="fas fa-angle-left mr-1"></i>      
       Anterior
     </button>
-    <button v-if="pagination.pagina_posterior != 0" @click="loadItems(pagination.pagina_posterior,pagination.palabra_buscada)" class="flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center">
+    <button v-if="pagination.pagina_posterior != 0" @click="loadItems(pagination.pagina_posterior,pagination.palabra_buscada)" class="flex-1 text-gray-500 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center">
       Siguiente
       <i class="fas fa-angle-right ml-1"></i>      
     </button>
